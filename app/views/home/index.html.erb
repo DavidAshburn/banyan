@@ -1,6 +1,13 @@
 <div data-controller="mapper" class="grid lg:grid-cols-[1fr_1024px_1fr] bg-emerald-800 min-h-[80vh]" >
 
   <div id="map" class="lg:col-start-2 h-[50vh]"></div>
-  <p id="coordinates" class="font-bold text-xl bg-black text-white lg:col-start-2 row-start-2"></p>
+  <div class="font-bold text-xl bg-black text-white lg:col-start-2 row-start-2 hidden">
+    <p data-mapper-target="markerlat"></p>
+    <p data-mapper-target="markerlon"></p>
+  </div>
+  <button data-action="mapper#getLatLng" class="p-4 m-2 rounded bg-green-700 text-white font-bold lg:col-start-2">Report</button>
+  <button data-action="mapper#addToData" class="p-4 m-2 rounded bg-green-700 text-white font-bold lg:col-start-2">Add</button>
+
+  <button data-action="mapper#reportData" class="p-4 m-2 rounded bg-green-700 text-white font-bold lg:col-start-2">Data</button>
 
 </div>
