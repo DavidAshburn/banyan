@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'user/dashboard'
+  get 'user/profile'
   get 'mapping/new'
   root 'home#index'
   devise_for :users

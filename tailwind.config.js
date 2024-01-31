@@ -14,10 +14,10 @@ module.exports = {
         'inter': ['Inter Tight', 'sans-serif'],
         'josefin': ['Josefin Slab', 'serif']
       },
-    },
-    colors: {
-      'light': '#d5fdef',
-      'dark': '#275c51'
+      colors: {
+        'light': '#d5fdef',
+        'dark': '#275c51'
+      }
     }
   }
 }

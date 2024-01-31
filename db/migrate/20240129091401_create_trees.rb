@@ -4,14 +4,14 @@ class CreateTrees < ActiveRecord::Migration[7.0]
       t.float :lat
       t.float :lon
       t.integer :dbh
-      t.string :crown
+      t.string :crown, default: ''
       t.string :history, array: true, default: []
       t.string :hazards, array: true, default: []
       t.string :pictures, array: true, default: []
-      t.string :species
+      t.string :species, default: ''
       t.boolean :removed, default: false
       t.boolean :ground, default: false
-      t.text :notes
+      t.text :notes, default: ''
       t.integer :property_id
 
       t.timestamps

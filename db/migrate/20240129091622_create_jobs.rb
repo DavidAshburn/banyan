@@ -7,8 +7,8 @@ class CreateJobs < ActiveRecord::Migration[7.0]
       t.datetime :end
       t.boolean :invoived
       t.boolean :paid
-      t.string :estimator
-      t.string :foreman
+      t.string :estimator, default: ''
+      t.string :foreman, default: ''
       t.text :notes
       t.text :work, default: "{}"
       t.string :equipment, array: true, default: []

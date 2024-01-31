@@ -15,12 +15,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_091753) do
   enable_extension "plpgsql"
 
   create_table "clients", force: :cascade do |t|
-    t.string "name"
-    t.string "contact_name"
-    t.string "phone"
-    t.string "email"
-    t.string "mail_address"
-    t.text "notes"
+    t.string "name", default: ""
+    t.string "contact_name", default: ""
+    t.string "phone", default: ""
+    t.string "email", default: ""
+    t.string "mail_address", default: ""
+    t.text "notes", default: ""
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -33,8 +33,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_091753) do
     t.datetime "end"
     t.boolean "invoived"
     t.boolean "paid"
-    t.string "estimator"
-    t.string "foreman"
+    t.string "estimator", default: ""
+    t.string "foreman", default: ""
     t.text "notes"
     t.text "work", default: "{}"
     t.string "equipment", default: [], array: true
@@ -46,14 +46,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_091753) do
   end
 
   create_table "properties", force: :cascade do |t|
-    t.string "name"
-    t.string "contact_name"
-    t.string "phone"
-    t.string "email"
-    t.string "address"
-    t.string "type"
-    t.string "parking"
-    t.string "tree_access"
+    t.string "name", default: ""
+    t.string "contact_name", default: ""
+    t.string "phone", default: ""
+    t.string "email", default: ""
+    t.string "address", default: ""
+    t.string "property_type", default: ""
+    t.string "parking", default: ""
+    t.string "tree_access", default: ""
     t.integer "client_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -63,14 +63,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_091753) do
     t.float "lat"
     t.float "lon"
     t.integer "dbh"
-    t.string "crown"
+    t.string "crown", default: ""
     t.string "history", default: [], array: true
     t.string "hazards", default: [], array: true
     t.string "pictures", default: [], array: true
-    t.string "species"
+    t.string "species", default: ""
     t.boolean "removed", default: false
     t.boolean "ground", default: false
-    t.text "notes"
+    t.text "notes", default: ""
     t.integer "property_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
