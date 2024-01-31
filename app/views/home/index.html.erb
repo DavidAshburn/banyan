@@ -1,13 +1,11 @@
-<div data-controller="mapper" class="grid lg:grid-cols-[1fr_1024px_1fr] bg-emerald-800 min-h-[80vh]" >
-
-  <div id="map" class="lg:col-start-2 h-[50vh]"></div>
-  <div class="font-bold text-xl bg-black text-white lg:col-start-2 row-start-2 hidden">
-    <p data-mapper-target="markerlat"></p>
-    <p data-mapper-target="markerlon"></p>
+<div class="grid h-[100dvh] bg-light text-dark min-h-[100lvh] grid-rows-[1fr_1fr_8fr] overflow-hidden font-josefin font-bold" >
+  <div class="p-4">
+    <p class="text-5xl">Banyan</p>
   </div>
-  <button data-action="mapper#getLatLng" class="p-4 m-2 rounded bg-green-700 text-white font-bold lg:col-start-2">Report</button>
-  <button data-action="mapper#addToData" class="p-4 m-2 rounded bg-green-700 text-white font-bold lg:col-start-2">Add</button>
-
-  <button data-action="mapper#reportData" class="p-4 m-2 rounded bg-green-700 text-white font-bold lg:col-start-2">Data</button>
-
+  <div class="flex items-center gap-2 pl-8 text-lg">
+    <%= link_to 'Sign-up', new_user_registration_path %>
+    <div class="w-4 h-1 bg-dark"></div>
+    <%= link_to 'Login', new_user_session_path %>
+  </div>
+  <img src="<%= asset_path('welcome.svg') %>" alt="Welcome" class="object-cover min-h-[80dvh]">
 </div>
