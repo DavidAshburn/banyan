@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'maps/find'
   get 'user/dashboard'
   get 'user/profile'
   get 'mapping/new'
@@ -6,6 +7,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   get 'data/clients', to: 'data#clients'
+  get 'maps/find', to: 'maps#find'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

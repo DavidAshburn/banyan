@@ -30,7 +30,12 @@ export default function ClientRow({ client, properties, index }) {
             <p>Type: {property.property_type}</p>
             <p>Parking: {property.parking}</p>
             <p>Access: {property.tree_access}</p>
-            <p>Address: {property.address}</p>
+            <p>
+              Address:{' '}
+              <a href={'/maps/find?target=' + property.address}>
+                {property.address}
+              </a>
+            </p>
           </div>
         ))}
       </div>

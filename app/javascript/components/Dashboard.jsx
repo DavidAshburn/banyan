@@ -17,7 +17,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="grid">
+    <div className="grid gap-4 p-4 text-lg bg-light text-dark font-josefin min-h-screen">
       <Windowpane
         title="Clients"
         content={clientdata.map((client, i) => (

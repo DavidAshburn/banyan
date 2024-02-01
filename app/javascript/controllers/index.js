@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import MapfindController from "./mapfind_controller"
+application.register("mapfind", MapfindController)
+
 import MapperController from "./mapper_controller"
 application.register("mapper", MapperController)
 
