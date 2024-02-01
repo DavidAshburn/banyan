@@ -58,6 +58,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_01_001433) do
     t.string "phone", default: ""
     t.string "email", default: ""
     t.string "address", default: ""
+    t.float "latitude"
+    t.float "longitude"
     t.string "property_type", default: ""
     t.string "parking", default: ""
     t.string "tree_access", default: ""
@@ -67,8 +69,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_01_001433) do
   end
 
   create_table "trees", force: :cascade do |t|
-    t.float "lat"
-    t.float "lon"
+    t.float "latitude"
+    t.float "longitude"
     t.integer "dbh"
     t.string "crown", default: ""
     t.string "history", default: [], array: true

@@ -1,8 +1,8 @@
 class CreateTrees < ActiveRecord::Migration[7.0]
   def change
     create_table :trees do |t|
-      t.float :lat
-      t.float :lon
+      t.float :latitude
+      t.float :longitude
       t.integer :dbh
       t.string :crown, default: ''
       t.string :history, array: true, default: []

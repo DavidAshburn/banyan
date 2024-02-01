@@ -28,7 +28,7 @@ Client.create(
   contact_name:'none',
   phone: '123-123-1234',
   email: 'ralph@bacchio.com',
-  mail_address: '123 Main St, Honolulu, 96819',
+  mail_address: '1754 Ala Noe Way, Honolulu, 96819',
   notes: 'none',
   user_id: 1,
   id:1,
@@ -39,7 +39,7 @@ Ralphs = Property.create(
   contact_name:'Ralph Bacchio',
   phone: '123-123-1234',
   email: 'ralph@bacchio.com',
-  address: '123 Main St, Honolulu, 96819',
+  address: '1754 Ala Noe Way, Honolulu, 96819',
   property_type: 'Home',
   parking: 'large',
   tree_access: 'poor',
@@ -47,8 +47,8 @@ Ralphs = Property.create(
 )
 
 Ralphs.trees.create(
-  lat: 21.37203996437736, 
-  lon: -157.88392309999995,
+  latitude: 21.37203996437736,
+  longitude: -157.88392309999995,
   dbh: 6,
   crown: 'small',
   species: 'Sweetgum',
@@ -60,7 +60,7 @@ Client.create(
   contact_name:'none',
   phone: '143-143-1434',
   email: 'norma@sbcglobal.net',
-  mail_address: '142 Main St, Honolulu, 96819',
+  mail_address: '28 Rolling Green Circle, Pleasant Hill, CA 94523',
   notes: 'none',
   user_id: 1,
   id: 2,
@@ -71,7 +71,7 @@ Normas = Property.create(
   contact_name:'none',
   phone: '143-143-1434',
   email: 'norma@sbcglobal.net',
-  address: '142 Main St, Honolulu, 96819',
+  address: '28 Rolling Green Circle, Pleasant Hill, CA 94523',
   property_type: 'Home',
   parking: 'street',
   tree_access: 'good',
@@ -79,8 +79,8 @@ Normas = Property.create(
 )
 
 Normas.trees.create(
-  lat: 21.37327826530759, 
-  lon: -157.88285038247952,
+  latitude: 37.946569047725674,
+  longitude: -122.0761460021809,
   dbh: 3,
   crown: 'small',
   species: 'Crepe Myrtle',
@@ -88,8 +88,8 @@ Normas.trees.create(
 )
 
 Normas.trees.create(
-  lat: 21.37327826530800, 
-  lon: -157.88285038249000,
+  latitude: 37.946569047725000,
+  longitude: -122.0761460021000,
   dbh: 3,
   crown: 'small',
   species: 'Crepe Myrtle',

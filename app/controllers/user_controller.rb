@@ -4,7 +4,6 @@ class UserController < ApplicationController
   def dashboard
     @username = current_user.profile.name
     @uid = current_user.id
-    
   end
 
   def profile

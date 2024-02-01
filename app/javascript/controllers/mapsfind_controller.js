@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 import mapboxgl from 'mapbox-gl';
 // Connects to data-controller="mapper"
 export default class extends Controller {
-  static targets = ['targetaddress'];
+  static targets = ['targetaddress', 'trees'];
 
   connect() {
     const prefix =
@@ -13,16 +13,21 @@ export default class extends Controller {
       'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
     this.addressTarget = this.targetaddressTarget.innerText;
 
+    let treejson = this.treesTarget.innerText;
+    const regex = /=>/g;
+
+    this.trees = JSON.parse(treejson.replace(regex, ':'));
+
+    console.log(this.trees);
+
     fetch(prefix + this.addressTarget + middle + this.accesstoken)
       .then((response) => response.json())
       .then((data) => {
         mapboxgl.accessToken = this.accesstoken;
-        console.log(data);
-        /*
-        this.initialLongitude = -74.5;
-        this.initialLatitude = 40;
 
-        const coordinates = document.getElementById('coordinates');
+        this.initialLongitude = data.features[0].center[0];
+        this.initialLatitude = data.features[0].center[1];
+
         this.map = new mapboxgl.Map({
           container: 'map', // container ID
           center: [this.initialLongitude, this.initialLatitude], // starting position [lng, lat]
@@ -30,7 +35,15 @@ export default class extends Controller {
           cooperativeGestures: true,
           style: `mapbox://styles/mapbox/satellite-v9`,
         });
-        */
+
+        for (let item of this.trees) {
+          console.log(item);
+          let marker = new mapboxgl.Marker({
+            color: '#fbbf24',
+          })
+            .setLngLat([item.longitude, item.latitude])
+            .addTo(this.map);
+        }
       });
   }
 }
