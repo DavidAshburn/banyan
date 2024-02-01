@@ -1,16 +1,17 @@
-<section class="grid gap-2 p-4 font-bold bg-dark font-josefin text-slate-100">  
-  <h2 class="text-4xl">Log in</h2>
+<section class="grid min-h-[100lvh] gap-2 p-4 font-bold bg-dark font-josefin text-slate-100 text-xl">  
+  
+  <h2 class="text-8xl">Log in</h2>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div>
+    <div class="grid gap-2">
       <div class="field">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "text-dark px-2" %>
       </div>
 
       <div class="field">
         <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "current-password" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "text-dark px-2" %>
       </div>
 
       <% if devise_mapping.rememberable? %>
@@ -23,8 +24,9 @@
       <div class="actions">
         <%= f.submit "Log in" %>
       </div>
+      <%= render "devise/shared/links" %>
     </div>
   <% end %>
 
-  <%= render "devise/shared/links" %>
+  
 </section>

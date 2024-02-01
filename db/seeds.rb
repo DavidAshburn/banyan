@@ -18,6 +18,11 @@ TestUser = User.create(
   id: 1,
 	)
 
+Profile.create(
+  name:"Boss",
+  user_id:1,
+)
+
 Client.create(
   name:'Ralph Baccio',
   contact_name:'none',
