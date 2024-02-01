@@ -1,4 +1,7 @@
 <section class="grid gap-2 p-4 text-lg bg-light text-dark font-josefin">
-  <p>Hiya <%= @user.profile.name %>!</p>
+  <p>Hiya <%= @username %>!</p>
   <div data-controller="rdashboard" id="dashboardroot"></div>
 </section>
+<div class="hidden">
+  <div id="uid"><%= @uid %></div>
+</div>

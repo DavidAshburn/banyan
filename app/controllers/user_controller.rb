@@ -2,7 +2,8 @@ class UserController < ApplicationController
   before_action :authenticate_user!
 
   def dashboard
-    @user = current_user
+    @username = current_user.profile.name
+    @uid = current_user.id
     
   end
 
