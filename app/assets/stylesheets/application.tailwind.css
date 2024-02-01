@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .windowpane {
+    @apply border-[6px] border-dark rounded-lg bg-gradient-to-bl from-emerald-50 to-light text-dark font-josefin
+  }
+}

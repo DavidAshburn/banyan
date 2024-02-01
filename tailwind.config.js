@@ -1,23 +1,24 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   content: [
     './app/views/**/*.html.erb',
     './app/helpers/**/*.rb',
     './app/assets/stylesheets/**/*.css',
-    './app/javascript/**/*.{js,jsx}'
+    './app/javascript/**/*.{js,jsx}',
   ],
   theme: {
     extend: {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-        'inter': ['Inter Tight', 'sans-serif'],
-        'josefin': ['Josefin Slab', 'serif']
+        inter: ['Inter Tight', 'sans-serif'],
+        josefin: ['Josefin Slab', 'serif'],
       },
       colors: {
-        'light': '#d5fdef',
-        'dark': '#275c51'
-      }
-    }
-  }
-}
+        light: '#d5fdef',
+        dark: '#275c51',
+        coral: '#f87954',
+      },
+    },
+  },
+};
