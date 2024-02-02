@@ -1,4 +1,4 @@
-<div data-controller="mapsfind" id="mapfind">
+<div data-controller="mapsfind" id="mapfind" class="min-h-screen bg-light">
   <div class="hidden" data-mapsfind-target="targetaddress"><%= @target %></div>
   <div class="hidden" data-mapsfind-target="trees"><%= @trees %></div>
   <div class="relative">
@@ -6,9 +6,12 @@
     <div class="w-8 h-8 border-2 rounded-full abs-center border-pale"></div>
   </div>
     
-
-  <p class="" data-mapsfind-target="latitude"><%= @latitude %></p>
-  <p class="" data-mapsfind-target="longitude"><%= @longitude %></p>
-  <button type="button" data-action="mapsfind#addTree" class="p-2 px-4 text-2xl font-bold text-white rounded-lg bg-dark font-josefin">Add</button>
-  <button type="button" data-action="mapsfind#addTree" class="p-2 px-4 text-2xl font-bold border-2 rounded-lg text-dark bg-light font-josefin border-dark">Save</button>
-</div>
+  <div class="flex items-center justify-center gap-4 mb-2 bg-dark text-light">
+    <p class="" data-mapsfind-target="latitude"><%= @latitude %></p>
+    <p class="" data-mapsfind-target="longitude"><%= @longitude %></p>
+  </div>
+  <div class="grid grid-cols-3 gap-4 p-2">
+    <button type="button" data-action="mapsfind#addTree" class="p-2 px-4 text-2xl font-bold text-white rounded-lg bg-dark font-josefin">Add</button>
+    <button type="button" data-action="mapsfind#saveTrees" class="p-2 px-4 text-2xl font-bold border-2 rounded-lg text-dark bg-light font-josefin border-dark">Save</button>
+  </div>
+  </div>

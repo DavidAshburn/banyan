@@ -64,7 +64,7 @@ export default class extends Controller {
     .setLngLat([center.lng, center.lat])
     .addTo(this.map);
 
-    this.newTrees.push({lng:center.lng, lat:center.lat});
+    this.newTrees.push({lng:center.lng, lat:center.lat, index:this.newTrees.length});
   }
 
   saveTrees() {
