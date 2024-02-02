@@ -2,16 +2,28 @@
   <div class="hidden" data-mapsfind-target="targetaddress"><%= @target %></div>
   <div class="hidden" data-mapsfind-target="trees"><%= @trees %></div>
   <div class="relative">
-    <div id="map" class="h-[80vh]"></div>
+    <div id="map" class="h-[60vh]"></div>
     <div class="w-8 h-8 border-2 rounded-full abs-center border-pale"></div>
   </div>
-    
+
   <div class="flex items-center justify-center gap-4 mb-2 bg-dark text-light">
     <p class="" data-mapsfind-target="latitude"><%= @latitude %></p>
     <p class="" data-mapsfind-target="longitude"><%= @longitude %></p>
   </div>
-  <div class="grid grid-cols-3 gap-4 p-2">
+  <div class="grid grid-cols-3 gap-4 p-2" id="treecontrols">
     <button type="button" data-action="mapsfind#addTree" class="p-2 px-4 text-2xl font-bold text-white rounded-lg bg-dark font-josefin">Add</button>
     <button type="button" data-action="mapsfind#saveTrees" class="p-2 px-4 text-2xl font-bold border-2 rounded-lg text-dark bg-light font-josefin border-dark">Save</button>
   </div>
+  <div id="treeinputs" class="grid grid-cols-6 gap-2 p-2 min-h-[20lvh] windowpane hidden">
+    <div className="bg-dark border-b-4 border-coral h-8 text-white pl-2 col-span-full">
+      Add Tree
+    </div>
+    <input type="text" data-mapsfind-target="treespecies" />
+    <input type="number" data-mapsfind-target="treedbh" />
+    <input type="text" data-mapsfind-target="treecrown" />
+    <input type="textarea" class="col-span-2" data-mapsfind-target="treenotes" />
+    <div clas="flex">
+      <button type="button" data-action="mapsfind#submitTree" class="p-2 px-4 text-2xl font-bold border-2 rounded-lg text-dark bg-light font-josefin border-dark">Save</button>
+    </div>
   </div>
+</div>
