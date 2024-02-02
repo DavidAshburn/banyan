@@ -25,7 +25,6 @@ class TreesController < ApplicationController
 
     respond_to do |format|
       if @tree.save
-        format.html { redirect_to tree_url(@tree), notice: "Tree was successfully created." }
         format.json { render :show, status: :created, location: @tree }
       else
         format.html { render :new, status: :unprocessable_entity }

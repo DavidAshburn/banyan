@@ -1,3 +1,8 @@
 <h1>New tree</h1>
-<%= render "form", tree: @tree %>
+<turbo-frame id="addtree">
+  <%= render "form", tree: @tree %>
+  <button data-action="mapsfind#cancelAddTree", class="ml-2 border-2 border-dark rounded-lg p-2 px-4 font-bold text-dark font-josefin text-lg">
+    cancel
+  </button>
+</turbo-frame>
 

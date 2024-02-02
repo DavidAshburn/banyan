@@ -55,6 +55,8 @@ export default class extends Controller {
           let center = this.map.getCenter(); //{lng: x, lat: y}
           this.latitudeTarget.innerText = center.lat;
           this.longitudeTarget.innerText = center.lng;
+          document.getElementById('latitudeform').value = center.lat;
+          document.getElementById('longitudeform').value = center.lng;
         });
       });
 
@@ -84,6 +86,13 @@ export default class extends Controller {
       lat: center.lat,
       index: this.newTrees.length,
     });
+    let el = document.getElementById('treeinputs');
+    let buttons = document.getElementById('treecontrols');
+
+    el?.classList.toggle('hidden');
+    buttons?.classList.toggle('hidden');
+  }
+  cancelAddTree() {
     let el = document.getElementById('treeinputs');
     let buttons = document.getElementById('treecontrols');
 
