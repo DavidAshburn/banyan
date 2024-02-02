@@ -87,9 +87,28 @@ Normas.trees.create(
   notes: "Out of place here",
 )
 
+
 Normas.trees.create(
-  latitude: 37.946569047725000,
+  latitude: 37.946560000000000,
   longitude: -122.0761460021000,
+  dbh: 3,
+  crown: 'small',
+  species: 'Crepe Myrtle',
+  notes: "Out of place here",
+)
+
+Normas.trees.create(
+  latitude: 37.946600000000000,
+  longitude: -122.0761460021000,
+  dbh: 3,
+  crown: 'small',
+  species: 'Crepe Myrtle',
+  notes: "Out of place here",
+)
+
+Normas.trees.create(
+  latitude: 37.942600000000000,
+  longitude: -122.0751460021000,
   dbh: 3,
   crown: 'small',
   species: 'Crepe Myrtle',
