@@ -1,0 +1,35 @@
+<%= form_with(model: tree) do |form| %>
+  <% if tree.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(tree.errors.count, "error") %> prohibited this tree from being saved:</h2>
+
+      <ul>
+        <% tree.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="flex flex w-full justify-between text-lg">
+    <%= form.label :dbh %>
+    <%= form.range_field :dbh, in 1...60 %>
+  </div>
+
+  <div class="flex flex w-full justify-between text-lg">
+    <%= form.label :crown %>
+    <%= form.text_field :crown, class: "rounded-lg font-righteous text-lg" %>
+  </div>
+
+  <div class="flex flex w-full justify-between text-lg">
+    <%= form.label :latitude %>
+    <%= form.text_field :latitude, class: "hidden", id:"latitudeform" %>
+  </div>
+  <div class="flex flex w-full justify-between text-lg">
+    <%= form.label :longitude %>
+    <%= form.text_field :longitude, class: "hidden", id:"longitudeform" %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
