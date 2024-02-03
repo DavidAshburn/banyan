@@ -11,23 +11,29 @@ export default function ClientRow({ client, properties, index }) {
     }
   }
 
+  function toCap(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
   return (
     <div
-      className="grid items-center grid-cols-4 text-center bg-white min-h-[4rem]"
+      className="grid py-4 items-center grid-cols-2 text-center min-h-[4rem] rounded-bl-lg rounded-tr-lg"
       data-ref={index}
       onClick={toggleItem}
     >
-      <p>{client.name}</p>
+      <p className="row-span-2">{client.name}</p>
       <p>{client.email}</p>
       <p>{client.phone}</p>
-      <p>{client.mail_address}</p>
-      <div className={'col-span-full ' + display}>
+      <div className={'grid gap-4 col-span-full ' + display}>
         {properties.map((property, i) => (
-          <div className="grid grid-cols-2" key={i}>
-            <p>Type: {property.property_type}</p>
-            <p>Parking: {property.parking}</p>
-            <p>Access: {property.tree_access}</p>
-            <p>
+          <div
+            className="grid grid-cols-3 border border-dark rounded-md mx-4"
+            key={i}
+          >
+            <p>{property.property_type}</p>
+            <p>{toCap(property.parking)} parking</p>
+            <p>{toCap(property.tree_access)} access</p>
+            <p className="col-span-full">
               Address:{' '}
               <a
                 href={

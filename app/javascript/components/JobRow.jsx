@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function JobRow({ job }) {
+export default function JobRow({ jobdata }) {
   let [display, setDisplay] = useState('hidden');
 
   function toggleItem() {
@@ -28,17 +28,23 @@ export default function JobRow({ job }) {
     return thisdate.toLocaleString();
   }
 
+  const job = jobdata.job;
+  const property = jobdata.property;
+  const client = jobdata.client;
+
   return (
     <div
-      className="grid items-center grid-cols-2 text-center bg-white min-h-[4rem]"
+      className="grid items-center grid-cols-2 text-center min-h-[4rem] py-2 rounded-bl-lg rounded-tr-lg"
       onClick={toggleItem}
     >
-      <p>Start: {formatDate(job.start)}</p>
-      <p>End: {formatDate(job.end)}</p>
+      <p>Client: {client.name} </p>
+      <p>Property: {property.name}</p>
       <p>{job.crew_size} Hands</p>
       <p>{job.est_hours} Hours</p>
       <div className={'col-span-full ' + display}>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-2 border border-dark rounded-md mx-4">
+          <p>Start: {formatDate(job.start)}</p>
+          <p>End: {formatDate(job.end)}</p>
           <p>Estimator: {job.estimator}</p>
           <p>Foreman: {job.foreman}</p>
           <p className="col-span-full">Equipment</p>

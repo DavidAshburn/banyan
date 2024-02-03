@@ -23,7 +23,9 @@ class DataController < ApplicationController
   end
 
   def jobs
-    @jobs = current_user.jobs.order(:start)
+    alljobs = current_user.jobs.order(:start)
+
+    @jobs = alljobs.map{|job| {job:job, property:job.property, client:job.property.client}}
     respond_to do |format|
       format.json { render json: @jobs}
     end

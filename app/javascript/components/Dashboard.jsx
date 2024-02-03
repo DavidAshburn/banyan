@@ -22,7 +22,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="grid gap-4 p-4 text-lg bg-light text-dark font-josefin min-h-screen">
+    <div className="flex flex-col gap-4 p-4 text-lg bg-teal-300 text-dark font-josefin min-h-screen">
       <Windowpane
         title="Clients"
         content={clientdata.map((client, i) => (
@@ -37,7 +37,7 @@ export default function Dashboard() {
       <Windowpane
         title="Jobs"
         content={jobsdata.map((job, j) => (
-          <JobRow job={job} key={j} />
+          <JobRow jobdata={job} key={j} />
         ))}
       />
     </div>
