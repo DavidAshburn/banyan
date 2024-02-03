@@ -21,4 +21,10 @@ class DataController < ApplicationController
       format.json { render json: @treesout}
     end
   end
+
+  def jobs
+
+
+  end
+
 end
