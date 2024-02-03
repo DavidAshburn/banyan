@@ -2,21 +2,18 @@ import React, { useState } from 'react';
 
 export default function ClientRow({ client, properties, index }) {
   let [display, setDisplay] = useState('hidden');
-  let [opened, setOpened] = useState(false);
 
   function toggleItem() {
-    if (!opened) {
+    if (display == 'hidden') {
       setDisplay('grid');
-      setOpened(true);
     } else {
       setDisplay('hidden');
-      setOpened(false);
     }
   }
 
   return (
     <div
-      className="grid items-center grid-cols-4 text-center bg-white"
+      className="grid items-center grid-cols-4 text-center bg-white min-h-[4rem]"
       data-ref={index}
       onClick={toggleItem}
     >

@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   get 'data/clients', to: 'data#clients'
   get 'maps/find', to: 'maps#find'
+  get 'data/jobtrees', to: 'data#jobtrees'
+  get 'data/jobs', to: 'data#jobs'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

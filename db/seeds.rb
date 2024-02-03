@@ -47,9 +47,27 @@ Ralphs = Property.create(
   client_id: 1,
 )
 
-Ralphs.trees.create(
+tone = Ralphs.trees.create(
   latitude: 21.37203996437736,
   longitude: -157.88392309999995,
+  dbh: 6,
+  crown: 'small',
+  species: 'Sweetgum',
+  notes: "Out of place here",
+)
+
+ttwo = Ralphs.trees.create(
+  latitude: 21.37303996437736,
+  longitude: -157.88492309999995,
+  dbh: 6,
+  crown: 'small',
+  species: 'Sweetgum',
+  notes: "Out of place here",
+)
+
+tthree = Ralphs.trees.create(
+  latitude: 21.37103996437736,
+  longitude: -157.88292309999995,
   dbh: 6,
   crown: 'small',
   species: 'Sweetgum',
@@ -65,7 +83,7 @@ Job.create(
   crew_size: 4,
   est_hours: 8,
   property_id: Ralphs.id,
-  work: {trees:[]},
+  work: {trees:[tone.id, ttwo.id, tthree.id]},
 )
 
 Client.create(
