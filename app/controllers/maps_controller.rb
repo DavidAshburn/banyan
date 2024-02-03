@@ -5,4 +5,10 @@ class MapsController < ApplicationController
     @target = params[:target]
     @trees = Property.find(params[:property]).trees.as_json
   end
+
+  def job
+    @target = params[:target]
+    @trees = Property.find(params[:property]).trees.as_json
+  end
+
 end

@@ -48,6 +48,17 @@ export default function JobRow({ jobdata }) {
             <p>Start: {formatDate(job.start)}</p>
             <p>End: {formatDate(job.end)}</p>
           </div>
+          <a
+            href={
+              '/maps/job?target=' +
+              property.address +
+              '&property=' +
+              property.id
+            }
+            className="col-span-full bg-emerald-200"
+          >
+            {property.address}
+          </a>
           <p>Estimator: {job.estimator}</p>
           <p>Foreman: {job.foreman}</p>
 

@@ -31,28 +31,28 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4 p-4 text-lg bg-light text-dark font-josefin min-h-screen">
-      <Windowpane
-        title={user.name}
-        content={<DashHead user={user} />}
-      />
-      <Windowpane
-        title="Jobs"
-        content={jobsdata.map((job, j) => (
-          <JobRow jobdata={job} key={j} />
-        ))}
-      />
-      <Windowpane
-        title="Clients"
-        content={clientdata.map((client, i) => (
-          <ClientRow
-            client={client[0]}
-            properties={client[1]}
-            index={i}
-            key={i}
-          />
-        ))}
-      />
+    <div className="grid grid-cols-[1fr_5fr]">
+      <div className="row-span-full bg-green-300"></div>
+      <div className="flex flex-col gap-4 p-4 text-lg bg-light text-dark font-josefin min-h-screen">
+        <Windowpane title="User" content={<DashHead user={user} />} />
+        <Windowpane
+          title="Jobs"
+          content={jobsdata.map((job, j) => (
+            <JobRow jobdata={job} key={j} />
+          ))}
+        />
+        <Windowpane
+          title="Clients"
+          content={clientdata.map((client, i) => (
+            <ClientRow
+              client={client[0]}
+              properties={client[1]}
+              index={i}
+              key={i}
+            />
+          ))}
+        />
+      </div>
     </div>
   );
 }
