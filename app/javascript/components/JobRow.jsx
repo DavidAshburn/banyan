@@ -34,23 +34,31 @@ export default function JobRow({ jobdata }) {
 
   return (
     <div
-      className="grid items-center grid-cols-2 text-center min-h-[4rem] py-2 rounded-bl-lg rounded-tr-lg"
+      className="grid items-center grid-cols-2 text-center min-h-[4rem] py-2 rounded-bl-lg rounded-tr-lg border border-dark rounded-md"
       onClick={toggleItem}
     >
       <p>Client: {client.name} </p>
-      <p>Property: {property.name}</p>
       <p>{job.crew_size} Hands</p>
+      <p>Property: {property.name}</p>
       <p>{job.est_hours} Hours</p>
+
       <div className={'col-span-full ' + display}>
-        <div className="grid grid-cols-2 border border-dark rounded-md mx-4">
-          <p>Start: {formatDate(job.start)}</p>
-          <p>End: {formatDate(job.end)}</p>
+        <div className="grid gap-2 grid-cols-2 border border-dark rounded-md mx-4 py-2">
+          <div className="grid grid-cols-2 p-2 gap-2 col-span-full border-dull rounded-md bg-light">
+            <p>Start: {formatDate(job.start)}</p>
+            <p>End: {formatDate(job.end)}</p>
+          </div>
           <p>Estimator: {job.estimator}</p>
           <p>Foreman: {job.foreman}</p>
-          <p className="col-span-full">Equipment</p>
-          {job.equipment.map((x, i) => (
-            <p key={i}>{x}</p>
-          ))}
+
+          <div className="grid col-span-full grid-cols-3 gap-2 border-t border-stone-400 rounded-md">
+            <p className="col-span-full text-sm text-stone-500">
+              equipment
+            </p>
+            {job.equipment.map((x, i) => (
+              <p key={i}>{x}</p>
+            ))}
+          </div>
         </div>
       </div>
     </div>

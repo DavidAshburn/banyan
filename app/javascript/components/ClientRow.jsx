@@ -17,7 +17,7 @@ export default function ClientRow({ client, properties, index }) {
 
   return (
     <div
-      className="grid py-4 items-center grid-cols-2 text-center min-h-[4rem] rounded-bl-lg rounded-tr-lg"
+      className="grid py-4 items-center grid-cols-2 text-center min-h-[4rem] rounded-bl-lg rounded-tr-lg border border-dark rounded-md"
       data-ref={index}
       onClick={toggleItem}
     >
@@ -33,19 +33,17 @@ export default function ClientRow({ client, properties, index }) {
             <p>{property.property_type}</p>
             <p>{toCap(property.parking)} parking</p>
             <p>{toCap(property.tree_access)} access</p>
-            <p className="col-span-full">
-              Address:{' '}
-              <a
-                href={
-                  '/maps/find?target=' +
-                  property.address +
-                  '&property=' +
-                  property.id
-                }
-              >
-                {property.address}
-              </a>
-            </p>
+            <a
+              href={
+                '/maps/find?target=' +
+                property.address +
+                '&property=' +
+                property.id
+              }
+              className="col-span-full bg-emerald-200"
+            >
+              {property.address}
+            </a>
           </div>
         ))}
       </div>
