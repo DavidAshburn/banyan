@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :jobs
+  resources :properties
+  resources :clients
   resources :trees
   get 'maps/find'
   get 'user/dashboard'

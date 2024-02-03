@@ -27,19 +27,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_01_001433) do
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.datetime "sched_start"
-    t.datetime "schedend"
     t.datetime "start"
     t.datetime "end"
-    t.boolean "invoived"
-    t.boolean "paid"
+    t.boolean "invoiced", default: false
+    t.boolean "paid", default: false
     t.string "estimator", default: ""
     t.string "foreman", default: ""
-    t.text "notes"
+    t.text "notes", default: ""
     t.text "work", default: "{}"
     t.string "equipment", default: [], array: true
-    t.integer "crew_size"
-    t.integer "est_hours"
+    t.integer "crew_size", default: 0
+    t.integer "est_hours", default: 0
     t.integer "property_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

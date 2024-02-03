@@ -10,6 +10,7 @@ User.destroy_all
 Client.destroy_all
 Property.destroy_all
 Tree.destroy_all
+Job.destroy_all
 
 TestUser = User.create(
 	email:"test@user.com",
@@ -53,6 +54,18 @@ Ralphs.trees.create(
   crown: 'small',
   species: 'Sweetgum',
   notes: "Out of place here",
+)
+
+Job.create(
+  start: DateTime.new(2024,3,2,8),
+  end: DateTime.new(2024,3,2,4),
+  estimator: "Johnny",
+  foreman: "Reed",
+  equipment: ["Bucket Truck","F450","BC1000"],
+  crew_size: 4,
+  est_hours: 8,
+  property_id: Ralphs.id,
+  work: {trees:[]},
 )
 
 Client.create(
@@ -113,4 +126,16 @@ Normas.trees.create(
   crown: 'small',
   species: 'Crepe Myrtle',
   notes: "Out of place here",
+)
+
+NormaApts = Property.create(
+  name:'Willow Glen',
+  contact_name:'Norma Flaskerud',
+  phone: '143-143-1434',
+  email: 'norma@sbcglobal.net',
+  address: '400 Longbrook Way, Pleasant Hill, CA 94523',
+  property_type: 'Complex',
+  parking: 'large',
+  tree_access: 'good',
+  client_id: 2,
 )
