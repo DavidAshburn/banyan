@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import ClientRow from './ClientRow';
 import Windowpane from './Windowpane';
 import JobRow from './JobRow';
+import DashHead from './DashHead';
 
 export default function Dashboard() {
   let [clientdata, setClientData] = useState([]);
   let [jobsdata, setJobsData] = useState([]);
+  let [user, setUser] = useState({});
 
   useEffect(() => {
     fetch(`/data/clients`)
@@ -19,10 +21,27 @@ export default function Dashboard() {
       .then((data) => {
         setJobsData(data);
       });
+
+    fetch('/data/user')
+      .then((response) => response.json())
+      .then((data) => {
+        setUser(data);
+        console.log(data);
+      });
   }, []);
 
   return (
-    <div className="flex flex-col gap-4 p-4 text-lg bg-teal-300 text-dark font-josefin min-h-screen">
+    <div className="flex flex-col gap-4 p-4 text-lg bg-light text-dark font-josefin min-h-screen">
+      <Windowpane
+        title={user.name}
+        content={<DashHead user={user} />}
+      />
+      <Windowpane
+        title="Jobs"
+        content={jobsdata.map((job, j) => (
+          <JobRow jobdata={job} key={j} />
+        ))}
+      />
       <Windowpane
         title="Clients"
         content={clientdata.map((client, i) => (
@@ -32,12 +51,6 @@ export default function Dashboard() {
             index={i}
             key={i}
           />
-        ))}
-      />
-      <Windowpane
-        title="Jobs"
-        content={jobsdata.map((job, j) => (
-          <JobRow jobdata={job} key={j} />
         ))}
       />
     </div>

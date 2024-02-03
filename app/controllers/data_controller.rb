@@ -31,4 +31,19 @@ class DataController < ApplicationController
     end
   end
 
+  def user
+
+    trees = 0
+    current_user.clients.each {|client| client.properties.each{|prop| trees += prop.trees.count}}
+
+    @user_data = {
+      email: current_user.email,
+      clients: current_user.clients.count,
+      jobs: current_user.jobs.count,
+      trees: trees
+    }
+    respond_to do |format|
+      format.json { render json: @user_data }
+    end
+  end
 end
