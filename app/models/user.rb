@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   has_many :clients
   has_one :profile
+  has_many :jobs
 end

@@ -39,6 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_01_001433) do
     t.integer "crew_size", default: 0
     t.integer "est_hours", default: 0
     t.integer "property_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

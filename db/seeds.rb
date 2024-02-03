@@ -76,13 +76,14 @@ tthree = Ralphs.trees.create(
 
 Job.create(
   start: DateTime.new(2024,3,2,8),
-  end: DateTime.new(2024,3,2,4),
+  end: DateTime.new(2024,3,2,16),
   estimator: "Johnny",
   foreman: "Reed",
   equipment: ["Bucket Truck","F450","BC1000"],
   crew_size: 4,
   est_hours: 8,
   property_id: Ralphs.id,
+  user_id: 1,
   work: {trees:[tone.id, ttwo.id, tthree.id]},
 )
 
@@ -119,7 +120,7 @@ Normas.trees.create(
 )
 
 
-Normas.trees.create(
+ntone = Normas.trees.create(
   latitude: 37.946560000000000,
   longitude: -122.0761460021000,
   dbh: 3,
@@ -128,7 +129,7 @@ Normas.trees.create(
   notes: "Out of place here",
 )
 
-Normas.trees.create(
+nttwo = Normas.trees.create(
   latitude: 37.946600000000000,
   longitude: -122.0761460021000,
   dbh: 3,
@@ -137,13 +138,26 @@ Normas.trees.create(
   notes: "Out of place here",
 )
 
-Normas.trees.create(
+ntthree = Normas.trees.create(
   latitude: 37.942600000000000,
   longitude: -122.0751460021000,
   dbh: 3,
   crown: 'small',
   species: 'Crepe Myrtle',
   notes: "Out of place here",
+)
+
+Job.create(
+  start: DateTime.new(2024,3,3,8),
+  end: DateTime.new(2024,3,3,16),
+  estimator: "Johnny",
+  foreman: "Reed",
+  equipment: ["F650","BC1000"],
+  crew_size: 4,
+  est_hours: 8,
+  property_id: Normas.id,
+  user_id: 1,
+  work: {trees:[ntone.id, nttwo.id, ntthree.id]},
 )
 
 NormaApts = Property.create(

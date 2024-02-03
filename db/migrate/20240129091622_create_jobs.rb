@@ -13,6 +13,7 @@ class CreateJobs < ActiveRecord::Migration[7.0]
       t.integer :crew_size, default: 0
       t.integer :est_hours, default: 0
       t.integer :property_id
+      t.integer :user_id
 
       t.timestamps
     end

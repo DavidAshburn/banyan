@@ -23,8 +23,10 @@ class DataController < ApplicationController
   end
 
   def jobs
-
-
+    @jobs = current_user.jobs.order(:start)
+    respond_to do |format|
+      format.json { render json: @jobs}
+    end
   end
 
 end

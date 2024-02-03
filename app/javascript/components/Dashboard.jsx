@@ -13,12 +13,12 @@ export default function Dashboard() {
       .then((data) => {
         setClientData(data);
       });
-    
+
     fetch('/data/jobs')
-    .then((response) => response.json())
-    .then((data) => {
-      setJobsData(data);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        setJobsData(data);
+      });
   }, []);
 
   return (
@@ -36,12 +36,8 @@ export default function Dashboard() {
       />
       <Windowpane
         title="Jobs"
-        content={jobsdata.map((job, i) => (
-          <JobRow
-            job={job}
-            index={i}
-            key={i}
-          />
+        content={jobsdata.map((job, j) => (
+          <JobRow job={job} key={j} />
         ))}
       />
     </div>
