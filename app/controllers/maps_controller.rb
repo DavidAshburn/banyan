@@ -3,7 +3,7 @@ class MapsController < ApplicationController
 
   def job
     @target = params[:target]
-    @trees = Property.find(params[:property]).trees
+    @jobid = params[:jobid]
   end
 
   def edit

@@ -2,24 +2,10 @@ import { Controller } from '@hotwired/stimulus';
 import mapboxgl from 'mapbox-gl';
 // Connects to data-controller="mapper"
 export default class extends Controller {
-  static targets = ['targetaddress', 'trees'];
+  static targets = ['targetaddress', 'jobid'];
 
   connect() {
-    //retrieve property.trees from the DOM
-    let treejson = this.treesTarget.innerText;
-    const regex = /=>/g;
-    this.trees = JSON.parse(treejson.replace(regex, ':'));
-
-    //find center of existing trees, take count to check for empty set
-    this.lat = 0;
-    this.lon = 0;
-    this.tree_index = 0;
-
-    for (let item of this.trees) {
-      this.tree_index++;
-      this.lat += item.latitude;
-      this.lon += item.longitude;
-    }
+    this.job_id = this.jobidTarget.innerText;
 
     //fetch geocoding API for property address
     // .then render map
@@ -33,22 +19,39 @@ export default class extends Controller {
     fetch(prefix + this.addressTarget + middle + this.accesstoken)
       .then((response) => response.json())
       .then((data) => {
-        mapboxgl.accessToken = this.accesstoken;
+        fetch('/data/jobtrees?jid=' + this.job_id)
+          .then((response) => response.json())
+          .then((treedata) => {
+            this.trees = treedata;
 
-        this.setInitialLatLng();
+            mapboxgl.accessToken = this.accesstoken;
 
-        this.map = new mapboxgl.Map({
-          container: 'map', // container ID
-          center: [this.initialLongitude, this.initialLatitude], // starting position [lng, lat]
-          zoom: 18, // starting zoom
-          //cooperativeGestures: true,
-          style: `mapbox://styles/mapbox/satellite-v9`,
-        });
+            this.setInitialLatLng();
 
-        if (this.tree_index > 0) this.setMarkersAndBounds();
+            this.map = new mapboxgl.Map({
+              container: 'map', // container ID
+              center: [this.initialLongitude, this.initialLatitude], // starting position [lng, lat]
+              zoom: 18, // starting zoom
+              //cooperativeGestures: true,
+              style: `mapbox://styles/mapbox/satellite-v9`,
+            });
+
+            if (this.tree_index > 0) this.setMarkersAndBounds();
+          });
       });
   }
   setInitialLatLng() {
+    //find center of existing trees, take count to check for empty set
+    this.lat = 0;
+    this.lon = 0;
+    this.tree_index = 0;
+
+    for (let item of this.trees) {
+      this.tree_index++;
+      this.lat += item.latitude;
+      this.lon += item.longitude;
+    }
+
     if (this.tree_index > 0) {
       this.initialLongitude = this.lon / this.tree_index;
       this.initialLatitude = this.lat / this.tree_index;
@@ -89,6 +92,4 @@ export default class extends Controller {
     }
     this.map.fitBounds(bounds, { padding: 40 });
   }
-
-  selectMarker(event) {}
 }

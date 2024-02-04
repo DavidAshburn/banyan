@@ -52,8 +52,8 @@ export default function JobRow({ jobdata }) {
             href={
               '/maps/job?target=' +
               property.address +
-              '&property=' +
-              property.id
+              '&jobid=' +
+              job.id
             }
             className="col-span-full bg-emerald-200"
           >
