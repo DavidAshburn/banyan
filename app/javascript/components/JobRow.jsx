@@ -37,7 +37,7 @@ export default function JobRow({ jobdata }) {
       className="grid items-center grid-cols-2 text-center min-h-[4rem] py-2 rounded-bl-lg rounded-tr-lg border border-dark rounded-md"
       onClick={toggleItem}
     >
-      <p>Client: {client.name} </p>
+      <p>{client.name} </p>
       <p>{job.crew_size} Hands</p>
       <p>Property: {property.name}</p>
       <p>{job.est_hours} Hours</p>

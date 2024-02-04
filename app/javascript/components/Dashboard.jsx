@@ -30,7 +30,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="grid grid-cols-[1fr_5fr]">
+    <div className="grid lg:grid-cols-[1fr_5fr]">
       <div className="row-span-full bg-green-300"></div>
       <div className="flex flex-col gap-4 p-4 text-lg bg-light text-dark font-josefin min-h-screen">
         <Windowpane title="User" content={<DashHead user={user} />} />
