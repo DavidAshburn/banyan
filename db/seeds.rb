@@ -82,7 +82,7 @@ Job.create(
   est_hours: 8,
   property_id: Ralphs.id,
   user_id: 1,
-  work: {trees:[tone.id, ttwo.id, tthree.id]},
+  trees:[tone.id, ttwo.id, tthree.id],
 )
 
 Client.create(
@@ -152,7 +152,7 @@ Job.create(
   est_hours: 8,
   property_id: Normas.id,
   user_id: 1,
-  work: {trees:[ntone.id, nttwo.id, ntthree.id]},
+  trees: [ntone.id, nttwo.id, ntthree.id],
 )
 
 NormaApts = Property.create(

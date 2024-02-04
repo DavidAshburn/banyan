@@ -24,10 +24,13 @@ export default class extends Controller {
           .then((treedata) => {
             this.trees = treedata;
 
+            console.log(treedata);
+            
             mapboxgl.accessToken = this.accesstoken;
 
             this.setInitialLatLng();
 
+            
             this.map = new mapboxgl.Map({
               container: 'map', // container ID
               center: [this.initialLongitude, this.initialLatitude], // starting position [lng, lat]
@@ -35,8 +38,10 @@ export default class extends Controller {
               //cooperativeGestures: true,
               style: `mapbox://styles/mapbox/satellite-v9`,
             });
+            
 
             if (this.tree_index > 0) this.setMarkersAndBounds();
+            
           });
       });
   }

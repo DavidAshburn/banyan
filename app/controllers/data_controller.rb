@@ -14,9 +14,8 @@ class DataController < ApplicationController
   def jobtrees
 
     job = Job.find(params[:jid])
-    data = job.work
 
-    @jobtrees = data
+    @jobtrees = job.trees.map{|item| Tree.find(item)}
     #@jobtrees = @json.trees.map{ |x| Tree.find(x) }
 
     respond_to do |format|
