@@ -71,7 +71,4 @@ export default class extends Controller {
         this.map.fitBounds(bounds, { padding: 40 });
       });
   }
-  debug() {
-    console.log('debug');
-  }
 }

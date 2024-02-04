@@ -1,7 +1,7 @@
 <div data-controller="mapsjob" id="mapsjob" class="min-h-screen bg-light">
   <div class="hidden">
     <div data-mapsjob-target="targetaddress"><%= @target %></div>
-    <div data-mapsjob-target="trees"><%= @trees %></div>
+    <div data-mapsjob-target="trees"><%= @trees.as_json %></div>
   </div>
   <div class="relative">
     <div id="map" class="h-[60vh]"></div>

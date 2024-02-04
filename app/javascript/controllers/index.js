@@ -10,9 +10,6 @@ application.register('mapper', MapperController);
 import MapseditController from './mapsedit_controller';
 application.register('mapsedit', MapseditController);
 
-import MapsfindController from './mapsfind_controller';
-application.register('mapsfind', MapsfindController);
-
 import MapsjobController from './mapsjob_controller';
 application.register('mapsjob', MapsjobController);
 

@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   devise_for :users
 
   get 'data/clients', to: 'data#clients'
-  get 'maps/find', to: 'maps#find'
   get 'maps/edit', to: 'maps#edit'
   get 'maps/job', to: 'maps#job'
   get 'data/jobtrees', to: 'data#jobtrees'
