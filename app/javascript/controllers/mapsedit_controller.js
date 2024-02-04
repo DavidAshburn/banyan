@@ -41,10 +41,19 @@ export default class extends Controller {
 
     fetch(prefix + this.addressTarget + middle + this.accesstoken)
       .then((response) => response.json())
-      .then((data) => {
+      .then((geocode) => {
         mapboxgl.accessToken = this.accesstoken;
 
-        this.setInitialLatLng();
+        /*
+        fetch('/data/proptrees?pid=' + this.property_id)
+          .then((response) => response.json())
+          .then((treedata) => {
+
+
+          });
+        */
+
+        this.setInitialLatLng(geocode);
 
         this.map = new mapboxgl.Map({
           container: 'map', // container ID
@@ -64,7 +73,7 @@ export default class extends Controller {
             this.property_id;
         });
 
-        if (this.tree_index > 0) this.setBounds();
+        if (this.tree_index > 0) this.setMarkersAndBounds();
       });
   }
 
@@ -82,18 +91,18 @@ export default class extends Controller {
     el?.classList.toggle('hidden');
     buttons?.classList.toggle('hidden');
   }
-  setInitialLatLng() {
+  setInitialLatLng(geocode) {
     if (this.tree_index > 0) {
       this.initialLongitude = this.lon / this.tree_index;
       this.initialLatitude = this.lat / this.tree_index;
     } else {
-      this.initialLongitude = data.features[0].center[0];
-      this.initialLatitude = data.features[0].center[1];
+      this.initialLongitude = geocode.features[0].center[0];
+      this.initialLatitude = geocode.features[0].center[1];
     }
     this.latitudeTarget.innerText = this.initialLatitude;
     this.longitudeTarget.innerText = this.initialLongitude;
   }
-  setBounds() {
+  setMarkersAndBounds() {
     //mapbounds collection
     let features = [
       { lon: this.initialLongitude, lat: this.initialLatitude },
