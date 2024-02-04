@@ -26,7 +26,6 @@ export default function Dashboard() {
       .then((response) => response.json())
       .then((data) => {
         setUser(data);
-        console.log(data);
       });
   }, []);
 

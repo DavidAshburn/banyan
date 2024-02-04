@@ -19,6 +19,19 @@ export default class extends Controller {
     //property_id
     this.property_id = this.pidTarget.value;
 
+    let lat = 0;
+    let lon = 0;
+    let index = 0;
+
+    //find center of all tree lat/lon coords
+    for (let item of this.trees) {
+      index++;
+      lat += item.latitude;
+      lon += item.longitude;
+    }
+    this.initialLongitude = lon / index;
+    this.initialLatitude = lat / index;
+
     //fetch geocoding API for property address
     // .then render map
     const prefix =
@@ -32,9 +45,6 @@ export default class extends Controller {
       .then((response) => response.json())
       .then((data) => {
         mapboxgl.accessToken = this.accesstoken;
-
-        this.initialLongitude = data.features[0].center[0];
-        this.initialLatitude = data.features[0].center[1];
 
         this.latitudeTarget.innerText = this.initialLatitude;
         this.longitudeTarget.innerText = this.initialLongitude;
@@ -64,9 +74,32 @@ export default class extends Controller {
           document.getElementById('property_id').value =
             this.property_id;
         });
-      });
 
-    this.newTrees = [];
+        //mapbounds collection
+        let features = [];
+
+        for (let item of this.trees) {
+          let marker = new mapboxgl.Marker({
+            color: '#fbbf24',
+          })
+            .setLngLat([item.longitude, item.latitude])
+            .addTo(this.map);
+
+          //build mapbounds collection
+          features.push({ lon: item.longitude, lat: item.latitude });
+        }
+
+        //mapbounds setting
+        const bounds = new mapboxgl.LngLatBounds(
+          features[0],
+          features[0]
+        );
+        for (let item of features) {
+          bounds.extend(item);
+        }
+
+        this.map.fitBounds(bounds, { padding: 40 });
+      });
   }
 
   addTree() {
