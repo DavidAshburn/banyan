@@ -35,7 +35,7 @@ export default function ClientRow({ client, properties, index }) {
             <p>{toCap(property.tree_access)} access</p>
             <a
               href={
-                '/maps/find?target=' +
+                '/maps/edit?target=' +
                 property.address +
                 '&property=' +
                 property.id

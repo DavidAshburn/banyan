@@ -1,0 +1,14 @@
+<div data-controller="mapsjob" id="mapsjob" class="min-h-screen bg-light">
+  <div class="hidden">
+    <div data-mapsjob-target="targetaddress"><%= @target %></div>
+    <div data-mapsjob-target="trees"><%= @trees %></div>
+  </div>
+  <div class="relative">
+    <div id="map" class="h-[60vh]"></div>
+    <div class="w-8 h-8 border-2 rounded-full abs-center border-pale"></div>
+  </div>
+
+  <div class="grid grid-cols-3 gap-4 p-2" id="treecontrols">
+    <button type="button" data-action="mapsjob#debug" class="p-2 px-4 text-2xl font-bold border-2 rounded-lg text-dark bg-light font-josefin border-dark">Debug</button>
+  </div>
+</div>

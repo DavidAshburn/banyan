@@ -1,0 +1,9 @@
+<%= turbo_stream.prepend "trees" do %>
+  <%= render "tree", tree: @tree %>
+<% end %>
+<%= turbo_stream.replace "#{dom_id(Tree.new)}_form" do %>
+  <%= render "treeform", tree: Tree.new %>
+<% end %>
+<%= turbo_stream.replace "treejson" do %>
+  <%= Property.find(params[:property]).trees.as_json %>
+<% end %>

@@ -26,6 +26,8 @@ class TreesController < ApplicationController
 
     respond_to do |format|
       if @tree.save
+        format.turbo_stream
+        format.html { redirect_to new_tree, notice: "Tree was successfully added." }
         format.json { render :show, status: :created, location: @tree }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -65,6 +67,6 @@ class TreesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tree_params
-      params.fetch(:tree, {})
+      params.require(:tree).permit(:latitude,:longitude,:dbh,:crown,:history,:hazards,:pictures,:species,:removed,:ground,:notes,:property_id,:created_at,:updated_at)
     end
 end

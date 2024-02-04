@@ -1,4 +1,4 @@
-<%= form_with(model: tree) do |form| %>
+<%= form_with(model: tree, id: "#{dom_id(tree)}_form") do |form| %>
   <% if tree.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(tree.errors.count, "error") %> prohibited this tree from being saved:</h2>
@@ -24,10 +24,13 @@
     </div>
 
     <div class="flex flex w-full justify-between text-lg">
-      <%= form.text_field :latitude, class: "hidden", id:"latitudeform" %>
+      <%= form.text_field :latitude, class: "", id:"latitudeform" %>
     </div>
     <div class="flex flex w-full justify-between text-lg">
-      <%= form.text_field :longitude, class: "hidden", id:"longitudeform" %>
+      <%= form.text_field :longitude, class: "", id:"longitudeform" %>
+    </div>
+    <div class="flex flex w-full justify-between text-lg">
+      <%= form.number_field :property_id, class: "", id:"property_id", value: params[:property] %>
     </div>
     <div>
       <%= form.submit 'Save Tree', class: "p-2 px-4 text-center bg-dark font-bold text-light font-josefin text-3xl" %>
