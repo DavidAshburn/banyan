@@ -3,7 +3,7 @@ class CreateTrees < ActiveRecord::Migration[7.0]
     create_table :trees do |t|
       t.float :latitude
       t.float :longitude
-      t.integer :dbh
+      t.integer :dbh, default: 0
       t.string :crown, default: ''
       t.string :history, array: true, default: []
       t.string :hazards, array: true, default: []

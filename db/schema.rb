@@ -70,7 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_01_001433) do
   create_table "trees", force: :cascade do |t|
     t.float "latitude"
     t.float "longitude"
-    t.integer "dbh"
+    t.integer "dbh", default: 0
     t.string "crown", default: ""
     t.string "history", default: [], array: true
     t.string "hazards", default: [], array: true
