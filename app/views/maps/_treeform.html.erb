@@ -14,6 +14,10 @@
 
   <div class="grid gap-2 p-2">
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :species %>
+      <%= form.text_field :species, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :dbh %>
       <%= form.number_field :dbh, class: "px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
     </div>

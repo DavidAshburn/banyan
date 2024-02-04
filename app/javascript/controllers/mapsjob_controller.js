@@ -70,7 +70,7 @@ export default class extends Controller {
         .setLngLat([item.longitude, item.latitude])
         .setPopup(
           new mapboxgl.Popup().setHTML(
-            `<div className='grid p-2 gap-2'><p>${item.dbh} DBH</p><p>${item.crown} crown</p></div>`
+            `<div className='grid p-2 gap-2'><p>${item.species}</p><p>${item.dbh} DBH</p><p>${item.crown} crown</p></div>`
           )
         )
         .addTo(this.map);

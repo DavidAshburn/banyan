@@ -54,14 +54,6 @@ export default class extends Controller {
           style: `mapbox://styles/mapbox/satellite-v9`,
         });
 
-        for (let item of this.trees) {
-          let marker = new mapboxgl.Marker({
-            color: '#fbbf24',
-          })
-            .setLngLat([item.longitude, item.latitude])
-            .addTo(this.map);
-        }
-
         this.map.on('moveend', (e) => {
           let center = this.map.getCenter(); //{lng: x, lat: y}
           this.latitudeTarget.innerText = center.lat;
@@ -112,6 +104,11 @@ export default class extends Controller {
         color: '#fbbf24',
       })
         .setLngLat([item.longitude, item.latitude])
+        .setPopup(
+          new mapboxgl.Popup().setHTML(
+            `<div className='grid p-2 gap-2'><p>${item.species}</p><p>${item.dbh} DBH</p><p>${item.crown} crown</p></div>`
+          )
+        )
         .addTo(this.map);
 
       //build mapbounds collection

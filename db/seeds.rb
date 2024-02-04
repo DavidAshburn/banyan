@@ -48,12 +48,12 @@ Ralphs = Property.create(
 )
 
 tone = Ralphs.trees.create(
-  latitude: 21.37203996437736,
-  longitude: -157.88392309999995,
+  latitude: 21.37353996437736,
+  longitude: -157.88422309999995,
   dbh: 6,
   crown: 'small',
-  species: 'Sweetgum',
-  notes: "Out of place here",
+  species: 'Sheffelera',
+  notes: "Leaning",
 )
 
 ttwo = Ralphs.trees.create(
@@ -61,17 +61,15 @@ ttwo = Ralphs.trees.create(
   longitude: -157.88492309999995,
   dbh: 6,
   crown: 'small',
-  species: 'Sweetgum',
-  notes: "Out of place here",
+  species: 'Plumeria',
 )
 
 tthree = Ralphs.trees.create(
-  latitude: 21.37103996437736,
-  longitude: -157.88292309999995,
+  latitude: 21.37253996437736,
+  longitude: -157.88452309999995,
   dbh: 6,
   crown: 'small',
-  species: 'Sweetgum',
-  notes: "Out of place here",
+  species: 'Avocado',
 )
 
 Job.create(
@@ -116,7 +114,6 @@ Normas.trees.create(
   dbh: 3,
   crown: 'small',
   species: 'Crepe Myrtle',
-  notes: "Out of place here",
 )
 
 
@@ -135,7 +132,6 @@ nttwo = Normas.trees.create(
   dbh: 3,
   crown: 'small',
   species: 'Crepe Myrtle',
-  notes: "Out of place here",
 )
 
 ntthree = Normas.trees.create(
@@ -144,7 +140,6 @@ ntthree = Normas.trees.create(
   dbh: 3,
   crown: 'small',
   species: 'Crepe Myrtle',
-  notes: "Out of place here",
 )
 
 Job.create(
