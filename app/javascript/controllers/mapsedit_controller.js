@@ -19,15 +19,15 @@ export default class extends Controller {
     //property_id
     this.property_id = this.pidTarget.value;
 
-    let lat = 0;
-    let lon = 0;
+    this.lat = 0;
+    this.lon = 0;
     this.tree_index = 0;
 
     //find center of all tree lat/lon coords
     for (let item of this.trees) {
       this.tree_index++;
-      lat += item.latitude;
-      lon += item.longitude;
+      this.lat += item.latitude;
+      this.lon += item.longitude;
     }
 
     //fetch geocoding API for property address
@@ -44,16 +44,7 @@ export default class extends Controller {
       .then((data) => {
         mapboxgl.accessToken = this.accesstoken;
 
-        if (this.tree_index > 0) {
-          this.initialLongitude = lon / this.tree_index;
-          this.initialLatitude = lat / this.tree_index;
-        } else {
-          this.initialLongitude = data.features[0].center[0];
-          this.initialLatitude = data.features[0].center[1];
-        }
-
-        this.latitudeTarget.innerText = this.initialLatitude;
-        this.longitudeTarget.innerText = this.initialLongitude;
+        this.setInitialLatLng();
 
         this.map = new mapboxgl.Map({
           container: 'map', // container ID
@@ -92,7 +83,6 @@ export default class extends Controller {
     el?.classList.toggle('hidden');
     buttons?.classList.toggle('hidden');
   }
-
   cancelAddTree() {
     let el = document.getElementById('treeinputs');
     let buttons = document.getElementById('treecontrols');
@@ -100,7 +90,17 @@ export default class extends Controller {
     el?.classList.toggle('hidden');
     buttons?.classList.toggle('hidden');
   }
-
+  setInitialLatLng() {
+    if (this.tree_index > 0) {
+      this.initialLongitude = this.lon / this.tree_index;
+      this.initialLatitude = this.lat / this.tree_index;
+    } else {
+      this.initialLongitude = data.features[0].center[0];
+      this.initialLatitude = data.features[0].center[1];
+    }
+    this.latitudeTarget.innerText = this.initialLatitude;
+    this.longitudeTarget.innerText = this.initialLongitude;
+  }
   setBounds() {
     //mapbounds collection
     let features = [
