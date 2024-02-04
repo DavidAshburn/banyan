@@ -15,16 +15,16 @@
   <div class="grid gap-2 p-2">
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :species %>
-      <%= form.text_field :species, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+      <%= form.text_field :species, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50", id:'speciesfield'%>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :dbh %>
-      <%= form.number_field :dbh, class: "px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+      <%= form.number_field :dbh, class: "px-2 bg-slate-100 font-bold focus:bg-emerald-50", id:"dbhfield" %>
     </div>
 
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :crown %>
-      <%= form.text_field :crown, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+      <%= form.text_field :crown, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50", id:"crownfield" %>
     </div>
 
     <div class="flex flex w-full justify-between text-lg">
@@ -37,7 +37,8 @@
       <%= form.number_field :property_id, class: "hidden", id:"property_id", value: params[:property] %>
     </div>
     <div>
-      <%= form.submit 'Save Tree', class: "p-2 px-4 text-center bg-dark font-bold text-light font-josefin text-3xl" %>
+      <%= form.submit 'Save Tree', class: "p-2 px-4 text-center bg-dark font-bold text-light font-josefin text-3xl", data: { action:'mapsedit#saveTree'} %>
     </div>
+    <p>maps controller</p>
   </div>
 <% end %>

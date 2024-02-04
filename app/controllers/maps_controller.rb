@@ -8,8 +8,6 @@ class MapsController < ApplicationController
 
   def edit
     @target = params[:target]
-    @treejson = Property.find(params[:property]).trees.as_json
-    @trees = Property.find(params[:property]).trees
     @pid = params[:property]
   end
 

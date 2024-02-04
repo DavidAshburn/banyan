@@ -22,6 +22,14 @@ class DataController < ApplicationController
     end
   end
 
+  def proptrees
+    property = Property.find(params[:pid])
+    @proptrees = property.trees
+
+    respond_to do |format|
+      format.json { render json: @proptrees}
+    end
+  end
   def jobs
     alljobs = current_user.jobs.order(:start)
 

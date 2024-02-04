@@ -1,24 +1,32 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Dashboard Menu
+  Add Client
+  Add Property
+  Calendar
 
-Things you may want to cover:
+  Config
+    Tree Species for Dropdown Labels
+    Equipment for Dropdown Labels
+    Theming
+    Estimation
+      man/hours
+      overhead/day
 
-* Ruby version
+Views
+  Client index
+  Show Client
+  Show Property
+    Tree Statistics
+    Property Tree Management 'Health'
+    Soil type overlay (find information source)
+      recommend fertilization options
+  Show Job
+  Show Tree
+  Calendar
+  Show Day
+    Map with locations marked
+      Calculate drive time and predict problems based on estimated start/end times
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  Create Job
+    calculate estimate based on man/hours, rates from config

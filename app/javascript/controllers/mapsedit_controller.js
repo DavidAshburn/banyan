@@ -2,33 +2,30 @@ import { Controller } from '@hotwired/stimulus';
 import mapboxgl from 'mapbox-gl';
 // Connects to data-controller="mapper"
 export default class extends Controller {
-  static targets = [
-    'targetaddress',
-    'trees',
-    'latitude',
-    'longitude',
-    'pid',
-  ];
+  static targets = ['targetaddress', 'latitude', 'longitude', 'pid'];
 
   connect() {
-    //retrieve property.trees from the DOM
-    let treejson = this.treesTarget.innerText;
-    const regex = /=>/g;
-    this.trees = JSON.parse(treejson.replace(regex, ':'));
+    this.lastspecies = '';
+    this.lastdbh = 0;
+    this.lastcrown = '';
+    //listeners
+    let spcf = document.getElementById('speciesfield');
+    spcf?.addEventListener('blur', () => {
+      this.lastspecies = spcf.value;
+    });
+
+    let dbhf = document.getElementById('dbhfield');
+    dbhf?.addEventListener('blur', () => {
+      this.lastdbh = dbhf.value;
+    });
+
+    let crf = document.getElementById('crownfield');
+    crf?.addEventListener('blur', () => {
+      this.lastcrown = crf.value;
+    });
 
     //property_id
     this.property_id = this.pidTarget.value;
-
-    this.lat = 0;
-    this.lon = 0;
-    this.tree_index = 0;
-
-    //find center of all tree lat/lon coords
-    for (let item of this.trees) {
-      this.tree_index++;
-      this.lat += item.latitude;
-      this.lon += item.longitude;
-    }
 
     //fetch geocoding API for property address
     // .then render map
@@ -44,36 +41,46 @@ export default class extends Controller {
       .then((geocode) => {
         mapboxgl.accessToken = this.accesstoken;
 
-        /*
         fetch('/data/proptrees?pid=' + this.property_id)
           .then((response) => response.json())
           .then((treedata) => {
+            this.trees = treedata;
 
+            this.lat = 0;
+            this.lon = 0;
+            this.tree_index = 0;
 
+            //find center of all tree lat/lon coords
+            for (let item of this.trees) {
+              this.tree_index++;
+              this.lat += item.latitude;
+              this.lon += item.longitude;
+            }
+
+            this.setInitialLatLng(geocode);
+
+            this.map = new mapboxgl.Map({
+              container: 'map', // container ID
+              center: [this.initialLongitude, this.initialLatitude], // starting position [lng, lat]
+              zoom: 18, // starting zoom
+              //cooperativeGestures: true,
+              style: `mapbox://styles/mapbox/satellite-v9`,
+            });
+
+            this.map.on('moveend', (e) => {
+              let center = this.map.getCenter(); //{lng: x, lat: y}
+              this.latitudeTarget.innerText = center.lat;
+              this.longitudeTarget.innerText = center.lng;
+              document.getElementById('latitudeform').value =
+                center.lat;
+              document.getElementById('longitudeform').value =
+                center.lng;
+              document.getElementById('property_id').value =
+                this.property_id;
+            });
+
+            if (this.tree_index > 0) this.setMarkersAndBounds();
           });
-        */
-
-        this.setInitialLatLng(geocode);
-
-        this.map = new mapboxgl.Map({
-          container: 'map', // container ID
-          center: [this.initialLongitude, this.initialLatitude], // starting position [lng, lat]
-          zoom: 18, // starting zoom
-          //cooperativeGestures: true,
-          style: `mapbox://styles/mapbox/satellite-v9`,
-        });
-
-        this.map.on('moveend', (e) => {
-          let center = this.map.getCenter(); //{lng: x, lat: y}
-          this.latitudeTarget.innerText = center.lat;
-          this.longitudeTarget.innerText = center.lng;
-          document.getElementById('latitudeform').value = center.lat;
-          document.getElementById('longitudeform').value = center.lng;
-          document.getElementById('property_id').value =
-            this.property_id;
-        });
-
-        if (this.tree_index > 0) this.setMarkersAndBounds();
       });
   }
 
@@ -83,6 +90,22 @@ export default class extends Controller {
 
     el?.classList.toggle('hidden');
     buttons?.classList.toggle('hidden');
+  }
+
+  saveTree(event) {
+    console.log('savetree');
+    console.log(document.getElementById('speciesfield').innerText);
+    let center = this.map.getCenter(); //{lng: x, lat: y}
+    let marker = new mapboxgl.Marker({
+      color: '#fbbf24',
+    })
+      .setLngLat([center.lng, center.lat])
+      .setPopup(
+        new mapboxgl.Popup().setHTML(
+          `<div className='grid p-2 gap-2'><p>${this.lastspecies}</p><p>${this.lastdbh} DBH</p><p>${this.lastcrown} crown</p></div>`
+        )
+      )
+      .addTo(this.map);
   }
   cancelAddTree() {
     let el = document.getElementById('treeinputs');
@@ -134,4 +157,11 @@ export default class extends Controller {
     }
     this.map.fitBounds(bounds, { padding: 40 });
   }
+  listen(idstring, ref) {
+    let el = document.getElementById(idstring);
+    el?.addEventListener('change', () => {
+      ref = el.value;
+    });
+  }
+  debug() {}
 }
