@@ -1,6 +1,7 @@
-<%= turbo_stream.prepend "trees" do %>
-  <%= render "tree", tree: @tree %>
-<% end %>
+<%# turbo_stream.prepend "trees" do %>
+  <%# render "tree", tree: @tree %>
+<%# end %>
+<%#  removed list from view in facor of dynamic menu %>
 <%= turbo_stream.replace "#{dom_id(Tree.new)}_form" do %>
   <%= render "treeform", tree: Tree.new %>
 <% end %>

@@ -45,7 +45,7 @@ export default class extends Controller {
           style: `mapbox://styles/mapbox/satellite-v9`,
         });
 
-        if (this.tree_index > 0) this.setBounds();
+        if (this.tree_index > 0) this.setMarkersAndBounds();
       });
   }
   setInitialLatLng() {
@@ -57,7 +57,7 @@ export default class extends Controller {
       this.initialLatitude = data.features[0].center[1];
     }
   }
-  setBounds() {
+  setMarkersAndBounds() {
     //mapbounds collection
     let features = [
       { lon: this.initialLongitude, lat: this.initialLatitude },
@@ -68,6 +68,11 @@ export default class extends Controller {
         color: '#fbbf24',
       })
         .setLngLat([item.longitude, item.latitude])
+        .setPopup(
+          new mapboxgl.Popup().setHTML(
+            `<div className='grid p-2 gap-2'><p>${item.dbh} DBH</p><p>${item.crown} crown</p></div>`
+          )
+        )
         .addTo(this.map);
 
       //build mapbounds collection
@@ -84,4 +89,6 @@ export default class extends Controller {
     }
     this.map.fitBounds(bounds, { padding: 40 });
   }
+
+  selectMarker(event) {}
 }
