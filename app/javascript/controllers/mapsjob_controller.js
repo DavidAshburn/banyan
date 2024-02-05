@@ -5,7 +5,6 @@ export default class extends Controller {
   static targets = ['targetaddress', 'jobid'];
 
   connect() {
-    
     this.job_id = this.jobidTarget.innerText;
 
     //fetch geocoding API for property address
@@ -16,7 +15,7 @@ export default class extends Controller {
     const accesstoken =
       'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
     const addressTarget = this.targetaddressTarget.innerText;
-    
+
     this.mapboxInit(accesstoken);
 
     fetch(prefix + addressTarget + middle + accesstoken)
@@ -26,8 +25,12 @@ export default class extends Controller {
           .then((response) => response.json())
           .then((treedata) => {
             this.setInitialThisLatLng(geocode, treedata);
-            this.map.setCenter([this.initialLongitude, this.initialLatitude]);
-            if (this.tree_index > 0) this.setMarkersAndBounds(treedata);
+            this.map.setCenter([
+              this.initialLongitude,
+              this.initialLatitude,
+            ]);
+            if (this.tree_index > 0)
+              this.setMarkersAndBounds(treedata);
           });
       });
   }
@@ -60,7 +63,7 @@ export default class extends Controller {
     } else {
       this.initialLongitude = geocode.features[0].center[0];
       this.initialLatitude = geocode.features[0].center[1];
-    } 
+    }
   }
   setMarkersAndBounds(treedata) {
     //mapbounds collection

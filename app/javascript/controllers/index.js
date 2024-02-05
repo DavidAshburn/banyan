@@ -2,22 +2,22 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from "./application"
+import { application } from './application';
 
-import DashjobsmapController from "./dashjobsmap_controller"
-application.register("dashjobsmap", DashjobsmapController)
+import DashjobsmapController from './dashjobsmap_controller';
+application.register('dashjobsmap', DashjobsmapController);
 
-import MapperController from "./mapper_controller"
-application.register("mapper", MapperController)
+import MapperController from './mapper_controller';
+application.register('mapper', MapperController);
 
-import MapseditController from "./mapsedit_controller"
-application.register("mapsedit", MapseditController)
+import MapseditController from './mapsedit_controller';
+application.register('mapsedit', MapseditController);
 
-import MapsjobController from "./mapsjob_controller"
-application.register("mapsjob", MapsjobController)
+import MapsjobController from './mapsjob_controller';
+application.register('mapsjob', MapsjobController);
 
-import PropformController from "./propform_controller"
-application.register("propform", PropformController)
+import PropertyformController from './propertyform_controller';
+application.register('propertyform', PropertyformController);
 
-import RdashboardController from "./rdashboard_controller"
-application.register("rdashboard", RdashboardController)
+import RdashboardController from './rdashboard_controller';
+application.register('rdashboard', RdashboardController);

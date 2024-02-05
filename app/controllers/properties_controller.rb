@@ -14,6 +14,14 @@ class PropertiesController < ApplicationController
   # GET /properties/new
   def new
     @property = Property.new
+    @propertytype_labels = [
+      {label: 'Home'},
+      {label: 'Attached Home'},
+      {label: 'Apartments'},
+      {label: 'Park'},
+      {label: 'Complex'},
+      {label: 'Industrial'}
+    ]
   end
 
   # GET /properties/1/edit

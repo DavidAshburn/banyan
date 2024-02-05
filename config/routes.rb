@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'data/jobsdash', to: 'data#jobsdash'
   get 'data/user', to: 'data#user'
   get 'data/proptrees', to: 'data#proptrees'
+  get 'data/client', to: 'data#client'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

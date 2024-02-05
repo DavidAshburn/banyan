@@ -11,6 +11,7 @@ Client.destroy_all
 Property.destroy_all
 Tree.destroy_all
 Job.destroy_all
+Proptype.destroy_all
 
 TestUser = User.create(
 	email:"test@user.com",
@@ -168,4 +169,23 @@ NormaApts = Property.create(
   parking: 'large',
   tree_access: 'good',
   client_id: 2,
+)
+
+Proptype.create(
+  label: 'House',
+)
+Proptype.create(
+  label: 'Attached',
+)
+Proptype.create(
+  label: 'Apartments'
+)
+Proptype.create(
+  label: 'Park',
+)
+Proptype.create(
+  label: 'Complex',
+)
+Proptype.create(
+  label: 'Industrial',
 )

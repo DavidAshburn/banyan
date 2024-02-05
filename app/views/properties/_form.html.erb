@@ -11,14 +11,18 @@
     </div>
   <% end %>
 
-  <div class="grid gap-2 p-2" data-controller="propform">
+  <div class="grid gap-2 p-2" data-controller="propertyform">
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label 'Client' %>
       <%= form.collection_select :client_id, current_user.clients, :id, :name, prompt: true %>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label 'Property Type' %>
+      <%= form.collection_select :property_type, Proptype.all, :label, :label, prompt: true, id:"propertytypeselect" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :name %>
-      <%= form.text_field :name, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+      <%= form.text_field :name, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50", data: {'propertyform-target':'nameinput'} %>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :contact_name, 'Contact'%>
@@ -34,12 +38,7 @@
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :address %>
-      <%= form.text_field :address, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
-    </div>
-    
-    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
-      <%= form.label :property_type %>
-      <%= form.text_field :property_type, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+      <%= form.text_field :address, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50", id:"address" %>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :parking %>

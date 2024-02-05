@@ -64,4 +64,15 @@ class DataController < ApplicationController
       format.json { render json: @data }
     end
   end
+
+  def client
+    @client = Client.find(params[:cid])
+    @count = @client.properties.count
+
+    @data = {client:@client, property_count:@count}
+
+    respond_to do |format|
+      format.json { render json: @data}
+    end
+  end
 end
