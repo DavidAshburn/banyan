@@ -33,18 +33,12 @@ export default function Dashboard() {
     <div className="grid lg:grid-cols-[1fr_5fr]">
       <div className="row-span-full bg-green-300 max-lg:h-12">
         <div className="lg:flex lg:flex-col grid grid-cols-4 gap-2">
-          <div>
-            <a href="/clients/new">Add Client</a>
-          </div>
-          <div>
-            <a href="/properties/new">Add Property</a>
-          </div>
-          <div>
-            <a href="/user/profile">Profile</a>
-          </div>
-          <div>
-            <a href="/user/configuration">Config</a>
-          </div>
+
+            <a href="/clients/new" class="text-center font-bold text-xl navlink">Add Client</a>
+            <a href="/properties/new" class="text-center font-bold text-xl navlink">Add Property</a>
+            <a href="/user/profile" class="text-center font-bold text-xl navlink">Profile</a>
+            <a href="/user/configuration" class="text-center font-bold text-xl navlink">Config</a>
+
         </div>
       </div>
       <div className="flex flex-col gap-4 p-4 text-lg bg-light text-dark font-josefin min-h-screen">
