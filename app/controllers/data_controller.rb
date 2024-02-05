@@ -56,4 +56,12 @@ class DataController < ApplicationController
       format.json { render json: @user_data }
     end
   end
+
+  def jobsdash
+    @data = current_user.jobs.map{|job| {latitude:job.property.latitude, longitude:job.property.longitude}}
+
+    respond_to do |format|
+      format.json { render json: @data }
+    end
+  end
 end

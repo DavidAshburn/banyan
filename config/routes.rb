@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'maps/job', to: 'maps#job'
   get 'data/jobtrees', to: 'data#jobtrees'
   get 'data/jobs', to: 'data#jobs'
+  get 'data/jobsdash', to: 'data#jobsdash'
   get 'data/user', to: 'data#user'
   get 'data/proptrees', to: 'data#proptrees'
 
