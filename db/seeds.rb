@@ -16,12 +16,11 @@ TestUser = User.create(
 	email:"test@user.com",
 	password: "password",
 	password_confirmation: "password",
-  id: 1,
 	)
 
 Profile.create(
   name:"Boss",
-  user_id:1,
+  user_id: TestUser.id,
 )
 
 Client.create(
@@ -31,7 +30,7 @@ Client.create(
   email: 'ralph@bacchio.com',
   mail_address: '1754 Ala Noe Way, Honolulu, 96819',
   notes: 'none',
-  user_id: 1,
+  user_id: TestUser.id,
   id:1,
 )
 
@@ -83,7 +82,7 @@ Job.create(
   crew_size: 4,
   est_hours: 8,
   property_id: Ralphs.id,
-  user_id: 1,
+  user_id: TestUser.id,
   trees:[tone.id, ttwo.id, tthree.id],
 )
 
@@ -94,7 +93,7 @@ Client.create(
   email: 'norma@sbcglobal.net',
   mail_address: '28 Rolling Green Circle, Pleasant Hill, CA 94523',
   notes: 'none',
-  user_id: 1,
+  user_id: TestUser.id,
   id: 2,
 )
 
@@ -155,7 +154,7 @@ Job.create(
   crew_size: 4,
   est_hours: 8,
   property_id: Normas.id,
-  user_id: 1,
+  user_id: TestUser.id,
   trees: [ntone.id, nttwo.id, ntthree.id],
 )
 

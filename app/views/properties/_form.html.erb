@@ -34,7 +34,7 @@
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :address %>
-      <%= form.text_field :ddress, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+      <%= form.text_field :address, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
     </div>
     
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
@@ -48,9 +48,6 @@
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :tree_access %>
       <%= form.text_field :tree_access, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
-    </div>
-    <div class="hidden">
-      <%= form.text_field :client_id, value: params[:cid] %>
     </div>
     <%= form.submit 'Add Property', class: "p-2 px-4 text-center bg-dark font-bold text-light font-josefin text-3xl" %>
   </div>

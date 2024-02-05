@@ -13,8 +13,10 @@ export default class extends Controller {
     fetch('/data/jobsdash')
       .then((response) => response.json())
       .then((jobsites) => {
-        this.map.setCenter(this.centerOf(jobsites));
-        this.setMarkersAndBounds(jobsites);
+        if(jobsites.length > 0) {
+          this.map.setCenter(this.centerOf(jobsites));
+          this.setMarkersAndBounds(jobsites);
+        }
       });
 
   }
