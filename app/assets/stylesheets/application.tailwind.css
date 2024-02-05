@@ -4,7 +4,10 @@
 
 @layer components {
   .navlink {
-    @apply bg-dark font-light;
+    @apply py-4 bg-dark text-light border-r-4 border-r-coral text-center text-sm;
+  }
+  .navlinklast {
+    @apply py-4 bg-dark text-light text-center text-sm;
   }
 }
 

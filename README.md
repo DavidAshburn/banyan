@@ -1,10 +1,7 @@
 # README
 
 Dashboard Menu
-  Add Client
-  Add Property
   Calendar
-
   Config
     Tree Species for Dropdown Labels
     Equipment for Dropdown Labels

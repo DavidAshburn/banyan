@@ -15,6 +15,7 @@ class DataController < ApplicationController
 
     job = Job.find(params[:jid])
 
+    #job.trees is an array of Tree ids
     @jobtrees = job.trees.map{|item| Tree.find(item)}
     #@jobtrees = @json.trees.map{ |x| Tree.find(x) }
 
