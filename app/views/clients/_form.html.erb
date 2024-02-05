@@ -11,7 +11,34 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.submit %>
+  <div class="grid gap-2 p-2">
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :contact_name, 'Contact'%>
+      <%= form.text_field :contact_name, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :phone %>
+      <%= form.text_field :phone, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :email %>
+      <%= form.text_field :email, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :mail_address %>
+      <%= form.text_field :mail_address, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :notes %>
+      <%= form.text_area :notes, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="hidden">
+      <%= form.number_field :user_id, value: current_user.id %>
+    </div>
+    <%= form.submit 'Add Client', class: "p-2 px-4 text-center bg-dark font-bold text-light font-josefin text-3xl" %>
   </div>
 <% end %>

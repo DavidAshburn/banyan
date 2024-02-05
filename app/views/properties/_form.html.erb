@@ -11,7 +11,47 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.submit %>
+  <div class="grid gap-2 p-2" data-controller="propform">
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label 'Client' %>
+      <%= form.collection_select :client_id, current_user.clients, :id, :name, prompt: true %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :contact_name, 'Contact'%>
+      <%= form.text_field :contact_name, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50", id:"contactname" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :phone %>
+      <%= form.text_field :phone, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :email %>
+      <%= form.text_field :email, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :address %>
+      <%= form.text_field :ddress, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :property_type %>
+      <%= form.text_field :property_type, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :parking %>
+      <%= form.text_field :parking, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :tree_access %>
+      <%= form.text_field :tree_access, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="hidden">
+      <%= form.text_field :client_id, value: params[:cid] %>
+    </div>
+    <%= form.submit 'Add Property', class: "p-2 px-4 text-center bg-dark font-bold text-light font-josefin text-3xl" %>
   </div>
 <% end %>
