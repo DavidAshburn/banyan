@@ -1,26 +1,29 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus';
 import mapboxgl from 'mapbox-gl';
 
 // Connects to data-controller="propshowmap"
 export default class extends Controller {
-  
   connect() {
     let regex = /=>/g;
-    let property_data = document.getElementById('propertydata').innerText.replace(regex,':');
-    
+    let property_data = document
+      .getElementById('propertydata')
+      .innerText.replace(regex, ':');
+
     this.property = JSON.parse(property_data);
 
     const accesstoken =
       'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
 
-    this.mapboxInit(accesstoken, [this.property.longitude,this.property.latitude,]);
+    this.mapboxInit(accesstoken, [
+      this.property.longitude,
+      this.property.latitude,
+    ]);
 
     let marker = new mapboxgl.Marker({
       color: '#fbbf24',
     })
       .setLngLat([this.property.longitude, this.property.latitude])
       .addTo(this.map);
-
     /*
     if (this.tree_index > 0)
       this.setMarkersAndBounds(treedata);

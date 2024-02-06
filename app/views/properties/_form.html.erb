@@ -22,53 +22,55 @@
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :name %>
-      <%= form.text_field :name, 
-        class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50", 
+      <%= form.text_field :name,
+        class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50",
         id:'namein'
         %>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :contact_name, 'Contact'%>
-      <%= form.text_field :contact_name, 
-        class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50", 
-        id:"contactnamein" 
+      <%= form.text_field :contact_name,
+        class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50",
+        id:"contactnamein"
         %>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :phone %>
-      <%= form.text_field :phone, 
+      <%= form.text_field :phone,
         class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50",
         id: 'phonein'
         %>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :email %>
-      <%= form.text_field :email, 
+      <%= form.text_field :email,
         class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50",
         id: 'emailin'
         %>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :address %>
-      <%= form.text_field :address, 
-        class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50", 
-        id:"addressin" 
+      <%= form.text_field :address,
+        class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50",
+        id:"addressin"
       %>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :parking %>
-      <%= form.text_field :parking, 
+      <%= form.text_field :parking,
         class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50"
       %>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :tree_access %>
-      <%= form.text_field :tree_access, 
+      <%= form.text_field :tree_access,
         class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50"
       %>
     </div>
-    <%= form.submit 'Add Property', 
-      class: "p-2 px-4 text-center bg-dark font-bold text-light font-josefin text-3xl" 
+    <%= form.number_field :latitude, step: "any", id:"forminlatitude", class:"hidden"%>
+    <%= form.number_field :longitude, step: "any", id:"forminlongitude", class:"hidden"%>
+    <%= form.submit 'Add Property',
+      class: "p-2 px-4 text-center bg-dark font-bold text-light font-josefin text-3xl"
     %>
   </div>
 <% end %>

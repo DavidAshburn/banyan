@@ -2,9 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 
 // Connects to data-controller="propform"
 export default class extends Controller {
-  static targets = [
-    'nameinput',
-  ]
+  static targets = ['nameinput'];
   connect() {
     this.client = {};
     this.contactTarget = document.getElementById('contactnamein');
@@ -30,15 +28,42 @@ export default class extends Controller {
         });
     });
 
-    this.propertytypeselect = document.getElementById('property_property_type');
+    this.propertytypeselect = document.getElementById(
+      'property_property_type'
+    );
     this.address = document.getElementById('addressin');
+    this.latitude = document.getElementById('forminlatitude');
+    this.longitude = document.getElementById('forminlongitude');
 
-    this.propertytypeselect?.addEventListener("change", (event) => {
+    const prefix =
+      'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+    const middle = '.json?access_token=';
+    const accesstoken =
+      'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
+
+    this.propertytypeselect?.addEventListener('change', (event) => {
       if (this.propcount < 1 && this.client != {}) {
         this.address.value = this.client.mail_address;
         document.getElementById('phonein').value = this.client.phone;
         document.getElementById('emailin').value = this.client.email;
-      } 
+        fetch(
+          prefix + this.client.mail_address + middle + accesstoken
+        )
+          .then((response) => response.json())
+          .then((geocode) => {
+            this.longitude.value = geocode.features[0].center[0];
+            this.latitude.value = geocode.features[0].center[1];
+          });
+      }
+    });
+
+    this.address?.addEventListener('blur', () => {
+      fetch(prefix + this.address.innerText + middle + accesstoken)
+        .then((response) => response.json())
+        .then((geocode) => {
+          this.longitude.value = geocode.features[0].center[0];
+          this.latitude.value = geocode.features[0].center[1];
+        });
     });
   }
 
