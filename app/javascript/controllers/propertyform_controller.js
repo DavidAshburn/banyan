@@ -5,48 +5,16 @@ export default class extends Controller {
   static targets = ['nameinput'];
   connect() {
     this.client = {};
-    this.contactTarget = document.getElementById('contactnamein');
-    this.clientSelect = document.getElementById('property_client_id');
-    console.log(window.location.search);
-    //check route source based on url search tag contents
-    //we handle :client_id form input differently if it is preset
-    let searchlength = window.location.search.length;
-    if (searchlength == 0) {
-      this.clientSelect.addEventListener('change', () => {
-        let selectedclient = '';
-        for (let item of this.clientSelect.children) {
-          if (item.selected) selectedclient = item;
-        }
-
-        //add name and reset other fields
-        this.contactTarget.value = selectedclient.text;
-        document.getElementById('phonein').value = '';
-        document.getElementById('emailin').value = '';
-
-        //propcount tells us if we should auto-copy contact info from the Client
-        fetch('/data/client?cid=' + selectedclient.value)
-          .then((response) => response.json())
-          .then((data) => {
-            this.client = data.client;
-            this.propcount = data.property_count;
-            this.contactTarget.value = data.client.name;
-          });
-      });
-    } else {
-      let client_id = window.location.search.split('=')[1];
-      fetch('/data/client?cid=' + client_id)
-        .then((response) => response.json())
-        .then((data) => {
-          this.client = data.client;
-          this.propcount = data.property_count;
-        });
-    }
-    this.propertytypeselect = document.getElementById(
+    this.contactnameIn = document.getElementById('contactnamein');
+    this.clientidIn = document.getElementById('property_client_id');
+    this.propertytypeIn = document.getElementById(
       'property_property_type'
     );
-    this.address = document.getElementById('addressin');
-    this.latitude = document.getElementById('forminlatitude');
-    this.longitude = document.getElementById('forminlongitude');
+    this.addressIn = document.getElementById('addressin');
+    this.latitudeIn = document.getElementById('forminlatitude');
+    this.longitudeIn = document.getElementById('forminlongitude');
+    this.phoneIn = document.getElementById('phonein');
+    this.emailIn = document.getElementById('emailin');
 
     const prefix =
       'https://api.mapbox.com/geocoding/v5/mapbox.places/';
@@ -54,35 +22,37 @@ export default class extends Controller {
     const accesstoken =
       'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
 
-    this.propertytypeselect?.addEventListener('change', (event) => {
-      if (this.propcount < 1 && this.client != {}) {
-        this.address.value = this.client.mail_address;
-        document.getElementById('phonein').value = this.client.phone;
-        document.getElementById('emailin').value = this.client.email;
-        fetch(
-          prefix + this.client.mail_address + middle + accesstoken
-        )
+    //check route source -- EventListener unneeded if <select> is not used in the form
+    if (window.location.search.length == 0) {
+      //autofill correct client's data when client <select> is changed
+      this.clientidIn.addEventListener('change', () => {
+        fetch('/data/client?cid=' + this.clientidIn.value)
           .then((response) => response.json())
-          .then((geocode) => {
-            this.longitude.value = geocode.features[0].center[0];
-            this.latitude.value = geocode.features[0].center[1];
+          .then((data) => {
+            this.client = data.client;
+            this.contactnameIn.value = data.client.name;
+            this.phoneIn.value = data.client.phone;
+            this.emailIn.value = data.client.email;
           });
-      }
-    });
+      });
+    } else { //path with cid given in search parameters
+      let client_id = window.location.search.split('=')[1];
+      fetch('/data/client?cid=' + client_id)
+        .then((response) => response.json())
+        .then((data) => {
+          this.client = data.client;
+          this.contactnameIn.value = data.client.name;
+        });
+    }
 
-    this.address?.addEventListener('blur', () => {
-      fetch(prefix + this.address.innerText + middle + accesstoken)
+    //geocode the address field when focus is lost
+    this.addressIn?.addEventListener('blur', () => {
+      fetch(prefix + this.addressIn.innerText + middle + accesstoken)
         .then((response) => response.json())
         .then((geocode) => {
-          this.longitude.value = geocode.features[0].center[0];
-          this.latitude.value = geocode.features[0].center[1];
+          this.longitudeIn.value = geocode.features[0].center[0];
+          this.latitudeIn.value = geocode.features[0].center[1];
         });
     });
   }
-
-  clientSelect(event) {
-    this.contactTarget.value = event.target.innerText;
-  }
-
-  handleSetClient() {}
 }
