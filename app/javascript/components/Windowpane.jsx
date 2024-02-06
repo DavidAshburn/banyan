@@ -1,12 +1,15 @@
 import React from 'react';
 
-export default function Windowpane({ title, content }) {
+export default function Windowpane({ title, content, light }) {
+  let style
+  light == '1' ? style = 'windowpanelight': style = 'windowpanedark';
+  
   return (
-    <div className="border-[6px] border-dark rounded-lg bg-white text-dark font-josefin h-fit">
-      <div className="bg-dark border-b-4 border-coral h-8 text-white pl-2">
+    <div className={style}>
+      <p>
         {title}
-      </div>
-      <div className="grid gap-2 p-2">{content}</div>
+      </p>
+      <div>{content}</div>
     </div>
   );
 }

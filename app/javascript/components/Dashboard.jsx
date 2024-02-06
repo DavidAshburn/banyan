@@ -56,6 +56,7 @@ export default function Dashboard() {
           <Windowpane
             title="User"
             content={<DashHead user={user} />}
+            light = '0'
           />
         </div>
         <Windowpane
@@ -63,6 +64,7 @@ export default function Dashboard() {
           content={jobsdata.map((job, j) => (
             <JobRow jobdata={job} key={j} />
           ))}
+          light = '0'
         />
         <Windowpane
           title="Clients"
@@ -74,6 +76,7 @@ export default function Dashboard() {
               key={i}
             />
           ))}
+          light = '0'
         />
       </div>
     </div>

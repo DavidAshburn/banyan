@@ -45,7 +45,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_05_211755) do
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.string "name"
+    t.string "name", default: ""
+    t.string "preferred_contact_email", default: ""
+    t.string "species", default: [], array: true
+    t.string "vehicles", default: [], array: true
+    t.string "equipment", default: [], array: true
+    t.boolean "prefers_dark", default: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -7,4 +7,12 @@ class User < ApplicationRecord
   has_many :clients
   has_one :profile
   has_many :jobs
+
+  before_create :build_default_profile
+
+  private
+  def build_default_profile
+    profile = build_profile
+    true
+  end
 end
