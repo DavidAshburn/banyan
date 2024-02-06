@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import Windowpane from "./Windowpane";
+import Windowpane from "./ui/Windowpane";
 
 export default function Profile() {
     let [profile, setProfile] = useState({});

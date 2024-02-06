@@ -6,26 +6,23 @@ export default class extends Controller {
 
   connect() {
 
+    //dont need geocode if property always has lat long now
+
     this.property_id = this.pidTarget.value;
-    const prefix = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
-    const middle = '.json?access_token=';
     const accesstoken =
       'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
-    const addressTarget = this.targetaddressTarget.innerText;
 
     this.mapboxInit(accesstoken);
     this.setBackupListeners();
 
-    fetch(prefix + addressTarget + middle + accesstoken)
+    fetch('/data/proptrees?pid=' + this.property_id)
       .then((response) => response.json())
-      .then((geocode) => {
-        fetch('/data/proptrees?pid=' + this.property_id)
-          .then((response) => response.json())
-          .then((treedata) => {
-            this.setInitialThisLatLng(geocode, treedata);
-            this.map.setCenter([this.initialLongitude, this.initialLatitude]);
-            if (this.tree_index > 0) this.setMarkersAndBounds(treedata);
-          });
+      .then((propertydata) => {
+        let property = propertydata[0];
+        let treedata = propertydata[1]
+
+        this.map.setCenter([property.longitude, property.latitude]);
+        if (this.tree_index > 0) this.setMarkersAndBounds(treedata, property.longitude, property.latitude);
       });
   }
 
@@ -57,6 +54,7 @@ export default class extends Controller {
     el?.classList.toggle('hidden');
     buttons?.classList.toggle('hidden');
   }//unused
+
   mapboxInit(token) {
     const honolulu = [-157.858093, 21.315603];
     mapboxgl.accessToken = token;
@@ -69,8 +67,6 @@ export default class extends Controller {
     });
     this.map.on('moveend', (e) => {
       let center = this.map.getCenter(); //{lng: x, lat: y}
-      this.latitudeTarget.innerText = center.lat;
-      this.longitudeTarget.innerText = center.lng;
       document.getElementById('latitudeform').value =
         center.lat;
       document.getElementById('longitudeform').value =
@@ -79,32 +75,11 @@ export default class extends Controller {
         this.property_id;
     });
   }
-  setInitialThisLatLng(geocode, treedata) {
-    let lat = 0;
-    let lon = 0;
-    this.tree_index = 0;
 
-    //find center of all tree lat/lon coords
-    for (let item of treedata) {
-      this.tree_index++;
-      lat += item.latitude;
-      lon += item.longitude;
-    }
-
-    if (this.tree_index > 0) {
-      this.initialLongitude = lon / this.tree_index;
-      this.initialLatitude = lat / this.tree_index;
-    } else {
-      this.initialLongitude = geocode.features[0].center[0];
-      this.initialLatitude = geocode.features[0].center[1];
-    }
-    this.latitudeTarget.innerText = this.initialLatitude;
-    this.longitudeTarget.innerText = this.initialLongitude;
-  }
-  setMarkersAndBounds(treedata) {
+  setMarkersAndBounds(treedata, longitude, latitude) {
     //mapbounds collection
     let features = [
-      { lon: this.initialLongitude, lat: this.initialLatitude },
+      { lon: longitude, lat: latitude },
     ];
 
     for (let item of treedata) {
@@ -118,24 +93,15 @@ export default class extends Controller {
           )
         )
         .addTo(this.map);
-
-      //build mapbounds collection
       features.push({ lon: item.longitude, lat: item.latitude });
     }
 
     //mapbounds setting
-    const bounds = new mapboxgl.LngLatBounds(
-      features[0],
-      features[0]
-    );
+    const bounds = new mapboxgl.LngLatBounds(features[0],features[0]);
     for (let item of features) {
       bounds.extend(item);
     }
     this.map.fitBounds(bounds, { padding: 40 });
-
-    if(features.length == 1) {
-      this.map.setZoom(8);
-    }
   }
   setBackupListeners() {
     this.lastspecies = '';

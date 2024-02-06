@@ -12,6 +12,9 @@
   .darkbutton {
     @apply p-2 px-4 rounded bg-dark text-light font-bold text-2xl text-center w-fit;
   }
+  .darkbutton-s {
+    @apply p-2 rounded bg-dark text-light font-bold text-center w-fit;
+  }
 }
 
 .abs-center {

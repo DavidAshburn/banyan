@@ -42,16 +42,22 @@ export default class extends Controller {
         .then((data) => {
           this.client = data.client;
           this.contactnameIn.value = data.client.name;
+          this.phoneIn.value = data.client.phone;
+          this.emailIn.value = data.client.email;
         });
     }
 
     //geocode the address field when focus is lost
-    this.addressIn?.addEventListener('blur', () => {
-      fetch(prefix + this.addressIn.innerText + middle + accesstoken)
+    this.addressIn?.addEventListener('blur', (event) => {
+      fetch(prefix + event.target.value + middle + accesstoken)
         .then((response) => response.json())
         .then((geocode) => {
-          this.longitudeIn.value = geocode.features[0].center[0];
-          this.latitudeIn.value = geocode.features[0].center[1];
+          console.log(event.target.value);
+          console.log(geocode);
+          if(geocode.features.length > 0) {
+            this.longitudeIn.value = geocode.features[0].center[0];
+            this.latitudeIn.value = geocode.features[0].center[1];
+          }
         });
     });
   }

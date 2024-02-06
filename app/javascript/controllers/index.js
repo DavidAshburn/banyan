@@ -19,11 +19,8 @@ application.register("mapsjob", MapsjobController)
 import PropertyformController from "./propertyform_controller"
 application.register("propertyform", PropertyformController)
 
-import PropertyshowController from "./propertyshow_controller"
-application.register("propertyshow", PropertyshowController)
-
-import PropshowmapController from "./propshowmap_controller"
-application.register("propshowmap", PropshowmapController)
+import PropertyshowmapController from "./propertyshowmap_controller"
+application.register("propertyshowmap", PropertyshowmapController)
 
 import RdashboardController from "./rdashboard_controller"
 application.register("rdashboard", RdashboardController)

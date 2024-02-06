@@ -1,6 +1,33 @@
 class DataController < ApplicationController
   before_action :authenticate_user!
 
+  def user
+
+    trees = 0
+    current_user.clients.each {|client| client.properties.each{|prop| trees += prop.trees.count}}
+
+    @user_data = {
+      email: current_user.email,
+      clients: current_user.clients.count,
+      jobs: current_user.jobs.count,
+      trees: trees
+    }
+    respond_to do |format|
+      format.json { render json: @user_data }
+    end
+  end
+
+  def client
+    @client = Client.find(params[:cid])
+    @count = @client.properties.count
+
+    @data = {client:@client, property_count:@count}
+
+    respond_to do |format|
+      format.json { render json: @data}
+    end
+  end
+
   def clients
 
     clients = current_user.clients
@@ -8,6 +35,23 @@ class DataController < ApplicationController
 
     respond_to do |format|
       format.json { render json: @clientdata}
+    end
+  end
+
+  def profile
+    @profile = current_user.profile
+
+    respond_to do |format|
+      format.json { render json: @profile }
+    end
+  end
+
+  def proptrees
+    @property = Property.find(params[:pid])
+    @proptrees = @property.trees
+
+    respond_to do |format|
+      format.json { render json: [@property, @proptrees]}
     end
   end
 
@@ -21,15 +65,6 @@ class DataController < ApplicationController
 
     respond_to do |format|
       format.json { render json: @jobtrees}
-    end
-  end
-
-  def proptrees
-    property = Property.find(params[:pid])
-    @proptrees = property.trees
-
-    respond_to do |format|
-      format.json { render json: @proptrees}
     end
   end
 
@@ -50,54 +85,11 @@ class DataController < ApplicationController
     end
   end
 
-  def user
-
-    trees = 0
-    current_user.clients.each {|client| client.properties.each{|prop| trees += prop.trees.count}}
-
-    @user_data = {
-      email: current_user.email,
-      clients: current_user.clients.count,
-      jobs: current_user.jobs.count,
-      trees: trees
-    }
-    respond_to do |format|
-      format.json { render json: @user_data }
-    end
-  end
-
   def jobsdash
     @data = current_user.jobs.map{|job| {latitude:job.property.latitude, longitude:job.property.longitude}}
 
     respond_to do |format|
       format.json { render json: @data }
-    end
-  end
-
-  def client
-    @client = Client.find(params[:cid])
-    @count = @client.properties.count
-
-    @data = {client:@client, property_count:@count}
-
-    respond_to do |format|
-      format.json { render json: @data}
-    end
-  end
-
-  def profile
-    @profile = current_user.profile
-
-    respond_to do |format|
-      format.json { render json: @profile }
-    end
-  end
-
-  def property
-    @property = Property.find(params[:pid])
-
-    respond_to do |format|
-      format.json { render json: @property }
     end
   end
 end

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import ClientRow from './ClientRow';
-import Windowpane from './Windowpane';
-import JobRow from './JobRow';
-import DashHead from './DashHead';
+import ClientRow from './ui/ClientRow';
+import DashHead from './ui/DashHead';
+import JobRow from './ui/JobRow';
+import Windowpane from './ui/Windowpane';
+
 
 export default function Dashboard() {
   let [clientdata, setClientData] = useState([]);

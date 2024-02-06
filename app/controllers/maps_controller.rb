@@ -7,7 +7,6 @@ class MapsController < ApplicationController
   end
 
   def edit
-    @target = params[:target]
     @pid = params[:property]
   end
 

@@ -1,7 +1,31 @@
 <p style="color: green"><%= notice %></p>
 
-<div data-controller="propertyshow" >
-  <div class="hidden" id="propertydata"><%= @property.as_json %></div>
-  <div id="propertyshow"></div>
+<div data-controller="propertyshowmap" >
+  <div class="hidden" data-propertyshowmap-target="pid"><%= @property.id %></div>
+  <div class="grid lg:grid-cols-[1fr_6fr_1fr] min-h-screen bg-dark p-4 bg-light">
+    <div class="lg:col-start-2 min-h-[100lvh]">
+
+      <div class="windowpanedark">
+        <p><%= @property.address%></p>
+        <div>
+          <div class="grid grid-rows-[1fr_50lvh] gap-4">   
+            <div class="grid grid-cols-2 gap-2">
+                <p class="rounded border-b border-stone-50"><%= @property.name%></p>
+                <p class="rounded border-b border-stone-50"><%= @property.contact_name%></p>
+                <p class="rounded border-b border-stone-50"><%= @property.phone%></p>
+                <p class="rounded border-b border-stone-50"><%= @property.email%></p>
+                <p class="rounded border-b border-stone-50">Type: <%= @property.property_type%></p>
+                <p class="rounded border-b border-stone-50">Tree Access: <%= @property.tree_access%></p>
+                <%= link_to 'Dashboard', user_dashboard_path, class:"darkbuttonsmall"%>
+                <%= button_to "Delete this property", @property, method: :delete %>
+            </div>
+            <div id="propshowmap"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 

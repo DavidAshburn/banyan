@@ -15,7 +15,7 @@ export default function Trees({ job_id }) {
 
   return (
     <div className="grid">
-      <p>Stuff</p>
+      <p>trees.jsx</p>
     </div>
   );
 }
