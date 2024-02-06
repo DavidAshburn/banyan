@@ -12,8 +12,7 @@ export default class extends Controller {
     const accesstoken =
       'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
 
-    this.mapboxInit(accesstoken);
-    this.setBackupListeners();
+    
 
     fetch('/data/proptrees?pid=' + this.property_id)
       .then((response) => response.json())
@@ -21,8 +20,9 @@ export default class extends Controller {
         let property = propertydata[0];
         let treedata = propertydata[1]
 
-        this.map.setCenter([property.longitude, property.latitude]);
-        if (this.tree_index > 0) this.setMarkersAndBounds(treedata, property.longitude, property.latitude);
+        this.mapboxInit(accesstoken, [property.longitude, property.latitude]);
+        this.setBackupListeners();
+        if (treedata.length > 0) this.setMarkersAndBounds(treedata, property.longitude, property.latitude);
       });
   }
 
@@ -55,13 +55,12 @@ export default class extends Controller {
     buttons?.classList.toggle('hidden');
   }//unused
 
-  mapboxInit(token) {
-    const honolulu = [-157.858093, 21.315603];
+  mapboxInit(token, center) {
     mapboxgl.accessToken = token;
     this.map = new mapboxgl.Map({
       container: 'map', // container ID
-      center: honolulu, // starting position [lng, lat]
-      zoom: 9, // starting zoom
+      center: center, // starting position [lng, lat]
+      zoom: 17, // starting zoom
       //cooperativeGestures: true,
       style: `mapbox://styles/mapbox/satellite-v9`,
     });
@@ -78,9 +77,7 @@ export default class extends Controller {
 
   setMarkersAndBounds(treedata, longitude, latitude) {
     //mapbounds collection
-    let features = [
-      { lon: longitude, lat: latitude },
-    ];
+    let features = [{ lon: longitude, lat: latitude },];
 
     for (let item of treedata) {
       let marker = new mapboxgl.Marker({
@@ -103,6 +100,7 @@ export default class extends Controller {
     }
     this.map.fitBounds(bounds, { padding: 40 });
   }
+
   setBackupListeners() {
     this.lastspecies = '';
     this.lastdbh = 0;
