@@ -10,7 +10,6 @@ export default function Trees({ job_id }) {
       .then((response) => response.json())
       .then((data) => {
         setJob(data);
-        console.log(data);
       });
   }, []);
 

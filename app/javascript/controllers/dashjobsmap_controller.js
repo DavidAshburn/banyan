@@ -5,7 +5,6 @@ export default class extends Controller {
   static targets = [];
 
   connect() {
-    console.log('connect');
     const accesstoken =
       'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
     this.mapboxInit(accesstoken);
@@ -21,7 +20,6 @@ export default class extends Controller {
 
   }
   mapboxInit(token) {
-    console.log('mapboxInit');
     const honolulu = [-157.858093, 21.315603];
     mapboxgl.accessToken = token;
     this.map = new mapboxgl.Map({
@@ -60,7 +58,6 @@ export default class extends Controller {
   }
 
   centerOf(jobsites) {
-    console.log('centerOf');
     let lat = 0;
     let lon = 0;
     for(let item of jobsites) {

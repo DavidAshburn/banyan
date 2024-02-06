@@ -52,21 +52,15 @@ export default function Dashboard() {
           className="grid md:grid-cols-2 bg-dark"
           data-controller="dashjobsmap"
         >
-          <Windowpane
-            title="User"
-            content={<DashHead user={user} />}
-            light = '0'
-          />
           <div id="jobsmap" className="min-h-80"></div>
-          
-        </div>
-        <Windowpane
+          <Windowpane
           title="Jobs"
           content={jobsdata.map((job, j) => (
             <JobRow jobdata={job} key={j} />
           ))}
           light = '0'
         />
+        </div>
         <Windowpane
           title="Clients"
           content={clientdata.map((client, i) => (
@@ -77,6 +71,11 @@ export default function Dashboard() {
               key={i}
             />
           ))}
+          light = '0'
+        />
+        <Windowpane
+          title={user.email}
+          content={<DashHead user={user} />}
           light = '0'
         />
       </div>

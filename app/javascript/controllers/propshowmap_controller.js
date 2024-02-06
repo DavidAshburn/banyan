@@ -9,7 +9,6 @@ export default class extends Controller {
     let property_data = document.getElementById('propertydata').innerText.replace(regex,':');
     
     this.property = JSON.parse(property_data);
-    console.log(this.property);
 
     const accesstoken =
       'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
@@ -34,7 +33,7 @@ export default class extends Controller {
     this.map = new mapboxgl.Map({
       container: 'propshowmap', // container ID
       center: center, // starting position [lng, lat]
-      zoom: 15, // starting zoom
+      zoom: 17, // starting zoom
       //cooperativeGestures: true,
       style: `mapbox://styles/mapbox/satellite-v9`,
     });

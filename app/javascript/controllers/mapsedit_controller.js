@@ -37,8 +37,7 @@ export default class extends Controller {
     buttons?.classList.toggle('hidden');
   }
   saveTree(event) {
-    console.log('savetree');
-    console.log(document.getElementById('speciesfield').innerText);
+
     let center = this.map.getCenter(); //{lng: x, lat: y}
     let marker = new mapboxgl.Marker({
       color: '#fbbf24',

@@ -35,7 +35,6 @@ export default class extends Controller {
 
     this.propertytypeselect?.addEventListener("change", (event) => {
       if (this.propcount < 1 && this.client != {}) {
-        console.log(this.client);
         this.address.value = this.client.mail_address;
         document.getElementById('phonein').value = this.client.phone;
         document.getElementById('emailin').value = this.client.email;
@@ -44,7 +43,6 @@ export default class extends Controller {
   }
 
   clientSelect(event) {
-    console.log('cselect');
     this.contactTarget.value = event.target.innerText;
   }
 }
