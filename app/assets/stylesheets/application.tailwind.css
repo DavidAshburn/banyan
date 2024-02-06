@@ -9,6 +9,9 @@
   .navlinklast {
     @apply py-4 bg-dark text-light text-center text-sm;
   }
+  .darkbutton {
+    @apply p-2 px-4 rounded bg-dark text-light font-bold text-2xl text-center w-fit;
+  }
 }
 
 .abs-center {
@@ -20,21 +23,22 @@
 
 .windowpanedark {
   border-width: 6px;
-  border-color: "#275c51";
+  border-color: #275c51;
   border-radius: 0.5rem;
   background-color: white;
-  text-color: "#275c51";
   font-family: "Josefin Slab", serif;
   height: fit-content;
 }
 
 .windowpanedark > p {
-  background-color: "#275c51";
+  background-color: #275c51;
   border-bottom-width: 4px;
-  border-color: "#f87954";
+  border-color: #f87954;
   height: 2rem;
-  text-color: white;
+  color: white;
   padding-left: 0.5rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .windowpanedark > div {

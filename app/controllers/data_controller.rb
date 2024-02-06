@@ -32,6 +32,15 @@ class DataController < ApplicationController
       format.json { render json: @proptrees}
     end
   end
+
+  def propjobs
+    @propjobs = Property.find(params[:pid]).jobs
+
+    respons_to do |format|
+      format.json { render json: @propjobs }
+    end
+  end
+
   def jobs
     alljobs = current_user.jobs.order(:start)
 
@@ -73,6 +82,22 @@ class DataController < ApplicationController
 
     respond_to do |format|
       format.json { render json: @data}
+    end
+  end
+
+  def profile
+    @profile = current_user.profile
+
+    respond_to do |format|
+      format.json { render json: @profile }
+    end
+  end
+
+  def property
+    @property = Property.find(params[:pid])
+
+    respond_to do |format|
+      format.json { render json: @property }
     end
   end
 end

@@ -96,5 +96,9 @@ export default class extends Controller {
       bounds.extend(item);
     }
     this.map.fitBounds(bounds, { padding: 100 });
+
+    if(features.length == 1) {
+      this.map.setZoom(8);
+    }
   }
 }

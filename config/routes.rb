@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   get 'data/user', to: 'data#user'
   get 'data/proptrees', to: 'data#proptrees'
   get 'data/client', to: 'data#client'
+  get 'data/profile', to: 'data#profile'
+  get 'data/propjobs', to: 'data#propjobs'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

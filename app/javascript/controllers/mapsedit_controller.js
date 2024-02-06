@@ -133,6 +133,10 @@ export default class extends Controller {
       bounds.extend(item);
     }
     this.map.fitBounds(bounds, { padding: 40 });
+
+    if(features.length == 1) {
+      this.map.setZoom(8);
+    }
   }
   setBackupListeners() {
     this.lastspecies = '';
