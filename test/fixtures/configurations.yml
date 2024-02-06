@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tree_species: MyString
+  vehicles: MyString
+  equipment: MyString
+
+two:
+  tree_species: MyString
+  vehicles: MyString
+  equipment: MyString
