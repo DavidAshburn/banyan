@@ -12,10 +12,15 @@
   <% end %>
 
   <div class="grid gap-2 p-2" data-controller="propertyform">
-    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
-      <%= form.label 'Client' %>
-      <%= form.collection_select :client_id, current_user.clients, :id, :name, prompt: true %>
-    </div>
+    <% if !params[:cid] %>
+      <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+        <%= form.label 'Client' %>
+        <%= form.collection_select :client_id, current_user.clients, :id, :name, prompt: true %>
+      </div>
+    <% end %>
+    <% if params[:cid] %>
+      <%= form.number_field :client_id, value: params[:cid], class:"hidden"%>
+    <% end %>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label 'Property Type' %>
       <%= form.collection_select :property_type, Proptype.all, :label, :label, prompt: true %>

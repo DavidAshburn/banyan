@@ -17,12 +17,18 @@ export default function ClientRow({ client, properties, index }) {
 
   return (
     <div
-      className="grid py-4 items-center grid-cols-2 text-center min-h-[4rem] rounded-bl-lg rounded-tr-lg border border-dark rounded-md"
+      className="grid p-4 items-center grid-cols-[2fr_2fr_1fr] text-center min-h-[4rem] rounded-bl-lg rounded-tr-lg border border-dark rounded-md"
       data-ref={index}
       onClick={toggleItem}
     >
       <p className="row-span-2">{client.name}</p>
       <p>{client.email}</p>
+      <a
+        href={'/properties/new?cid=' + client.id}
+        className="row-span-2 darkbutton"
+      >
+        Add Property
+      </a>
       <p>{client.phone}</p>
       <div className={'grid gap-4 col-span-full ' + display}>
         {properties.map((property, i) => (
@@ -35,10 +41,7 @@ export default function ClientRow({ client, properties, index }) {
             <p>{toCap(property.tree_access)} access</p>
             <div className="col-span-full bg-emerald-200 grid grid-cols-3">
               <a
-                href={
-                  '/properties/' +
-                  property.id 
-                }
+                href={'/properties/' + property.id}
                 className="col-start-2"
               >
                 {property.address}

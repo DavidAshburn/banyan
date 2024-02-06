@@ -7,27 +7,40 @@ export default class extends Controller {
     this.client = {};
     this.contactTarget = document.getElementById('contactnamein');
     this.clientSelect = document.getElementById('property_client_id');
+    console.log(window.location.search);
+    //check route source based on url search tag contents
+    //we handle :client_id form input differently if it is preset
+    let searchlength = window.location.search.length;
+    if (searchlength == 0) {
+      this.clientSelect.addEventListener('change', () => {
+        let selectedclient = '';
+        for (let item of this.clientSelect.children) {
+          if (item.selected) selectedclient = item;
+        }
 
-    this.clientSelect.addEventListener('change', () => {
-      let selectedclient = '';
-      for (let item of this.clientSelect.children) {
-        if (item.selected) selectedclient = item;
-      }
+        //add name and reset other fields
+        this.contactTarget.value = selectedclient.text;
+        document.getElementById('phonein').value = '';
+        document.getElementById('emailin').value = '';
 
-      //add name and reset other fields
-      this.contactTarget.value = selectedclient.text;
-      document.getElementById('phonein').value = '';
-      document.getElementById('emailin').value = '';
-
-      //propcount tells us if we should auto-copy contact info from the Client
-      fetch('/data/client?cid=' + selectedclient.value)
+        //propcount tells us if we should auto-copy contact info from the Client
+        fetch('/data/client?cid=' + selectedclient.value)
+          .then((response) => response.json())
+          .then((data) => {
+            this.client = data.client;
+            this.propcount = data.property_count;
+            this.contactTarget.value = data.client.name;
+          });
+      });
+    } else {
+      let client_id = window.location.search.split('=')[1];
+      fetch('/data/client?cid=' + client_id)
         .then((response) => response.json())
         .then((data) => {
           this.client = data.client;
           this.propcount = data.property_count;
         });
-    });
-
+    }
     this.propertytypeselect = document.getElementById(
       'property_property_type'
     );
@@ -70,4 +83,6 @@ export default class extends Controller {
   clientSelect(event) {
     this.contactTarget.value = event.target.innerText;
   }
+
+  handleSetClient() {}
 }
