@@ -33,17 +33,27 @@ export default function ClientRow({ client, properties, index }) {
             <p>{property.property_type}</p>
             <p>{toCap(property.parking)} parking</p>
             <p>{toCap(property.tree_access)} access</p>
-            <a
-              href={
-                '/maps/edit?target=' +
-                property.address +
-                '&property=' +
-                property.id
-              }
-              className="col-span-full bg-emerald-200"
-            >
-              {property.address}
-            </a>
+            <div className="col-span-full bg-emerald-200 grid grid-cols-3">
+              <a
+                href={
+                  '/maps/edit?target=' +
+                  property.address +
+                  '&property=' +
+                  property.id
+                }
+                className="col-start-2"
+              >
+                {property.address}
+              </a>
+              <div className="col-start-3 flex items-center justify-center gap-2 p-2">
+                <a
+                  href={'/jobs/new?pid=' + property.id}
+                  className="darkbutton"
+                >
+                  New Job
+                </a>
+              </div>
+            </div>
           </div>
         ))}
       </div>

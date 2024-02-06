@@ -13,6 +13,7 @@ class JobsController < ApplicationController
   # GET /jobs/new
   def new
     @job = Job.new
+    @job.property_id = params[:pid]
   end
 
   # GET /jobs/1/edit
