@@ -36,10 +36,8 @@ export default function ClientRow({ client, properties, index }) {
             <div className="col-span-full bg-emerald-200 grid grid-cols-3">
               <a
                 href={
-                  '/maps/edit?target=' +
-                  property.address +
-                  '&property=' +
-                  property.id
+                  '/properties/' +
+                  property.id 
                 }
                 className="col-start-2"
               >
@@ -60,3 +58,16 @@ export default function ClientRow({ client, properties, index }) {
     </div>
   );
 }
+
+/*
+<a href={
+    '/maps/edit?target=' +
+    property.address +
+    '&property=' +
+    property.id
+  }
+  className="col-start-2"
+>
+  {property.address}
+</a>
+*/

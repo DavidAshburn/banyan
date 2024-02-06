@@ -49,15 +49,16 @@ export default function Dashboard() {
       </div>
       <div className="flex flex-col gap-4 p-4 text-lg bg-light text-dark font-josefin min-h-screen">
         <div
-          className="grid grid-cols-2 min-h-80 bg-dark"
+          className="grid md:grid-cols-2 bg-dark"
           data-controller="dashjobsmap"
         >
-          <div id="jobsmap"></div>
           <Windowpane
             title="User"
             content={<DashHead user={user} />}
             light = '0'
           />
+          <div id="jobsmap" className="min-h-80"></div>
+          
         </div>
         <Windowpane
           title="Jobs"

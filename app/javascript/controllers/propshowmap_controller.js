@@ -1,44 +1,42 @@
 import { Controller } from "@hotwired/stimulus"
+import mapboxgl from 'mapbox-gl';
 
 // Connects to data-controller="propshowmap"
 export default class extends Controller {
   
   connect() {
-    this.property = {};
-    this.dataTarget = document.getElementById('showmapdata');
-    this.typeTarget = document.getElementById('showmapdatatype');
-
-    this.data = this.dataTarget.innerText;
-    this.datatype = this.typeTarget.innerText;
-
-    this.dataTarget.addEventListener('change', () => {
-      this.data = this.dataTarget.innerText;
-    });
-
-    this.typeTarget.addEventListener('change', () => {
-      this.datatype = this.typeTarget.innerText;
-      this.updateMap
-    });
-
-    fetch(`/data/property?pid=${property_id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        this.property = data;
-      });
+    let regex = /=>/g;
+    let property_data = document.getElementById('propertydata').innerText.replace(regex,':');
+    
+    this.property = JSON.parse(property_data);
+    console.log(this.property);
 
     const accesstoken =
       'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
 
-    this.mapboxInit(accesstoken);
+    this.mapboxInit(accesstoken, [this.property.longitude,this.property.latitude,]);
 
-    this.setInitialThisLatLng(geocode, treedata);
-    this.map.setCenter([
-      this.initialLongitude,
-      this.initialLatitude,
-    ]);
+    let marker = new mapboxgl.Marker({
+      color: '#fbbf24',
+    })
+      .setLngLat([this.property.longitude, this.property.latitude])
+      .addTo(this.map);
+
+    /*
     if (this.tree_index > 0)
       this.setMarkersAndBounds(treedata);
+    */
+  }
 
+  mapboxInit(token, center) {
+    const honolulu = [-157.858093, 21.315603];
+    mapboxgl.accessToken = token;
+    this.map = new mapboxgl.Map({
+      container: 'propshowmap', // container ID
+      center: center, // starting position [lng, lat]
+      zoom: 15, // starting zoom
+      //cooperativeGestures: true,
+      style: `mapbox://styles/mapbox/satellite-v9`,
+    });
   }
 }
-//stub

@@ -17,6 +17,7 @@ TestUser = User.create(
 	email:"test@user.com",
 	password: "password",
 	password_confirmation: "password",
+  id: 999,
 	)
 
 Profile.create(
@@ -24,7 +25,7 @@ Profile.create(
   user_id: TestUser.id,
 )
 
-Client.create(
+RalphBaccio = Client.create(
   name:'Ralph Baccio',
   contact_name:'none',
   phone: '123-123-1234',
@@ -32,7 +33,7 @@ Client.create(
   mail_address: '1754 Ala Noe Way, Honolulu, 96819',
   notes: 'none',
   user_id: TestUser.id,
-  id:1,
+  id:990,
 )
 
 Ralphs = Property.create(
@@ -46,7 +47,8 @@ Ralphs = Property.create(
   property_type: 'Home',
   parking: 'large',
   tree_access: 'poor',
-  client_id: 1,
+  client_id: RalphBaccio.id,
+  id:980,
 )
 
 tone = Ralphs.trees.create(
@@ -56,6 +58,7 @@ tone = Ralphs.trees.create(
   crown: 'small',
   species: 'Sheffelera',
   notes: "Leaning",
+  id:981,
 )
 
 ttwo = Ralphs.trees.create(
@@ -64,6 +67,7 @@ ttwo = Ralphs.trees.create(
   dbh: 6,
   crown: 'small',
   species: 'Plumeria',
+  id:982,
 )
 
 tthree = Ralphs.trees.create(
@@ -72,6 +76,7 @@ tthree = Ralphs.trees.create(
   dbh: 6,
   crown: 'small',
   species: 'Avocado',
+  id:983,
 )
 
 Job.create(
@@ -85,9 +90,10 @@ Job.create(
   property_id: Ralphs.id,
   user_id: TestUser.id,
   trees:[tone.id, ttwo.id, tthree.id],
+  id:979,
 )
 
-Client.create(
+NormaF = Client.create(
   name:'Norma Flaskerud',
   contact_name:'none',
   phone: '143-143-1434',
@@ -95,7 +101,7 @@ Client.create(
   mail_address: '28 Rolling Green Circle, Pleasant Hill, CA 94523',
   notes: 'none',
   user_id: TestUser.id,
-  id: 2,
+  id: 960,
 )
 
 Normas = Property.create(
@@ -109,7 +115,7 @@ Normas = Property.create(
   property_type: 'Home',
   parking: 'street',
   tree_access: 'good',
-  client_id: 2,
+  client_id: NormaF.id,
 )
 
 Normas.trees.create(
@@ -118,6 +124,7 @@ Normas.trees.create(
   dbh: 3,
   crown: 'small',
   species: 'Crepe Myrtle',
+  id:961,
 )
 
 
@@ -128,6 +135,7 @@ ntone = Normas.trees.create(
   crown: 'small',
   species: 'Crepe Myrtle',
   notes: "Out of place here",
+  id:962,
 )
 
 nttwo = Normas.trees.create(
@@ -136,6 +144,7 @@ nttwo = Normas.trees.create(
   dbh: 3,
   crown: 'small',
   species: 'Crepe Myrtle',
+  id:963,
 )
 
 ntthree = Normas.trees.create(
@@ -144,6 +153,7 @@ ntthree = Normas.trees.create(
   dbh: 3,
   crown: 'small',
   species: 'Crepe Myrtle',
+  id:964,
 )
 
 Job.create(
@@ -157,6 +167,7 @@ Job.create(
   property_id: Normas.id,
   user_id: TestUser.id,
   trees: [ntone.id, nttwo.id, ntthree.id],
+  id:965,
 )
 
 NormaApts = Property.create(
@@ -168,7 +179,8 @@ NormaApts = Property.create(
   property_type: 'Complex',
   parking: 'large',
   tree_access: 'good',
-  client_id: 2,
+  client_id: NormaF.id,
+  id:966,
 )
 
 Proptype.create(

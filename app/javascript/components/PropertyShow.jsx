@@ -1,35 +1,17 @@
 import React, {useState, useEffect} from "react";
+import Windowpane from "./Windowpane";
 
 export default function PropertyShow() {
     let [property, setProperty] = useState({});
-    let [jobs, setJobs] = useState({});
-    let [showmapdata, setShowMapData] = useState({});
-    let [showmapdatatype, setShowMapDataType] = useState("Property");
-    let property_id = document.getElementById('pid').innerText;
+    
+    let regex = /=>/g;
+    let property_data = document.getElementById('propertydata').innerText.replace(regex,':');
+    
+    let jsondata = JSON.parse(property_data);
 
     useEffect(() => {
-        fetch(`/data/property?pid=${property_id}`)
-          .then((response) => response.json())
-          .then((data) => {
-            setProperty(data);
-            setShowMapData(data);
-          });
+        setProperty(jsondata);
       }, []);
-
-    function getJobs() {
-        fetch(`/data/property?pid=${property_id}`)
-          .then((response) => response.json())
-          .then((data) => {
-            setShowMapData(data);
-            setJobs(data);
-            setShowMapDataType("Jobs")
-          });
-    }
-
-    function getProperty() {
-        setShowMapData(property);
-        setShowMapDataType("Property");
-    }
 
     return(
         <div className="grid lg:grid-cols-[1fr_6fr_1fr] min-h-screen bg-dark p-4 bg-light">
@@ -49,8 +31,6 @@ export default function PropertyShow() {
                             <a href="/user/dashboard" className="darkbutton">Dashboard</a>
                         </div>
                         <div data-controller="propshowmap" id="propshowmap"></div>
-                        <div className="hidden" id="showmapdata">{showmapdata}</div>
-                        <div className="hidden" id="showmapdatatype">{showmapdatatype}</div>
                     </div>
                 }
                 light = 'o'

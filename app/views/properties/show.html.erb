@@ -1,9 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <div data-controller="propertyshow" >
-  <div class="hidden" id="pid"><%= @property.id %></div>
-  <div id="propertyshow">
-
-  </div>
+  <div class="hidden" id="propertydata"><%= @property.as_json %></div>
+  <div id="propertyshow"></div>
 </div>
 
