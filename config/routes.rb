@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'edit/locupdate'
   resources :jobs
   resources :properties
   resources :clients
@@ -8,7 +9,7 @@ Rails.application.routes.draw do
   get 'user/profile'
   get 'user/debug'
   get 'mapping/new'
-  get 'properties/locupdate', to: 'properties#locupdate'
+
   root 'home#index'
   devise_for :users
 
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
   get 'data/client', to: 'data#client'
   get 'data/profile', to: 'data#profile'
   get 'data/propjobs', to: 'data#propjobs'
+  post 'edit/locupdate', to: 'edit#locupdate'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

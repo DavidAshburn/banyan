@@ -115,14 +115,19 @@ export default class extends Controller {
 
   updateLatLng() {
     let center = this.propertymarker._lngLat;
+    let property_id = this.pidTarget.innerText;
+    let token = document.getElementsByName('csrf-token')[0].content
 
     fetch(
-      '/properties/locupdate?pid=' +
+      '/edit/locupdate?pid=' +
         property_id +
         '&lng=' +
         center.lng +
         '&lat=' +
-        center.lat
+        center.lat, { method: 'POST',  headers: {
+          "X-CSRF-Token": token,
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        }, }
     )
       .then((response) => response.json())
       .then((data) => {

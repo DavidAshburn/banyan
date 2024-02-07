@@ -36,18 +36,6 @@ class PropertiesController < ApplicationController
     end
   end
 
-  def locupdate
-    prop = Property.find(params[:pid])
-
-    respond_to do |format|
-      if prop.update(latitude:params[:lat]) && prop.update(longitude:params[:lng])
-        format.json { render :show, status: :ok, location: @property }
-      else
-        format.json { render json: @property.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # PATCH/PUT /properties/1 or /properties/1.json
   def update
     respond_to do |format|
