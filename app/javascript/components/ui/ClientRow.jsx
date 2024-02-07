@@ -22,15 +22,18 @@ export default function ClientRow({ client, properties, index }) {
       <p>{client.email}</p>
       <p>{client.phone}</p>
       <div className={'grid gap-4 col-span-full ' + display}>
-        <a
-          href={'/properties/new?cid=' + client.id}
-          className="row-span-2 darkbutton-s"
-        >
-          Add Property
-        </a>
+        
         {properties.map((location, i) => (
           <PropertyRow property={location} key={i} />
         ))}
+        <div className="flex items-center justify-end pr-4">
+          <a
+            href={'/properties/new?cid=' + client.id}
+            className="row-span-2 darkbutton-s"
+          >
+            Add Property
+          </a>
+        </div>
       </div>
     </div>
   );

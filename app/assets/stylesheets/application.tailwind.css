@@ -13,7 +13,19 @@
     @apply p-2 px-4 rounded bg-dark text-light font-bold text-2xl text-center w-fit;
   }
   .darkbutton-s {
-    @apply p-2 rounded bg-dark text-light font-bold text-center w-fit;
+    @apply p-2 rounded bg-dark text-light font-bold text-sm text-center w-fit;
+  }
+  .lightbutton {
+    @apply p-2 px-4 rounded bg-light text-dark font-bold text-2xl text-center w-fit;
+  }
+  .lightbutton-s {
+    @apply p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit;
+  }
+  .coralbutton {
+    @apply p-2 px-4 rounded bg-lcoral border-2 border-coral text-coral font-bold text-2xl text-center w-fit;
+  }
+  .coralbutton-s {
+    @apply p-2 rounded bg-lcoral border-2 border-coral text-coral font-bold text-sm text-center w-fit;
   }
 }
 

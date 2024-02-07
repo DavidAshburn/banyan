@@ -16,14 +16,15 @@
                 <p class="rounded border-b border-stone-50"><%= @property.email%></p>
                 <p class="rounded border-b border-stone-50">Type: <%= @property.property_type%></p>
                 <p class="rounded border-b border-stone-50">Tree Access: <%= @property.tree_access%></p>
-                <%= link_to 'Dashboard', user_dashboard_path, class:"darkbuttonsmall"%>
-                <%= button_to "Delete this property", @property, method: :delete %>
+                
+                <%= button_to "Delete this property", @property, method: :delete, class:"coralbutton-s" %>
+                <a href="/maps/edit?pid=<%= @property.id %>" class="darkbutton-s col-start-2">Edit Map</a>
             </div>
             <div id="propshowmap"></div>
           </div>
         </div>
       </div>
-
+      <%= link_to 'Dashboard', user_dashboard_path, class:"darkbutton-s col-start-2"%>
     </div>
   </div>
 

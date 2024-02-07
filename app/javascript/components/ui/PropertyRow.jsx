@@ -11,7 +11,7 @@ export default function Property({property}) {
       <p>{property.property_type}</p>
       <p>{toCap(property.parking)} parking</p>
       <p>{toCap(property.tree_access)} access</p>
-      <div className="col-span-full bg-emerald-200 grid grid-cols-3">
+      <div className="col-span-full bg-emerald-200 grid grid-cols-3 items-center">
         <a
           href={'/properties/' + property.id}
           className="col-span-2 text-center p-2"
@@ -25,11 +25,9 @@ export default function Property({property}) {
           >
             New Job
           </a>
-        </div>
-        <div className="col-start-3 flex items-center justify-center gap-2 p-2">
           <a
             href={'/maps/edit?pid=' + property.id}
-            className="darkbutton-s"
+            className="lightbutton-s border-2 border-dark"
           >
             Edit Map
           </a>
