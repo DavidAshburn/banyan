@@ -14,15 +14,14 @@ export default class extends Controller {
       .then((propertydata) => {
         let property = propertydata[0];
         let treedata = propertydata[1];
-
         this.latestCenter = [property.longitude, property.latitude];
-
         this.mapboxInit(accesstoken, this.latestCenter);
 
         if (treedata.length > 0) {
           let calcCenter = this.getMarkerAvgCenter(treedata);
           //this.map.setCenter(calcCenter);
           this.setMarkersAndBounds(treedata, calcCenter);
+          this.movemarkerbuttonTarget.classList.toggle('hidden');
         } else {
           this.propertymarker = new mapboxgl.Marker({
             color: '#07a7cb',
@@ -33,6 +32,7 @@ export default class extends Controller {
       });
   }
 
+  //this.connect() Utilities
   mapboxInit(token, center) {
     mapboxgl.accessToken = token;
     this.map = new mapboxgl.Map({
@@ -43,7 +43,6 @@ export default class extends Controller {
       style: `mapbox://styles/mapbox/satellite-v9`,
     });
   }
-
   setMarkersAndBounds(treedata, center) {
     //mapbounds collection
     let features = [{ lon: center[0], lat: center[1] }];
@@ -63,16 +62,12 @@ export default class extends Controller {
     }
 
     //mapbounds setting
-    const bounds = new mapboxgl.LngLatBounds(
-      features[0],
-      features[0]
-    );
+    const bounds = new mapboxgl.LngLatBounds(features[0],features[0]);
     for (let item of features) {
       bounds.extend(item);
     }
     this.map.fitBounds(bounds, { padding: 200 });
   }
-
   getMarkerAvgCenter(treedata) {
     let lat = 0;
     let lon = 0;
@@ -84,7 +79,8 @@ export default class extends Controller {
     return center;
   }
 
-  editPropMarker(event) {
+  //Move Marker button action
+  editPropMarker() {
     this.propertymarker.remove();
     this.propertymarker = new mapboxgl.Marker({
       color: '#f87954',
@@ -99,7 +95,7 @@ export default class extends Controller {
     this.setmarkerbuttonTarget.classList.toggle('hidden');
     this.movemarkerbuttonTarget.classList.toggle('hidden');
   }
-
+  //Set Marker button action
   setPropMarker() {
     this.setmarkerbuttonTarget.classList.toggle('hidden');
     this.movemarkerbuttonTarget.classList.toggle('hidden');
@@ -110,10 +106,10 @@ export default class extends Controller {
       .setLngLat(this.latestCenter)
       .addTo(this.map);
 
-    this.updateLatLng();
+    this.postPropLatLng();
   }
-
-  updateLatLng() {
+  //setPropMarker Utility
+  postPropLatLng() {
     let center = this.propertymarker._lngLat;
     let property_id = this.pidTarget.innerText;
     let token = document.getElementsByName('csrf-token')[0].content

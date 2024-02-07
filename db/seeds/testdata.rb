@@ -90,6 +90,7 @@ Job.create(
   property_id: Ralphs.id,
   user_id: TestUser.id,
   trees:[tone.id, ttwo.id, tthree.id],
+  price:1200,
   id:979,
 )
 
@@ -167,6 +168,7 @@ Job.create(
   property_id: Normas.id,
   user_id: TestUser.id,
   trees: [ntone.id, nttwo.id, ntthree.id],
+  price:1200,
   id:965,
 )
 
