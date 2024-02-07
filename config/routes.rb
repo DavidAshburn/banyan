@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'user/profile'
   get 'user/debug'
   get 'mapping/new'
+  get 'properties/locupdate', to: 'properties#locupdate'
   root 'home#index'
   devise_for :users
 

@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
 <div data-controller="propertyshowmap" >
-  <div class="hidden" data-propertyshowmap-target="pid"><%= @property.id %></div>
+  <div class="hidden" data-propertyshowmap-target="pid" id="pid"><%= @property.id %></div>
   <div class="grid lg:grid-cols-[1fr_6fr_1fr] min-h-screen bg-dark p-4 bg-light">
     <div class="lg:col-start-2 min-h-[100lvh]">
 
       <div class="windowpanedark">
         <p><%= @property.address%></p>
         <div>
-          <div class="grid grid-rows-[1fr_60lvh] gap-4">   
+          <div class="grid grid-rows-[1fr_60lvh] gap-4">
             <div class="grid grid-cols-2 gap-2">
                 <p class="rounded border-b border-stone-50"><%= @property.name%></p>
                 <p class="rounded border-b border-stone-50"><%= @property.contact_name%></p>
@@ -16,9 +16,13 @@
                 <p class="rounded border-b border-stone-50"><%= @property.email%></p>
                 <p class="rounded border-b border-stone-50">Type: <%= @property.property_type%></p>
                 <p class="rounded border-b border-stone-50">Tree Access: <%= @property.tree_access%></p>
-                
+
                 <%= button_to "Delete this property", @property, method: :delete, class:"coralbutton-s" %>
-                <a href="/maps/edit?pid=<%= @property.id %>" class="darkbutton-s col-start-2">Edit Map</a>
+                <div class='flex items-center justify-center gap-2 p-2 col-start-2'>
+                  <a href="/maps/edit?pid=<%= @property.id %>" class="darkbutton-s">Edit Map</a>
+                  <button data-action="propertyshowmap#editPropMarker" data-propertyshowmap-target="movemarkerbutton" class="lightbutton-s">Move Marker</button>
+                  <button data-action="propertyshowmap#setPropMarker" data-propertyshowmap-target="setmarkerbutton"class="lightbutton-s hidden">Save Marker</button>
+                </div>
             </div>
             <div id="propshowmap"></div>
           </div>
