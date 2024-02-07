@@ -35,7 +35,8 @@ export default class extends Controller {
             this.emailIn.value = data.client.email;
           });
       });
-    } else { //path with cid given in search parameters
+    } else {
+      //path with cid given in search parameters
       let client_id = window.location.search.split('=')[1];
       fetch('/data/client?cid=' + client_id)
         .then((response) => response.json())
@@ -54,7 +55,7 @@ export default class extends Controller {
         .then((geocode) => {
           console.log(event.target.value);
           console.log(geocode);
-          if(geocode.features.length > 0) {
+          if (geocode.features.length > 0) {
             this.longitudeIn.value = geocode.features[0].center[0];
             this.latitudeIn.value = geocode.features[0].center[1];
           }
