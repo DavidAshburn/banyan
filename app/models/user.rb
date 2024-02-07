@@ -9,7 +9,6 @@ class User < ApplicationRecord
   has_many :jobs
 
   before_create :build_default_profile
-  before_create :build_default_configuration
 
   private
   def build_default_profile
@@ -17,8 +16,4 @@ class User < ApplicationRecord
     true
   end
 
-  def build_default_configuration
-    configuration = build_configuration
-    true
-  end
 end
