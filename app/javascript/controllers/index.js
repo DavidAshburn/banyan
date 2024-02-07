@@ -7,6 +7,9 @@ import { application } from "./application"
 import DashjobsmapController from "./dashjobsmap_controller"
 application.register("dashjobsmap", DashjobsmapController)
 
+import JobformController from "./jobform_controller"
+application.register("jobform", JobformController)
+
 import MapperController from "./mapper_controller"
 application.register("mapper", MapperController)
 

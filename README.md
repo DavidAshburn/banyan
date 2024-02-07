@@ -1,5 +1,13 @@
 # README
 
+# addons
+# gems
+  Devise
+# yarn
+  React
+  ReactDom
+  Flatpickr
+
 Dashboard Menu
   Calendar
 
