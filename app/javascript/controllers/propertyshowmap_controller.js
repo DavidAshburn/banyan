@@ -21,9 +21,10 @@ export default class extends Controller {
           property.longitude,
           property.latitude,
         ]);
-        this.map.setCenter([property.longitude, property.latitude]);
         if (treedata.length > 0) {
-          this.setMarkersAndBounds(treedata, property.longitude, property.latitude);
+          let calcCenter = this.getMarkerAvgCenter(treedata);
+          //this.map.setCenter(calcCenter);
+          this.setMarkersAndBounds(treedata, calcCenter);
         } else {
           let marker = new mapboxgl.Marker({
             color: '#07a7cb',
@@ -36,21 +37,20 @@ export default class extends Controller {
   }
 
   mapboxInit(token, center) {
-    const honolulu = [-157.858093, 21.315603];
     mapboxgl.accessToken = token;
     this.map = new mapboxgl.Map({
       container: 'propshowmap', // container ID
       center: center, // starting position [lng, lat]
-      zoom: 17, // starting zoom
+      zoom: 16, // starting zoom
       //cooperativeGestures: true,
       style: `mapbox://styles/mapbox/satellite-v9`,
     });
   }
 
-  setMarkersAndBounds(treedata, longitude, latitude) {
+  setMarkersAndBounds(treedata, center) {
     //mapbounds collection
     let features = [
-      { lon: longitude, lat:latitude },
+      { lon: center[0], lat:center[1] },
     ];
 
     for (let item of treedata) {
@@ -60,7 +60,7 @@ export default class extends Controller {
         .setLngLat([item.longitude, item.latitude])
         .setPopup(
           new mapboxgl.Popup().setHTML(
-            `<div className='grid p-2 gap-2'><p>${item.species}</p><p>${item.dbh} DBH</p><p>${item.crown} crown</p></div>`
+            `<div className='grid p-2 gap-2 w-40'><p>${item.species}</p><p>${item.dbh} DBH</p><p>${item.crown} crown</p></div>`
           )
         )
         .addTo(this.map);
@@ -75,6 +75,18 @@ export default class extends Controller {
     for (let item of features) {
       bounds.extend(item);
     }
-    this.map.fitBounds(bounds, { padding: 40 });
+    this.map.fitBounds(bounds, { padding: 200 });
   }
+
+  getMarkerAvgCenter(treedata) {
+    let lat = 0;
+    let lon = 0;
+    for(let item of treedata) {
+      lat += item.latitude;
+      lon += item.longitude;
+    }
+    let center = [lon/treedata.length, lat/treedata.length];
+    return center;
+  }
+
 }

@@ -1,107 +1,78 @@
+//geocoding debugging, in user/debug @ TOW
+
 import { Controller } from '@hotwired/stimulus';
 import mapboxgl from 'mapbox-gl';
-// Connects to data-controller="mapper"
-export default class extends Controller {
-  static targets = ['markerlat', 'markerlon'];
 
+// Connects to data-controller="propshowmap"
+export default class extends Controller {
+  static targets = ['pid'];
   connect() {
-    mapboxgl.accessToken =
+
+    
+    const prefix =
+      'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+    const middle = '.json?access_token=';
+    const accesstoken =
       'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
 
-    this.initialLongitude = -74.5;
-    this.initialLatitude = 40;
+    fetch(prefix + '1754 ala noe way, honolulu HI 96819' + middle + accesstoken)
+      .then((response) => response.json())
+      .then((geocode) => {
+        console.log(geocode);
+        this.codes = [];
+        for(let item of geocode.features) {
+          this.codes.push(item.center);
+        }
 
-    this.markerlng = this.initialLongitude;
-    this.markerlat = this.initialLatitude;
+        this.mapboxInit(accesstoken, this.codes[0]);
 
-    const coordinates = document.getElementById('coordinates');
+        this.setMarkersAndBounds(this.codes, this.codes[0]);
+      }
+    );
+  }
+
+  mapboxInit(token, center) {
+    mapboxgl.accessToken = token;
     this.map = new mapboxgl.Map({
-      container: 'map', // container ID
-      center: [this.initialLongitude, this.initialLatitude], // starting position [lng, lat]
-      zoom: 18, // starting zoom
-      cooperativeGestures: true,
+      container: 'debugmap', // container ID
+      center: center, // starting position [lng, lat]
+      zoom: 16, // starting zoom
+      //cooperativeGestures: true,
       style: `mapbox://styles/mapbox/satellite-v9`,
     });
+  }
 
-    this.dragger = new mapboxgl.Marker({
-      draggable: true,
-    })
-      .setLngLat([this.initialLongitude, this.initialLatitude])
-      .addTo(this.map);
-
-    let latTarg = this.markerlatTarget;
-    let lonTarg = this.markerlonTarget;
-    latTarg.innerText = `Latitude:  ${this.initialLongitude}`;
-    lonTarg.innerText = `Longitude:  ${this.initialLatitude}`;
-
-    let thisdragger = this.dragger;
-    function onDragEnd() {
-      const lngLat = thisdragger.getLngLat();
-      latTarg.innerText = `Latitude:  ${lngLat.lat}`;
-      lonTarg.innerText = `Longitude:  ${lngLat.lng}`;
-    }
-
-    this.dragger.on('dragend', onDragEnd);
-
-    //populate markers for data
-
-    this.dataset = [
-      {
-        lng: -74.49966937208349,
-        lat: 39.99994378317297,
-      },
-      {
-        lng: -74.49969625394637,
-        lat: 39.99995610311163,
-      },
+  setMarkersAndBounds(treedata, center) {
+    //mapbounds collection
+    let features = [
+      { lon: center[0], lat:center[1] },
     ];
-
-    for (let item of this.dataset) {
+    
+    for (let item of treedata) {
+      console.log('item: ' + item);
       let marker = new mapboxgl.Marker({
         color: '#fbbf24',
+        draggable: true,
       })
-        .setLngLat([item.lng, item.lat])
+        .setLngLat(item)
+        .setPopup(
+          new mapboxgl.Popup().setHTML(
+            `<div className='grid p-2 gap-2 w-40'><p>${item[0]}</p><p>${item[1]}</p></div>`
+          )
+        )
         .addTo(this.map);
+      features.push(item.center);
     }
+
+    //mapbounds setting
+    const bounds = new mapboxgl.LngLatBounds(
+      features[0],
+      features[0]
+    );
+    for (let item of features) {
+      bounds.extend(item);
+    }
+    this.map.fitBounds(bounds, { padding: 200 });
   }
 
-  getLatLng() {
-    let lat = parseFloat(
-      this.markerlatTarget.innerText.split(':')[1]
-    );
-    let lng = parseFloat(
-      this.markerlonTarget.innerText.split(':')[1]
-    );
-    console.log('Lat: ' + lat);
-    console.log('Lng: ' + lng);
-  }
-
-  addToData() {
-    let lat = parseFloat(
-      this.markerlatTarget.innerText.split(':')[1]
-    );
-    let lng = parseFloat(
-      this.markerlonTarget.innerText.split(':')[1]
-    );
-
-    this.dataset.push({
-      lng: lng,
-      lat: lat,
-    });
-
-    let marker = new mapboxgl.Marker({
-      color: '#fbbf24',
-    })
-      .setLngLat([lng, lat])
-      .addTo(this.map);
-
-    this.dragger.setLngLat([
-      this.initialLongitude,
-      this.initialLatitude,
-    ]);
-  }
-
-  reportData() {
-    console.dir(this.dataset);
-  }
 }

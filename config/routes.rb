@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'maps/find'
   get 'user/dashboard'
   get 'user/profile'
-  get 'user/configuration'
+  get 'user/debug'
   get 'mapping/new'
   root 'home#index'
   devise_for :users
