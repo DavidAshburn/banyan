@@ -3,9 +3,9 @@ class Property < ApplicationRecord
   has_many :trees
   has_many :jobs
 
-  valdates :latitude, presence: true
-  valdates :longitude, presence: true
-  valdates :address, presence: true
-  valdates :client_id, presence: true
+  validates :latitude, presence: true
+  validates :longitude, presence: true
+  validates :address, presence: true
+  validates :client_id, presence: true
 
 end

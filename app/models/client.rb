@@ -2,7 +2,7 @@ class Client < ApplicationRecord
   belongs_to :user
   has_many :properties
 
-  valdates :name, presence: true
-  valdates :mail_address, presence: true
-  valdates :user_id, presence: true
+  validates :name, presence: true
+  validates :mail_address, presence: true
+  validates :user_id, presence: true
 end
