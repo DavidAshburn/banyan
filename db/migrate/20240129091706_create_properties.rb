@@ -5,9 +5,9 @@ class CreateProperties < ActiveRecord::Migration[7.0]
       t.string :contact_name, default: ''
       t.string :phone, default: ''
       t.string :email, default: ''
-      t.string :address, default: ''
-      t.float :latitude, default: 0.0
-      t.float :longitude, default: 0.0
+      t.string :address
+      t.float :latitude
+      t.float :longitude
       t.string :property_type, default: ''
       t.string :parking, default: ''
       t.string :tree_access, default: ''

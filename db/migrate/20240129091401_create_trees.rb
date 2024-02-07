@@ -3,12 +3,12 @@ class CreateTrees < ActiveRecord::Migration[7.0]
     create_table :trees do |t|
       t.float :latitude
       t.float :longitude
-      t.integer :dbh, default: 0
+      t.integer :dbh
       t.string :crown, default: ''
       t.string :history, array: true, default: []
       t.string :hazards, array: true, default: []
       t.string :pictures, array: true, default: []
-      t.string :species, default: ''
+      t.string :species
       t.boolean :removed, default: false
       t.boolean :ground, default: false
       t.text :notes, default: ''

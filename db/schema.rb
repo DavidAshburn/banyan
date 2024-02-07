@@ -15,11 +15,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_06_000648) do
   enable_extension "plpgsql"
 
   create_table "clients", force: :cascade do |t|
-    t.string "name", default: ""
+    t.string "name"
     t.string "contact_name", default: ""
     t.string "phone", default: ""
     t.string "email", default: ""
-    t.string "mail_address", default: ""
+    t.string "mail_address"
     t.text "notes", default: ""
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -39,13 +39,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_06_000648) do
     t.datetime "end"
     t.boolean "invoiced", default: false
     t.boolean "paid", default: false
-    t.string "estimator", default: ""
+    t.string "estimator"
     t.string "foreman", default: ""
     t.text "notes", default: ""
     t.integer "trees", default: [], array: true
     t.string "equipment", default: [], array: true
     t.integer "crew_size", default: 0
     t.integer "est_hours", default: 0
+    t.integer "price"
     t.integer "property_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -69,9 +70,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_06_000648) do
     t.string "contact_name", default: ""
     t.string "phone", default: ""
     t.string "email", default: ""
-    t.string "address", default: ""
-    t.float "latitude", default: 0.0
-    t.float "longitude", default: 0.0
+    t.string "address"
+    t.float "latitude"
+    t.float "longitude"
     t.string "property_type", default: ""
     t.string "parking", default: ""
     t.string "tree_access", default: ""
@@ -89,12 +90,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_06_000648) do
   create_table "trees", force: :cascade do |t|
     t.float "latitude"
     t.float "longitude"
-    t.integer "dbh", default: 0
+    t.integer "dbh"
     t.string "crown", default: ""
     t.string "history", default: [], array: true
     t.string "hazards", default: [], array: true
     t.string "pictures", default: [], array: true
-    t.string "species", default: ""
+    t.string "species"
     t.boolean "removed", default: false
     t.boolean "ground", default: false
     t.text "notes", default: ""
