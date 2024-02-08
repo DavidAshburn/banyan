@@ -10,14 +10,15 @@
       </ul>
     </div>
   <% end %>
+
   <div class="grid gap-2 p-2" data-controller="jobform">
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :start %>
-      <%= form.datetime_field :start, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+      <input id="startdate" name="job[start] id="job_start"></input>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :end %>
-      <%= form.datetime_field :end, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+      <input id="enddate" name="job[end] id="job_end"></input>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :estimator %>
