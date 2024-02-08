@@ -8,6 +8,7 @@ class MapsController < ApplicationController
 
   def edit
     @pid = params[:pid]
+    @property = Property.find(params[:pid])
   end
 
 end

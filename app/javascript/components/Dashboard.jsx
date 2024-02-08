@@ -43,7 +43,7 @@ export default function Dashboard() {
           <a href="/user/profile" className="navlink">
             Profile
           </a>
-          <a href="/user/configuration" className="navlinklast">
+          <a href="/user/configuration" className="navlink">
             Config
           </a>
         </div>

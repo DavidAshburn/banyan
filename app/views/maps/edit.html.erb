@@ -9,8 +9,10 @@
     <div class="w-8 h-8 border-2 rounded-full abs-center border-pale"></div>
   </div>
 
-  <div class="grid grid-cols-3 gap-4 p-2" id="treecontrols">
-    <button type="button" data-action="mapsedit#addTree" class="p-2 px-4 text-2xl font-bold text-white rounded-lg bg-dark font-josefin w-40">Add Tree</button>
+  <div class="flex items-center justify-center gap-4 p-2" id="treecontrols">
+    <button type="button" data-action="mapsedit#addTree" class="darkbutton">Add Tree</button>
+    <%= link_to 'Property', @property, class: "lightbutton-s hover:bg-dark hover:text-light"%>
+    <%= link_to 'Dashboard', user_dashboard_path, class: "lightbutton-s hover:bg-dark hover:text-light"%>
   </div>
   <div id="treeinputs" class="grid grid-cols-6 gap-2 p-2 min-h-[20lvh] windowpane hidden">
     <%= render "treeform", tree: Tree.new %>
