@@ -3,6 +3,12 @@ class MapsController < ApplicationController
 
   def job
     @jobid = params[:jobid]
+
+    @thisjob = Job.find(params[:jobid])
+    @property = @thisjob.property
+
+    #job.trees is an array of Tree ids
+    @jobtrees = @thisjob.trees.map{|item| Tree.find(item)}
   end
 
   def edit

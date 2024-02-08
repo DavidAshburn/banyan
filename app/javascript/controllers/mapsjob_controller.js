@@ -21,6 +21,50 @@ export default class extends Controller {
         if (treedata.length > 0)
           this.setMarkersAndBounds(treedata, property.longitude, property.latitude);
       });
+    
+    //event listeners for each row item so they can switch the marker color
+    let treeboxes = document.getElementById('jobtrees').children;
+    let listenindex = 0;
+    for(let item of treeboxes) {
+      item.firstElementChild.innerText = listenindex
+      item.addEventListener('click', (event) => {
+        
+        let self = item;
+
+        let index = 0;
+        for(let marker of this.map._markers) {
+          let markerEl = marker.getElement();
+
+          let base = markerEl.firstChild.innerHTML;
+
+
+          if(index == parseInt(self.firstElementChild.innerText)) {
+            console.log('if');
+            markerEl.firstElementChild.innerHTML = base.replace("#fbbf24","#07a7cb");
+          } else {
+            console.log('else');
+            console.log(index + ' : ' + parseInt(self.firstElementChild.innerText));
+            markerEl.firstElementChild.innerHTML = base.replace("#07a7cb","#fbbf24");
+          }
+          index++;
+        }
+
+        /*
+
+        let el = this.map._markers[parseInt(item.firstChild.innerText)].getElement();
+        let base = el.firstChild.innerHTML;
+
+        let regbase = /#fbbf24/g;
+
+        if(base.search(regbase) != -1) {
+          el.firstChild.innerHTML = base.replace("#fbbf24","#07a7cb");
+        } else {
+          el.firstChild.innerHTML = base.replace("#07a7cb","#fbbf24");
+        }
+        */
+      })
+      listenindex++;
+    }
   }
   mapboxInit(token, center) {
     mapboxgl.accessToken = token;

@@ -1,3 +1,6 @@
-<li id="<%= dom_id tree %>">
-  <%= tree.latitude %> : <%= tree.longitude%>
-</li>
+<div id="<%= dom_id tree %>" class="bg-light rounded-md flex justify-center items-center gap-2">
+  <div class="hidden"></div>
+  <p><%= tree.species %></p>
+  <p><%= tree.dbh %>" DBH</p>
+  <p><%= tree.crown %> crown</p>
+</div>
