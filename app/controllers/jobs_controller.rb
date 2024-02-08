@@ -78,6 +78,7 @@ class JobsController < ApplicationController
         :equipment,
         :crew_size,
         :est_hours,
+        :price,
         :property_id,
         :user_id
         )

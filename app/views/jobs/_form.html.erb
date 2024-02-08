@@ -14,11 +14,13 @@
   <div class="grid gap-2 p-2" data-controller="jobform">
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :start %>
-      <input id="startdate" name="job[start] id="job_start"></input>
+      <input id="startdate"></input>
+      <%= form.datetime_field :start, class: "border border-black col-start-2" %>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :end %>
-      <input id="enddate" name="job[end] id="job_end"></input>
+      <input id="enddate"></input>
+      <%= form.datetime_field :end, class: "border border-black col-start-2" %>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :estimator %>
@@ -39,6 +41,10 @@
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :est_hours %>
       <%= form.number_field :est_hours, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+      <%= form.label :price %>
+      <%= form.number_field :price, step: 1, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
     </div>
 
     <div class="hidden">
