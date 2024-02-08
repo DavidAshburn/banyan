@@ -57,14 +57,16 @@ class DataController < ApplicationController
 
   def jobtrees
 
-    job = Job.find(params[:jid])
+    thisjob = Job.find(params[:jid])
+    property = thisjob.property
 
     #job.trees is an array of Tree ids
-    @jobtrees = job.trees.map{|item| Tree.find(item)}
+    jobtrees = thisjob.trees.map{|item| Tree.find(item)}
     #@jobtrees = @json.trees.map{ |x| Tree.find(x) }
 
+    @jobdata = {trees:jobtrees,property:property}
     respond_to do |format|
-      format.json { render json: @jobtrees}
+      format.json { render json: @jobdata}
     end
   end
 

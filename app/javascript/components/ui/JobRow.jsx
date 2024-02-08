@@ -50,8 +50,10 @@ export default function JobRow({ jobdata }) {
           </div>
           <a
             href={
-              '/maps/job?target=' +
-              property.address +
+              '/maps/job?plat=' +
+              property.latitude +
+              '&plon=' +
+              property.longitude +
               '&jobid=' +
               job.id
             }
