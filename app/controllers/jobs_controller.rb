@@ -13,6 +13,7 @@ class JobsController < ApplicationController
   # GET /jobs/new
   def new
     @job = Job.new
+    @profile = current_user.profile
   end
 
   # GET /jobs/1/edit

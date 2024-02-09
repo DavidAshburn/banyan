@@ -10,6 +10,7 @@ class CreateJobs < ActiveRecord::Migration[7.0]
       t.text :notes, default: ""
       t.integer :trees, array: true, default: []
       t.string :equipment, array: true, default: []
+      t.string :vehicles, array: true, default: []
       t.integer :crew_size, default: 0
       t.integer :est_hours, default: 0
       t.integer :price
