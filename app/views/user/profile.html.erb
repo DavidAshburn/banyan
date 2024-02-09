@@ -20,8 +20,11 @@
                   <p class="rounded border-b border-stone-50">
                     Species:
                   </p>
-                  <% @profile.species.each do |item| %>
-                    <p><%= item %></p>
+                  <% @profile.species.each_with_index do |item, index| %>
+                    <div class="flex gap-2">
+                      <p data-itemindex=<%= index %> data-itemtype="species"><%= item %></p>
+                      <button data-action="userprofile#removeItem" class="w-4 h-4 rounded-full flex justify-center items-center bg-dark text-light">x</button>
+                    </div>
                   <% end %>
                   <%# render @species? no its not a model%>
                 </div>
@@ -43,8 +46,11 @@
                   <p class="rounded border-b border-stone-50">
                     Vehicles:
                   </p>
-                  <% @profile.vehicles.each do |item| %>
-                    <p><%= item %></p>
+                  <% @profile.vehicles.each_with_index do |item, index| %>
+                    <div class="flex gap-2">
+                      <p data-itemindex=<%= index %> data-itemtype="vehicles"><%= item %></p>
+                      <button data-action="userprofile#removeItem" class="w-4 h-4 rounded-full flex justify-center items-center bg-dark text-light">x</button>
+                    </div>
                   <% end %>
                 </div>
                 <div class="hidden col-start-2" data-userprofile-target='vehiclesform'>
@@ -64,8 +70,11 @@
                   <p class="rounded border-b border-stone-50">
                     Equipment:
                   </p>
-                  <% @profile.equipment.each do |item| %>
-                    <p><%= item %></p>
+                  <% @profile.equipment.each_with_index do |item, index| %>
+                    <div class="flex gap-2">
+                      <p data-itemindex=<%= index %> data-itemtype="equipment"><%= item %></p>
+                      <button data-action="userprofile#removeItem" class="w-4 h-4 rounded-full flex justify-center items-center bg-dark text-light">x</button>
+                    </div>
                   <% end %>
                 </div>
                 <div class="hidden col-start-2" data-userprofile-target='equipmentform'>

@@ -53,5 +53,50 @@ class EditController < ApplicationController
     end
   end
 
+  def profileremovespecies
+    removeindex = Integer(params[:index])
+    @profile = current_user.profile
+    @targetarray = current_user.profile.species
+    @targetarray.delete_at(removeindex)
+
+    respond_to do |format|
+      if @profile.update(species:@targetarray)
+        format.json { render @profile, status: :ok, location: user_profile_path }
+      else
+        format.json { render json: @profile.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def profileremovevehicles
+    removeindex = Integer(params[:index])
+    @profile = current_user.profile
+    @targetarray = current_user.profile.vehicles
+    @targetarray.delete_at(removeindex)
+
+    respond_to do |format|
+      if @profile.update(vehicles:@targetarray)
+        format.json { render @profile, status: :ok, location: user_profile_path }
+      else
+        format.json { render json: @profile.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def profileremoveequipment
+    removeindex = Integer(params[:index])
+    @profile = current_user.profile
+    @targetarray = current_user.profile.equipment
+    @targetarray.delete_at(removeindex)
+
+    respond_to do |format|
+      if @profile.update(equipment:@targetarray)
+        format.json { render @profile, status: :ok, location: user_profile_path }
+      else
+        format.json { render json: @profile.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 
 end

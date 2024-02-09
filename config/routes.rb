@@ -28,6 +28,10 @@ Rails.application.routes.draw do
   post 'edit/profilespecies', to: 'edit#profilespecies'
   post 'edit/profilevehicles', to: 'edit#profilevehicles'
   post 'edit/profileequipment', to: 'edit#profileequipment'
+  post 'edit/profileremovespecies', to: 'edit#profileremovespecies'
+  post 'edit/profileremovevehicles', to: 'edit#profileremovevehicles'
+  post 'edit/profileremoveequipment', to: 'edit#profileremoveequipment'
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
