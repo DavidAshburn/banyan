@@ -14,6 +14,7 @@ class JobsController < ApplicationController
   def new
     @job = Job.new
     @profile = current_user.profile
+    @pid = params[:pid]
   end
 
   # GET /jobs/1/edit
