@@ -4,7 +4,11 @@ import mapboxgl from 'mapbox-gl';
 // Connects to data-controller="propshowmap"
 export default class extends Controller {
   static targets = ['pid', 'setmarkerbutton', 'movemarkerbutton'];
+  
   connect() {
+    this.startcolor = '#07a7cb';
+    this.highcolor = '#f87954';
+
     let property_id = this.pidTarget.innerText;
     const accesstoken =
       'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
@@ -49,7 +53,7 @@ export default class extends Controller {
 
     for (let item of treedata) {
       let marker = new mapboxgl.Marker({
-        color: '#fbbf24',
+        color: this.startcolor,
       })
         .setLngLat([item.longitude, item.latitude])
         .setPopup(
@@ -83,7 +87,7 @@ export default class extends Controller {
   editPropMarker() {
     this.propertymarker.remove();
     this.propertymarker = new mapboxgl.Marker({
-      color: '#f87954',
+      color: this.highcolor,
       draggable: true,
     })
       .setLngLat(this.latestCenter)

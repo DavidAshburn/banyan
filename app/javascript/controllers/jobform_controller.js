@@ -8,6 +8,11 @@ export default class extends Controller {
   connect() {
     let start = document.getElementById('startdate');
     let end = document.getElementById('enddate');
+    this.startcolor = '#07a7cb';
+    this.highcolor = '#f87954';
+    let property_id = this.pidTarget.innerText;
+    const accesstoken =
+      'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
 
     const fpstart = flatpickr('#startdate', {
       enableTime: true,
@@ -26,10 +31,6 @@ export default class extends Controller {
         console.log(dateStr);
       },
     });
-
-    let property_id = this.pidTarget.innerText;
-    const accesstoken =
-      'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
 
     fetch('/data/proptrees?pid=' + property_id)
       .then((response) => response.json())
@@ -51,6 +52,14 @@ export default class extends Controller {
             .addTo(this.map);
         }
       });
+
+      fetch('/data/geojson?pid=' + property_id)
+      .then((response) => response.json())
+      .then((geojson) => {
+        console.log(geojson);
+      });
+
+    initializePopups(treedata);
   }
 
   //this.connect() Utilities
@@ -70,15 +79,24 @@ export default class extends Controller {
 
     for (let item of treedata) {
       let marker = new mapboxgl.Marker({
-        color: '#fbbf24',
+        color: this.startcolor,
       })
         .setLngLat([item.longitude, item.latitude])
-        .setPopup(
-          new mapboxgl.Popup().setHTML(
-            `<div className='grid p-2 gap-2 w-40'><p>${item.species}</p><p>${item.dbh} DBH</p><p>${item.crown} crown</p></div>`
-          )
-        )
         .addTo(this.map);
+
+      marker.getElement().addEventListener('click',()=>{
+        let newcenter = marker.getLngLat();
+
+        marker.remove();
+        let highlighted = new mapboxgl.Marker({
+          color: this.highcolor,
+        })
+          .setLngLat(newcenter)
+          .addTo(this.map);
+      });
+
+        
+
       features.push({ lon: item.longitude, lat: item.latitude });
     }
 
@@ -90,7 +108,7 @@ export default class extends Controller {
     for (let item of features) {
       bounds.extend(item);
     }
-    this.map.fitBounds(bounds, { padding: 100 });
+    this.map.fitBounds(bounds, { padding: 300 });
   }
   getMarkerAvgCenter(treedata) {
     let lat = 0;
@@ -101,5 +119,8 @@ export default class extends Controller {
     }
     let center = [lon / treedata.length, lat / treedata.length];
     return center;
+  }
+  initializeData(geojson) {
+
   }
 }

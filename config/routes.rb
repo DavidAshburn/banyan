@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'data/client', to: 'data#client'
   get 'data/profile', to: 'data#profile'
   get 'data/propjobs', to: 'data#propjobs'
+  get 'data/geojson', to: 'data#geojson'
   get 'data/getdebug', to: 'data#getdebug'
   post 'edit/locupdate', to: 'edit#locupdate'
   post 'edit/profilespecies', to: 'edit#profilespecies'

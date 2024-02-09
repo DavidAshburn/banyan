@@ -95,6 +95,38 @@ class DataController < ApplicationController
     end
   end
 
+  def geojson
+    treedata = Property.find(params[:pid]).trees
+
+    @features = []
+
+    treedata.each do |tree|
+      @features.push({
+        type:"Feature",
+        properties: {
+          description:
+            "<div class='grid p-2 gap-2 w-40'><p>#{tree.species}</p><p>#{tree.dbh} DBH</p><p>#{tree.crown} crown</p></div>"
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [tree.longitude, tree.latitude]
+        }
+      })
+    end
+
+    @geojson = {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: @features,
+      }
+    }
+    respond_to do |format|
+      format.json { render json: @geojson }
+    end
+
+  end
+
   def getdebug
 
     @debug = Client.all.map{|client| {

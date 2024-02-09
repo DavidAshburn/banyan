@@ -1,10 +1,10 @@
 <div data-controller="jobform">
   <div class="hidden" data-jobform-target="pid"><%=@pid %></div>
-  <h1>New job</h1>
 
-  <div id="jobmap" class="min-h-[40vh]"></div>
-  <%= render "form", job: @job %>
-
+  <div id="jobmap" class="h-[40dvh] lg:h-[100dvh] lg:w-full"></div>
+  <div class="md:mx-[5vw] lg:z-2 lg:absolute lg:right-0 lg:top-20">
+    <%= render "form", job: @job %>
+  </div>
 
   <div>
     <%= link_to "Back to jobs", jobs_path %>
