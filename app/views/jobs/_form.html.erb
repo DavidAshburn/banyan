@@ -11,16 +11,19 @@
     </div>
   <% end %>
 
-  <div class="grid gap-2 p-2">
+  <div class="formcontainer">
+    <div class="windowpanedark sm:col-start-2">
+      <p>New Client</p>
+    <div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :start %>
       <input id="startdate"></input>
-      <%= form.datetime_field :start, class: "border border-black col-start-2" %>
+      <%= form.datetime_field :start, class: "hidden" %>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :end %>
       <input id="enddate"></input>
-      <%= form.datetime_field :end, class: "border border-black col-start-2" %>
+      <%= form.datetime_field :end, class: "hidden" %>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
       <%= form.label :estimator %>

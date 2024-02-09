@@ -33,6 +33,9 @@
   .profilecatbutton {
     @apply w-4 h-4 rounded-full flex justify-center items-center bg-dark text-light;
   }
+  .formcontainer {
+    @apply grid gap-2 p-2 sm:grid-cols-[1fr_640px_1fr] md:grid-cols-[1fr_768px_1fr] font-inter;
+  }
 }
 
 .abs-center {
