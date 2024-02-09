@@ -14,12 +14,12 @@ end
 def makeClients(list)
   list.each do |client|
     Client.create(
-      name: client.name,
-      contact_name: client.contact_name,
-      phone: client.phone,
-      email: client.email,
-      mail_address: client.mail_address,
-      notes: client.notes,
+      name: client[0],
+      contact_name: client[1],
+      phone: client[2],
+      email: client[3],
+      mail_address: client[4],
+      notes: client[5],
       user_id: TestUser.id,
     )
   end
@@ -619,38 +619,16 @@ trees8 = [
 ]
 makeTrees(trees8, Wes3.id)
 
+
+
 clients = [
-    {
-        name: "Ben Gaudette",
-        contact_name: "",
-        phone: "123-123-1234",
-        email: "ben@me.com",
-        mail_address: "1754 ala noe way, honolulu hi 96819",
-        notes: ""
-    },
-    {
-        name: "Adam bentley",
-        contact_name: "",
-        phone: "456-456-4567",
-        email: "a@m.com",
-        mail_address: "545 oakvale terrace walnut creek ca 94597",
-        notes: ""
-    },
-    {
-        name: "Johnson Holdings",
-        contact_name: "John Johnson",
-        phone: "987-123-1234",
-        email: "john@johnson.com",
-        mail_address: "3200 delmont ave, oakland ca",
-        notes: ""
-    },
-    {
-        name: "Agoron Landscaping",
-        contact_name: "terd ferguson",
-        phone: "928-444-5555",
-        email: "terd@agoron.com",
-        mail_address: "41 Valley Ct pleasant hill ca",
-        notes: ""
-    }
+    ["Ben Gaudette","","123-123-1234","ben@me.com","1754 ala noe way, honolulu hi 96819","",
+    ],
+    ["Adam bentley","","456-456-4567","a@m.com","545 oakvale terrace walnut creek ca 94597","",
+    ],
+    ["Johnson Holdings","John Johnson","987-123-1234","john@johnson.com","3200 delmont ave, oakland ca","",
+    ],
+    ["Agoron Landscaping","terd ferguson","928-444-5555","terd@agoron.com","41 Valley Ct pleasant hill ca","",
+    ],
 ]
 makeClients(clients)
