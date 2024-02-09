@@ -11,6 +11,20 @@ def makeTrees(trees, pid)
   end
 end
 
+def makeClients(list)
+  list.each do |client|
+    Client.create(
+      name: client.name,
+      contact_name: client.contact_name,
+      phone: client.phone,
+      email: client.email,
+      mail_address: client.mail_address,
+      notes: client.notes,
+      user_id: TestUser.id,
+    )
+  end
+end
+
 User.destroy_all
 Profile.destroy_all
 Client.destroy_all
@@ -604,3 +618,39 @@ trees8 = [
   ]
 ]
 makeTrees(trees8, Wes3.id)
+
+clients = [
+    {
+        name: "Ben Gaudette",
+        contact_name: "",
+        phone: "123-123-1234",
+        email: "ben@me.com",
+        mail_address: "1754 ala noe way, honolulu hi 96819",
+        notes: ""
+    },
+    {
+        name: "Adam bentley",
+        contact_name: "",
+        phone: "456-456-4567",
+        email: "a@m.com",
+        mail_address: "545 oakvale terrace walnut creek ca 94597",
+        notes: ""
+    },
+    {
+        name: "Johnson Holdings",
+        contact_name: "John Johnson",
+        phone: "987-123-1234",
+        email: "john@johnson.com",
+        mail_address: "3200 delmont ave, oakland ca",
+        notes: ""
+    },
+    {
+        name: "Agoron Landscaping",
+        contact_name: "terd ferguson",
+        phone: "928-444-5555",
+        email: "terd@agoron.com",
+        mail_address: "41 Valley Ct pleasant hill ca",
+        notes: ""
+    }
+]
+makeClients(clients)

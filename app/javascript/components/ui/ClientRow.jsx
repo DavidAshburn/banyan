@@ -14,7 +14,7 @@ export default function ClientRow({ client, properties, index }) {
 
   return (
     <div
-      className="grid p-4 gap-2 items-center grid-cols-[2fr_2fr_1fr] text-center min-h-[4rem] rounded-bl-lg rounded-tr-lg border border-dark rounded-md"
+      className="grid px-4 py-2 gap-2 items-center grid-cols-[2fr_2fr_1fr] text-center min-h-[2rem] rounded-bl-lg rounded-tr-lg border border-dark rounded-md"
       data-ref={index}
       onClick={toggleItem}
     >
@@ -22,7 +22,6 @@ export default function ClientRow({ client, properties, index }) {
       <p>{client.email}</p>
       <p>{client.phone}</p>
       <div className={'grid gap-4 col-span-full ' + display}>
-        
         {properties.map((location, i) => (
           <PropertyRow property={location} key={i} />
         ))}

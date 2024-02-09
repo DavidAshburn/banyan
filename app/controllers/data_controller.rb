@@ -95,12 +95,19 @@ class DataController < ApplicationController
     end
   end
 
-  def getproperties
+  def getdebug
 
-    @properties = Property.all.map{|prop| [prop.id, prop.trees.map{|tree| [tree.species, tree.dbh, tree.crown, tree.latitude, tree.longitude]}]}
+    @debug = Client.all.map{|client| {
+      name: client.name,
+      contact_name: client.contact_name,
+      phone: client.phone,
+      email: client.email,
+      mail_address: client.mail_address,
+      notes: client.notes,
+    } }
 
     respond_to do |format|
-      format.json { render json: @properties }
+      format.json { render json: @debug }
     end
   end
 end
