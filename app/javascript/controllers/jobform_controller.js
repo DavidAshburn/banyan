@@ -6,14 +6,9 @@ import mapboxgl from 'mapbox-gl';
 export default class extends Controller {
   static targets = ['pid'];
   connect() {
+    //datetime picker elements in form
     let start = document.getElementById('startdate');
     let end = document.getElementById('enddate');
-    this.startcolor = '#07a7cb';
-    this.highcolor = '#f87954';
-    let property_id = this.pidTarget.innerText;
-    const accesstoken =
-      'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
-
     const fpstart = flatpickr('#startdate', {
       enableTime: true,
       dateFormat: 'Y-m-d H:i',
@@ -22,7 +17,6 @@ export default class extends Controller {
         console.log(dateStr);
       },
     });
-
     const fpend = flatpickr('#enddate', {
       enableTime: true,
       dateFormat: 'Y-m-d H:i',
@@ -32,36 +26,35 @@ export default class extends Controller {
       },
     });
 
+    //colors for toggleMarker
+    this.startcolor = "#07a7cb";
+    this.brightcolor = "#6ee7b7"
+
+    //fetch property and tree data, then populate map
+    let property_id = this.pidTarget.innerText;
+    const accesstoken =
+      'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
     fetch('/data/proptrees?pid=' + property_id)
       .then((response) => response.json())
       .then((propertydata) => {
         let property = propertydata[0];
         let treedata = propertydata[1];
-        this.latestCenter = [property.longitude, property.latitude];
-        this.mapboxInit(accesstoken, this.latestCenter);
+        this.mapboxInit(accesstoken, [property.longitude, property.latitude]);
 
         if (treedata.length > 0) {
-          let calcCenter = this.getMarkerAvgCenter(treedata);
-          //this.map.setCenter(calcCenter);
-          this.setMarkersAndBounds(treedata, calcCenter);
+          this.initPopups(treedata); //this.popups gets passed in to toggleMarker
+          this.setMarkersAndBounds(treedata, this.getMarkerAvgCenter(treedata));
         } else {
           this.propertymarker = new mapboxgl.Marker({
-            color: '#07a7cb',
+            color: this.startcolor,
           })
-            .setLngLat(this.latestCenter)
+            .setLngLat([property.longitude, property.latitude])
             .addTo(this.map);
         }
-      });
 
-      fetch('/data/geojson?pid=' + property_id)
-      .then((response) => response.json())
-      .then((geojson) => {
-        console.log(geojson);
+        
       });
-
-    initializePopups(treedata);
   }
-
   //this.connect() Utilities
   mapboxInit(token, center) {
     mapboxgl.accessToken = token;
@@ -76,8 +69,9 @@ export default class extends Controller {
   setMarkersAndBounds(treedata, center) {
     //mapbounds collection
     let features = [{ lon: center[0], lat: center[1] }];
-
+    let treeIndex = 0;
     for (let item of treedata) {
+      let treeIndexValue = treeIndex;
       let marker = new mapboxgl.Marker({
         color: this.startcolor,
       })
@@ -85,21 +79,18 @@ export default class extends Controller {
         .addTo(this.map);
 
       marker.getElement().addEventListener('click',()=>{
-        let newcenter = marker.getLngLat();
-
-        marker.remove();
-        let highlighted = new mapboxgl.Marker({
-          color: this.highcolor,
-        })
-          .setLngLat(newcenter)
-          .addTo(this.map);
+        this.toggleMarker(marker, this.startcolor, this.brightcolor, this.map, treeIndexValue);
+      });
+      marker.getElement().addEventListener('mouseenter', () => {
+        this.showPopup(treeIndexValue);
+      });
+      marker.getElement().addEventListener('mouseleave', () => {
+        this.hidePopup(treeIndexValue);
       });
 
-        
-
       features.push({ lon: item.longitude, lat: item.latitude });
+      treeIndex++;
     }
-
     //mapbounds setting
     const bounds = new mapboxgl.LngLatBounds(
       features[0],
@@ -120,7 +111,50 @@ export default class extends Controller {
     let center = [lon / treedata.length, lat / treedata.length];
     return center;
   }
-  initializeData(geojson) {
+  toggleMarker(marker, start, bright, map, treeIndexValue) {
 
+    let nextcolor;
+    let addpopup;
+    if(marker._color == start) {
+      nextcolor = bright;
+    } else {
+      nextcolor = start;
+    }
+    let backup = marker;
+    marker.remove;
+
+    let newmarker = new mapboxgl.Marker({
+      color: nextcolor,
+    })
+      .setLngLat(backup.getLngLat())
+      .addTo(map);
+
+    newmarker.getElement().addEventListener('click',()=>{
+      this.toggleMarker(newmarker, start, bright, map, treeIndexValue);
+    });
+    newmarker.getElement().addEventListener('mouseenter', () => { 
+      this.showPopup(treeIndexValue);
+    });
+    newmarker.getElement().addEventListener('mouseleave', () => {
+      this.hidePopup(treeIndexValue);
+    });
+  }
+  initPopups(treedata) {
+    this.popups = []
+    for(let item of treedata) {
+      let newpop = new mapboxgl.Popup({anchor:'bottom-left', closeButton: false})
+      .setHTML(
+        `<div className='grid p-2 gap-2 w-40'><p>${item.species}</p><p>${item.dbh} DBH</p><p>${item.crown} crown</p></div>`
+        )
+      .setLngLat([item.longitude, item.latitude])
+
+      this.popups.push(newpop);
+    };
+  }
+  showPopup(index) {
+    this.popups[index].addTo(this.map);
+  }
+  hidePopup(index) {
+    this.popups[index].remove();
   }
 }

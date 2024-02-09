@@ -95,6 +95,7 @@ class DataController < ApplicationController
     end
   end
 
+  #unused right now but may come in handy
   def geojson
     treedata = Property.find(params[:pid]).trees
 
