@@ -94,4 +94,13 @@ class DataController < ApplicationController
       format.json { render json: @data }
     end
   end
+
+  def getproperties
+
+    @properties = Property.all.map{|prop| [prop.id, prop.trees.map{|tree| [tree.species, tree.dbh, tree.crown, tree.latitude, tree.longitude]}]}
+
+    respond_to do |format|
+      format.json { render json: @properties }
+    end
+  end
 end

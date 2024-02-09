@@ -60,7 +60,7 @@ export default class extends Controller {
     this.map = new mapboxgl.Map({
       container: 'map', // container ID
       center: center, // starting position [lng, lat]
-      zoom: 17, // starting zoom
+      zoom: 16, // starting zoom
       //cooperativeGestures: true,
       style: `mapbox://styles/mapbox/satellite-v9`,
     });
@@ -98,7 +98,7 @@ export default class extends Controller {
     for (let item of features) {
       bounds.extend(item);
     }
-    this.map.fitBounds(bounds, { padding: 40 });
+    this.map.fitBounds(bounds, { padding: 200 });
   }
 
   setBackupListeners() {

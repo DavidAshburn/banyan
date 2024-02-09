@@ -38,7 +38,9 @@
     </div>
     <div>
       <%= form.submit 'Save Tree', class: "p-2 px-4 text-center bg-dark font-bold text-light font-josefin text-3xl", data: { action:'mapsedit#saveTree'} %>
+      <%= link_to 'Property', @property, class: "darkbutton-s"%>
+      <%= link_to 'Dashboard', user_dashboard_path, class: "darkbutton-s"%>
     </div>
-    <p>maps controller</p>
+    <p>tree controller</p>
   </div>
 <% end %>

@@ -9,6 +9,7 @@ class PropertiesController < ApplicationController
 
   # GET /properties/1 or /properties/1.json
   def show
+    @trees = @property.trees.map {|tree| {longitude: tree.longitude, latitude: tree.latitude}}
   end
 
   # GET /properties/new
