@@ -1,4 +1,5 @@
 User.destroy_all
+Profile.destroy_all
 Client.destroy_all
 Property.destroy_all
 Tree.destroy_all

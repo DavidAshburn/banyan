@@ -7,6 +7,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 User.destroy_all
+Profile.destroy_all
 Client.destroy_all
 Property.destroy_all
 Tree.destroy_all
@@ -19,11 +20,6 @@ TestUser = User.create(
 	password_confirmation: "password",
   id: 999,
 	)
-
-Profile.create(
-  name:"Boss",
-  user_id: TestUser.id,
-)
 
 RalphBaccio = Client.create(
   name:'Ralph Baccio',

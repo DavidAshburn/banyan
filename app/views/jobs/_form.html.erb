@@ -48,6 +48,8 @@
     </div>
 
     <div class="hidden">
+      <%= form.number_field :property_id, value: @job.property_id %>
+      <%= form.number_field :user_id, value: current_user.id %>
     </div>
     <div>
       <%= form.submit %>

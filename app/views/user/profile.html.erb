@@ -1,50 +1,82 @@
 <div data-controller="userprofile" id="userprofile">
+  <div class='hidden' data-userprofile-target='pidin'><%= @pid %></div>
   <div class="grid lg:grid-cols-[1fr_6fr_1fr] min-h-screen bg-dark p-4 bg-light">
       <div class="lg:col-start-2 min-h-[30vh]">
         <div class="windowpanedark">
           <p>User Profile</p>
           <div>
-            <div class="grid grid-rows-5">
-              <p class="rounded border-b border-stone-50">
+            <div class="grid">
+              <p class="rounded border-b border-stone-200">
                 Name: <%= @profile.name %>
               </p>
-              <div class="grid gap-2 grid-cols-[1fr_1fr_4fr]">
+
+              <div class="grid gap-2 grid-cols-[1fr_5fr]">
                 <button
                   class="lightbutton-s"
-                  data-action='userprofile#addSpecies'
-                ></button>
-                <p class="rounded border-b border-stone-50">
-                  Species Saved:
-                </p>
-                <% @profile.species.each do |item| %>
-                  <p><%= item %></p>
-                <% end %>
+                  data-action='userprofile#showSpecies'
+                >Add Species</button>
+
+                <div class="flex items-center justify-start gap-2" data-userprofile-target='specieslist'>
+                  <p class="rounded border-b border-stone-50">
+                    Species:
+                  </p>
+                  <% @profile.species.each do |item| %>
+                    <p><%= item %></p>
+                  <% end %>
+                  <%# render @species? no its not a model%>
+                </div>
+
+                <div class="hidden col-start-2" data-userprofile-target='speciesform'>
+                  <div class="grid gap-2 grid-cols-[3fr_2fr] max-w-80">
+                    <input type="text" data-userprofile-target="speciesin" class="border border-dark rounded p-2">
+                    <button class="darkbutton-s" data-action="userprofile#addSpecies">Add</button>
+                  </div>
+                </div>
               </div>
-              <div class="grid gap-2 grid-cols-[1fr_1fr_4fr]">
+
+              <div class="grid gap-2 grid-cols-[1fr_5fr]">
                 <button
                   class = "lightbutton-s"
-                  data-action = 'userprofile#addVehicle'
-                ></button>
-                <p class="rounded border-b border-stone-50">
-                  Vehicles:
-                </p>
-                <% @profile.vehicles.each do |item| %>
-                  <p><%= item %></p>
-                <% end %>
+                  data-action = 'userprofile#showVehicle'
+                >Add Vehicles</button>
+                <div class="flex items-center justify-start gap-2" data-userprofile-target='vehicleslist'>
+                  <p class="rounded border-b border-stone-50">
+                    Vehicles:
+                  </p>
+                  <% @profile.vehicles.each do |item| %>
+                    <p><%= item %></p>
+                  <% end %>
+                </div>
+                <div class="hidden col-start-2" data-userprofile-target='vehiclesform'>
+                  <div class="grid gap-2 grid-cols-[3fr_2fr] max-w-80">
+                    <input type="text" data-userprofile-target="vehiclesin" class="border border-dark rounded p-2">
+                    <button class="darkbutton-s" data-action="userprofile#addVehicle">Add</button>
+                  </div>
+                </div>
               </div>
-              <div class="grid gap-2 grid-cols-[1fr_1fr_4fr]">
+
+              <div class="grid gap-2 grid-cols-[1fr_5fr]">
                 <button
                   class="lightbutton-s"
-                  data-action = 'userprofile#addEquipment'
-                ></button>
-                <p class="rounded border-b border-stone-50">
-                  Equipment:
-                </p>
-                <% @profile.equipment.each do |item| %>
-                  <p><%= item %></p>
-                <% end %>
+                  data-action = 'userprofile#showEquipment'
+                >Add Equipment</button>
+                <div class="flex items-center justify-start gap-2" data-userprofile-target='equipmentlist'>
+                  <p class="rounded border-b border-stone-50">
+                    Equipment:
+                  </p>
+                  <% @profile.equipment.each do |item| %>
+                    <p><%= item %></p>
+                  <% end %>
+                </div>
+                <div class="hidden col-start-2" data-userprofile-target='equipmentform'>
+                  <div class="grid gap-2 grid-cols-[3fr_2fr] max-w-80">
+                    <input type="text" data-userprofile-target="equipmentin" class="border border-dark rounded p-2">
+                    <button class="darkbutton-s" data-action="userprofile#addEquipment">Add</button>
+                  </div>
+                </div>
               </div>
-              <a href="/user/dashboard" class="darkbutton">
+
+              <a href="/user/dashboard" class="darkbutton-s mt-12">
                 Dashboard
               </a>
             </div>

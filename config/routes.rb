@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   get 'data/profile', to: 'data#profile'
   get 'data/propjobs', to: 'data#propjobs'
   post 'edit/locupdate', to: 'edit#locupdate'
+  post 'edit/profilespecies', to: 'edit#profilespecies'
+  post 'edit/profilevehicles', to: 'edit#profilevehicles'
+  post 'edit/profileequipment', to: 'edit#profileequipment'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
