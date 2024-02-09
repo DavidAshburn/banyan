@@ -24,6 +24,15 @@
   .coralbutton-s {
     @apply p-2 rounded bg-lcoral border-2 border-coral text-coral font-bold text-sm text-center w-fit;
   }
+  .profilecatlist {
+    @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 items-center gap-2 py-2;
+  }
+  .profilecatpair {
+    @apply flex justify-between items-center px-2 gap-2 bg-light rounded-full;
+  }
+  .profilecatbutton {
+    @apply w-4 h-4 rounded-full flex justify-center items-center bg-dark text-light;
+  }
 }
 
 .abs-center {

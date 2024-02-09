@@ -43,7 +43,12 @@ export default class extends Controller {
           /*handle POST errors*/
         });
 
-      this.appendP(this.specieslistTarget, input.value, this.latestSpecies.length - 1, 'species');
+      this.appendP(
+        this.specieslistTarget,
+        input.value,
+        this.latestSpecies.length - 1,
+        'species'
+      );
       this.clearInputs();
     }
     console.log(this.latestSpecies);
@@ -66,7 +71,12 @@ export default class extends Controller {
       .then((data) => {
         /*handle POST errors*/
       });
-    this.appendP(this.vehicleslistTarget, input.value, this.latestVehicles.length - 1, 'vehicles');
+    this.appendP(
+      this.vehicleslistTarget,
+      input.value,
+      this.latestVehicles.length - 1,
+      'vehicles'
+    );
     this.clearInputs();
   }
 
@@ -87,7 +97,12 @@ export default class extends Controller {
       .then((data) => {
         /*handle POST errors*/
       });
-    this.appendP(this.equipmentlistTarget, input.value, this.latestEquipment.length - 1, 'equipment');
+    this.appendP(
+      this.equipmentlistTarget,
+      input.value,
+      this.latestEquipment.length - 1,
+      'equipment'
+    );
     this.clearInputs();
   }
 
@@ -98,12 +113,12 @@ export default class extends Controller {
     let type = removeTarget.dataset.itemtype;
 
     fetch('/edit/profileremove' + type + '?index=' + index, {
-      method: "POST", 
+      method: 'POST',
       headers: {
-      'X-CSRF-Token': token,
+        'X-CSRF-Token': token,
       },
     })
-    .then((response) => response.json())
+      .then((response) => response.json())
       .then((data) => {
         console.log(data);
         /*handle POST errors*/
@@ -113,28 +128,28 @@ export default class extends Controller {
   }
 
   clearInputs() {
-    this.speciesinTarget.value = "";
-    this.vehiclesinTarget.value = "";
-    this.equipmentinTarget.value = "";
+    this.speciesinTarget.value = '';
+    this.vehiclesinTarget.value = '';
+    this.equipmentinTarget.value = '';
   }
 
   appendP(target, content, itemindex, itemtype) {
     let container = document.createElement('div');
-    container.classList.add('flex','gap-2');
+    container.classList.add('profilecatpair');
     let el = document.createElement('p');
     el.dataset.itemindex = itemindex; //used for removing items
     el.dataset.itemtype = itemtype;
-    
+
     let innerText = document.createTextNode(content);
     el.appendChild(innerText);
-    
+
     let button = document.createElement('button');
     let inner = document.createTextNode('x');
     button.appendChild(inner);
 
-    button.dataset.action="userprofile#removeItem";
-    button.classList.add('w-4','h-4','rounded-full','flex','justify-center','items-center','bg-dark','text-light');
-    
+    button.dataset.action = 'userprofile#removeItem';
+    button.classList.add('profilecatbutton');
+
     container.appendChild(el);
     container.appendChild(button);
     target.appendChild(container);
@@ -142,11 +157,27 @@ export default class extends Controller {
 
   showSpecies() {
     this.speciesformTarget.classList.toggle('hidden');
+    this.hideOthers(0);
   }
   showVehicle() {
     this.vehiclesformTarget.classList.toggle('hidden');
+    this.hideOthers(1);
   }
   showEquipment() {
     this.equipmentformTarget.classList.toggle('hidden');
+    this.hideOthers(2);
+  }
+  hideOthers(index) {
+    let targets = [
+      this.speciesformTarget,
+      this.vehiclesformTarget,
+      this.equipmentformTarget,
+    ];
+
+    for (let i = 0; i < 3; i++) {
+      if (i != index) {
+        targets[i].classList.toggle('hidden', true);
+      }
+    }
   }
 }

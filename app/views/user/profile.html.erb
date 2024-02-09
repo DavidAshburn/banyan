@@ -12,18 +12,18 @@
 
               <div class="grid gap-2 grid-cols-[1fr_5fr]">
                 <button
-                  class="lightbutton-s"
+                  class="lightbutton-s w-20"
                   data-action='userprofile#showSpecies'
                 >Add Species</button>
 
-                <div class="flex items-center justify-start gap-2" data-userprofile-target='specieslist'>
-                  <p class="rounded border-b border-stone-50">
+                <div class="profilecatlist" data-userprofile-target='specieslist'>
+                  <p class="rounded border-b border-stone-50 col-span-full text-sm">
                     Species:
                   </p>
                   <% @profile.species.each_with_index do |item, index| %>
-                    <div class="flex gap-2">
+                    <div class="profilecatpair">
                       <p data-itemindex=<%= index %> data-itemtype="species"><%= item %></p>
-                      <button data-action="userprofile#removeItem" class="w-4 h-4 rounded-full flex justify-center items-center bg-dark text-light">x</button>
+                      <button data-action="userprofile#removeItem" class="profilecatbutton">x</button>
                     </div>
                   <% end %>
                   <%# render @species? no its not a model%>
@@ -39,17 +39,17 @@
 
               <div class="grid gap-2 grid-cols-[1fr_5fr]">
                 <button
-                  class = "lightbutton-s"
+                  class = "lightbutton-s w-20"
                   data-action = 'userprofile#showVehicle'
                 >Add Vehicles</button>
-                <div class="flex items-center justify-start gap-2" data-userprofile-target='vehicleslist'>
-                  <p class="rounded border-b border-stone-50">
+                <div class="profilecatlist" data-userprofile-target='vehicleslist'>
+                  <p class="rounded border-b border-stone-50 col-span-full text-sm">
                     Vehicles:
                   </p>
                   <% @profile.vehicles.each_with_index do |item, index| %>
-                    <div class="flex gap-2">
+                    <div class="profilecatpair">
                       <p data-itemindex=<%= index %> data-itemtype="vehicles"><%= item %></p>
-                      <button data-action="userprofile#removeItem" class="w-4 h-4 rounded-full flex justify-center items-center bg-dark text-light">x</button>
+                      <button data-action="userprofile#removeItem" class="profilecatbutton">x</button>
                     </div>
                   <% end %>
                 </div>
@@ -63,17 +63,17 @@
 
               <div class="grid gap-2 grid-cols-[1fr_5fr]">
                 <button
-                  class="lightbutton-s"
+                  class="lightbutton-s w-20"
                   data-action = 'userprofile#showEquipment'
                 >Add Equipment</button>
-                <div class="flex items-center justify-start gap-2" data-userprofile-target='equipmentlist'>
-                  <p class="rounded border-b border-stone-50">
+                <div class="profilecatlist" data-userprofile-target='equipmentlist'>
+                  <p class="rounded border-b border-stone-50 col-span-full text-sm">
                     Equipment:
                   </p>
                   <% @profile.equipment.each_with_index do |item, index| %>
-                    <div class="flex gap-2">
+                    <div class="profilecatpair">
                       <p data-itemindex=<%= index %> data-itemtype="equipment"><%= item %></p>
-                      <button data-action="userprofile#removeItem" class="w-4 h-4 rounded-full flex justify-center items-center bg-dark text-light">x</button>
+                      <button data-action="userprofile#removeItem" class="profilecatbutton">x</button>
                     </div>
                   <% end %>
                 </div>
