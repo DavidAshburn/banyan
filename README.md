@@ -36,3 +36,17 @@ Views
     Soil type overlay (find information source)
       recommend fertilization options
   Show Job //need tree list
+
+
+//
+scheduled jobs / reminders for repruning
+
+automate reminder emails to clients -
+  Youll be getting a call from us soon since
+    we pruned your tree 6 months ago
+    //all in the subject line
+  notify business that a call needs to be made
+
+constant contact was their crm
+
+send emails with work orders to foreman and crew

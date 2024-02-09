@@ -1,1 +1,55 @@
-<div data-controller="userprofile" id="userprofile"></div>
+<div data-controller="userprofile" id="userprofile">
+  <div class="grid lg:grid-cols-[1fr_6fr_1fr] min-h-screen bg-dark p-4 bg-light">
+      <div class="lg:col-start-2 min-h-[30vh]">
+        <div class="windowpanedark">
+          <p>User Profile</p>
+          <div>
+            <div class="grid grid-rows-5">
+              <p class="rounded border-b border-stone-50">
+                Name: <%= @profile.name %>
+              </p>
+              <div class="grid gap-2 grid-cols-[1fr_1fr_4fr]">
+                <button
+                  class="lightbutton-s"
+                  data-action='userprofile#addSpecies'
+                ></button>
+                <p class="rounded border-b border-stone-50">
+                  Species Saved:
+                </p>
+                <% @profile.species.each do |item| %>
+                  <p><%= item %></p>
+                <% end %>
+              </div>
+              <div class="grid gap-2 grid-cols-[1fr_1fr_4fr]">
+                <button
+                  class = "lightbutton-s"
+                  data-action = 'userprofile#addVehicle'
+                ></button>
+                <p class="rounded border-b border-stone-50">
+                  Vehicles:
+                </p>
+                <% @profile.vehicles.each do |item| %>
+                  <p><%= item %></p>
+                <% end %>
+              </div>
+              <div class="grid gap-2 grid-cols-[1fr_1fr_4fr]">
+                <button
+                  class="lightbutton-s"
+                  data-action = 'userprofile#addEquipment'
+                ></button>
+                <p class="rounded border-b border-stone-50">
+                  Equipment:
+                </p>
+                <% @profile.equipment.each do |item| %>
+                  <p><%= item %></p>
+                <% end %>
+              </div>
+              <a href="/user/dashboard" class="darkbutton">
+                Dashboard
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
