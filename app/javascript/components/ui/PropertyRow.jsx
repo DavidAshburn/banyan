@@ -7,18 +7,18 @@ export default function Property({property}) {
   }
 
   return(
-    <div className="grid grid-cols-3 border border-dark rounded-md mx-4">
+    <div className="grid sm:grid-cols-3 border border-dark rounded-md mx-4">
       <p>{property.property_type}</p>
       <p>{toCap(property.parking)} parking</p>
       <p>{toCap(property.tree_access)} access</p>
-      <div className="col-span-full bg-emerald-200 grid grid-cols-3 items-center">
+      <div className="col-span-full bg-emerald-200 grid sm:grid-cols-3 items-center">
         <a
           href={'/properties/' + property.id}
-          className="col-span-2 text-center p-2"
+          className="sm:col-span-2 text-center p-2"
         >
           {property.address}
         </a>
-        <div className="col-start-3 flex items-center justify-center gap-2 p-2">
+        <div className="sm:col-start-3 flex items-center justify-center gap-2 p-2">
           <a
             href={'/jobs/new?pid=' + property.id}
             className="darkbutton-s"

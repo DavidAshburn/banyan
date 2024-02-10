@@ -50,13 +50,39 @@
         <%= form.number_field :price, step: 1, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50 w-full" %>
       </div>
 
-      <div class="hidden">
+      <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+        <%= form.label :vehicles %>
+        <div class="grid grid-cols-2" data-jobform-target="vehiclecheckboxes">
+          <% @profile.vehicles.each do |vehicle| %>
+            <div class="flex justify-between items-center text-end p-2 bg-green-300 text-dark">
+              <input type="checkbox" data-vehicle="<%= vehicle %>">
+              <p><%= vehicle %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
+        <%= form.label :equipment %>
+        <div class="grid grid-cols-2" data-jobform-target="equipmentcheckboxes">
+          <% @profile.equipment.each do |item| %>
+            <div class="flex justify-between items-center text-end p-2 bg-green-300 text-dark">
+              <input type="checkbox" data-equipment="<%= item %>">
+              <p><%= item%></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="">
         <p>prop_id</p>
         <%= form.number_field :property_id, value:@pid %>
         <p>user_id</p>
         <%= form.number_field :user_id, value: current_user.id %>
         <p>trees</p>
         <%= form.text_field :trees, id:'treesinput' %>
+        <p>vehicles</p>
+        <%= form.text_field :vehicles, id:'vehiclesinput' %>
+        <p>equipment</p>
+        <%= form.text_field :equipment, id:'equipmentinput' %>
       </div>
       <div class="grid gap-2" data-jobform-target="treelist">
       </div>

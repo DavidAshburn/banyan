@@ -55,6 +55,8 @@ export default class extends Controller {
       bounds.extend(this.makeLL(item));
     }
     this.map.fitBounds(bounds, { padding: 100 });
+    this.map.setMaxZoom(18);
+    this.map.setMaxZoom(22);
   }
 
   centerOf(jobsites) {

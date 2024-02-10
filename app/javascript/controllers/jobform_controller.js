@@ -4,7 +4,7 @@ import mapboxgl from 'mapbox-gl';
 
 // Connects to data-controller="jobform"
 export default class extends Controller {
-  static targets = ['pid', 'treelist'];
+  static targets = ['pid', 'treelist', 'vehiclecheckboxes', 'equipmentcheckboxes','vehiclesinput','equipmentinput'];
   connect() {
     //datetime picker elements in form
     let start = document.getElementById('startdate');
@@ -59,6 +59,36 @@ export default class extends Controller {
 
         
       });
+    this.setVehicleListeners();
+    this.setEquipmentListeners();
+  }
+  setVehicleListeners() {
+    if(this.vehiclecheckboxesTarget.children.length > 0) {
+      for(let frame of this.vehiclecheckboxesTarget.children) {
+          frame.firstElementChild.addEventListener('click', () => {
+            let output = [];
+            for(let item of this.vehiclecheckboxesTarget.children) {
+              if(item.firstElementChild.checked)
+                output.push(item.firstElementChild.dataset.vehicle);
+            }
+            document.getElementById('vehiclesinput').value = output;
+        });
+      };
+    }
+  }
+  setEquipmentListeners() {
+    if(this.equipmentcheckboxesTarget.children.length > 0) {
+      for(let frame of this.equipmentcheckboxesTarget.children) {
+          frame.firstElementChild.addEventListener('click', () => {
+            let output = [];
+            for(let item of this.equipmentcheckboxesTarget.children) {
+              if(item.firstElementChild.checked)
+                output.push(item.firstElementChild.dataset.equipment);
+            }
+            document.getElementById('equipmentinput').value = output;
+        });
+      };
+    }
   }
   //this.connect() Utilities
   mapboxInit(token, center) {
@@ -66,7 +96,7 @@ export default class extends Controller {
     this.map = new mapboxgl.Map({
       container: 'jobmap', // container ID
       center: center, // starting position [lng, lat]
-      zoom: 16, // starting zoom
+      zoom: 12, // starting zoom
       //cooperativeGestures: true,
       style: `mapbox://styles/mapbox/satellite-v9`,
     });
@@ -106,6 +136,8 @@ export default class extends Controller {
       bounds.extend(item);
     }
     this.map.fitBounds(bounds, { padding: 100 });
+    this.map.setMaxZoom(18);
+    this.map.setMaxZoom(22);
   }
   getMarkerAvgCenter(treedata) {
     let lat = 0;
@@ -180,17 +212,17 @@ export default class extends Controller {
     row.classList.add('flex','gap-2','px-2');
 
     let species = document.createElement('p');
-    let stext = document.createTextNode(tree.species)
+    let stext = document.createTextNode(this.capitalize(tree.species))
     species.appendChild(stext);
     row.appendChild(species);
 
     let dbh = document.createElement('p');
-    let dtext = document.createTextNode(tree.dbh)
+    let dtext = document.createTextNode(tree.dbh + '"')
     dbh.appendChild(dtext);
     row.appendChild(dbh);
 
     let crown = document.createElement('p');
-    let ctext = document.createTextNode(tree.crown)
+    let ctext = document.createTextNode(this.capitalize(tree.crown))
     crown.appendChild(ctext);
     row.appendChild(crown);
     row.dataset.treeindex = treeindex;
@@ -216,5 +248,8 @@ export default class extends Controller {
       this.selectedTrees.splice(index, 1);
     }
     document.getElementById('treesinput').value = this.selectedTrees;
+  }
+  capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1)
   }
 }
