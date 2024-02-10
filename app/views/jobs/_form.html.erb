@@ -27,32 +27,38 @@
       </div>
       <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
         <%= form.label :estimator %>
-        <%= form.text_field :estimator, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+        <%= form.text_field :estimator, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50 w-full" %>
       </div>
       <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
         <%= form.label :foreman %>
-        <%= form.text_field :foreman, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+        <%= form.text_field :foreman, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50 w-full" %>
       </div>
       <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
         <%= form.label :notes %>
-        <%= form.text_area :notes, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+        <%= form.text_area :notes, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50 w-full" %>
       </div>
       <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
         <%= form.label :crew_size %>
-        <%= form.number_field :crew_size, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+        <%= form.number_field :crew_size, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50 w-full" %>
       </div>
       <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
         <%= form.label :est_hours %>
-        <%= form.number_field :est_hours, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+        <%= form.number_field :est_hours, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50 w-full" %>
       </div>
       <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
         <%= form.label :price %>
-        <%= form.number_field :price, step: 1, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50" %>
+        <%= form.number_field :price, step: 1, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-emerald-50 w-full" %>
       </div>
 
       <div class="hidden">
-        <%= form.number_field :property_id, value: @job.property_id %>
+        <p>prop_id</p>
+        <%= form.number_field :property_id, value:@pid %>
+        <p>user_id</p>
         <%= form.number_field :user_id, value: current_user.id %>
+        <p>trees</p>
+        <%= form.text_field :trees, id:'treesinput' %>
+      </div>
+      <div class="grid gap-2" data-jobform-target="treelist">
       </div>
       <div>
         <%= form.submit class:"darkbutton-s"%>
