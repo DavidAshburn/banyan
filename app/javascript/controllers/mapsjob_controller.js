@@ -23,27 +23,7 @@ export default class extends Controller {
       });
     
     //event listeners for each row item so they can switch the marker color
-    let treeboxes = document.getElementById('jobtrees').children;
-    let listenindex = 0;
-    for(let item of treeboxes) {
-      item.firstElementChild.innerText = listenindex
-      item.addEventListener('click', (event) => {
-        let self = item;
-        let index = 0;
-        for(let marker of this.map._markers) {
-          let markerEl = marker.getElement();
-          let base = markerEl.firstChild.innerHTML;
-
-          if(index == parseInt(self.firstElementChild.innerText)) {
-            markerEl.firstElementChild.innerHTML = base.replace("#fbbf24","#07a7cb");
-          } else {
-            markerEl.firstElementChild.innerHTML = base.replace("#07a7cb","#fbbf24");
-          }
-          index++;
-        }
-      })
-      listenindex++;
-    }
+    
   }
   mapboxInit(token, center) {
     mapboxgl.accessToken = token;

@@ -48,7 +48,7 @@ export default function Dashboard() {
           </a>
         </div>
       </div>
-      <div className="flex flex-col gap-4 md:p-4 text-lg bg-light text-dark font-josefin min-h-screen">
+      <div className="flex flex-col gap-4 md:p-4 text-lg bg-light text-dark font-inter min-h-screen">
         <div
           className="grid md:grid-cols-2 bg-dark"
           data-controller="dashjobsmap"

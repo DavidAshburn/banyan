@@ -2,16 +2,85 @@
   <div class="hidden">
     <div data-mapsjob-target="jobid"><%= @jobid %></div>
   </div>
-  <div class="relative">
-    <div id="map" class="h-[60vh]"></div>
-  </div>
-  <div class="windowpanedark m-2">
-    <p>Trees</p>
-    <div id="jobtrees">
-      <%= render @jobtrees %>  
+  <div class="grid lg:grid-cols-2 gap-2">
+    
+    <div id="map" class="h-[40vh] lg:h-[60vh] rounded-[0.5rem]"></div>
+    
+    <div class="windowpanedark">
+      <p>Trees</p>
+      <div id="jobtrees">
+        <div class="grid grid-cols-3 px-2 text-center">
+          <p>Species</p>
+          <p>DBH</p>
+          <p>Crown</p>
+        </div>
+        <% @jobtrees.each do |tree| %>
+          <div class="grid grid-cols-3 bg-dull rounded-xl p-2 text-center">
+            <p><%= tree.species.capitalize %></p>
+            <p><%= tree.dbh %>"</p>
+            <p><%= tree.crown.capitalize %></p>
+          </div>
+        <% end %>
+      </div>
     </div>
+  
   </div>
-
+  <div class="grid md:grid-cols-2 gap-2">
+    
+    <div class="max-h-[40vh] lg:max-h-[60vh] grid gap-2 windowpanedark">
+      <p>Info</p>
+      <div class="grid-cols-2">
+        <div class="grid grid-cols-[1fr_4fr] items-center col-span-full">
+          <p>Start:</p>
+          <p><%= @job.start.strftime('%m/%d/%y %I:%M %p') %></P>
+        </div>
+        <div class="grid grid-cols-[1fr_4fr] items-center col-span-full">
+          <p>End: </p>
+          <p><%= @job.end.strftime('%m/%d/%y %I:%M %p') %></P>
+        </div>
+        <div class="grid grid-cols-2 items-center">
+          <p>Foreman: </p>
+          <p><%= @job.foreman %></P>
+        </div>
+        <div class="grid grid-cols-2 items-center">
+          <p>Estimator: </p>
+          <p><%= @job.estimator %></P>
+        </div>
+        <div class="grid grid-cols-2 items-center">
+          <p>Crew Size: </p>
+          <p><%= @job.crew_size %></P>
+        </div>
+        <div class="grid grid-cols-2 items-center">
+          <p>Est Hours: </p>
+          <p><%= @job.est_hours %></P>
+        </div>
+        <div class="grid grid-cols-2 items-center">
+          <p>Price: </p>
+          <p>$<%= @job.price %></P>
+        </div>
+        <div class="grid grid-cols-2 col-span-full items-center">
+          <p class="col-span-full text-center">Vehicles</p>
+          <% @vehicles.each do |vehicle| %>
+            <p><%= vehicle %></P>
+          <% end %>
+        </div>
+        <div class="grid grid-cols-2 col-span-full items-center">
+          <p class="col-span-full text-center">Equipment</p>
+          <% @equipment.each do |item| %>
+            <p><%= item %></P>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    
+    <div class="grid gap-2 windowpanedark">
+      <p>Notes</p>
+      <div>
+        <p><%= @job.notes %></p>
+      </div>
+    </div>
+  
+  </div>
   <div class="flex items-center justify-center gap-4 p-2" id="treecontrols">
   </div>
   <%= button_to "Destroy this job", @job, method: :delete, class:"darkbutton-s" %>

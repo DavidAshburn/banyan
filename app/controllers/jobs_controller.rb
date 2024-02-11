@@ -10,6 +10,8 @@ class JobsController < ApplicationController
   def show
     @jobid = @job.id
     @property = @job.property
+    @vehicles = @job.vehicles || []
+    @equipment = @job.equipment || []
 
     #job.trees is an array of Tree ids
     @jobtrees = @job.trees.map{|item| Tree.find(item)}
