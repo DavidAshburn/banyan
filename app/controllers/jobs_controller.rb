@@ -8,13 +8,21 @@ class JobsController < ApplicationController
 
   # GET /jobs/1 or /jobs/1.json
   def show
+    @jobid = @job.id
+    @property = @job.property
+
+    #job.trees is an array of Tree ids
+    @jobtrees = @job.trees.map{|item| Tree.find(item)}
   end
 
   # GET /jobs/new
   def new
     @job = Job.new
-    @profile = current_user.profile
     @pid = params[:pid]
+    @profile = current_user.profile
+    @vehicles = current_user.profile.vehicles
+    @equipment = current_user.profile.equipment
+
   end
 
   # GET /jobs/1/edit
@@ -23,13 +31,17 @@ class JobsController < ApplicationController
 
   # POST /jobs or /jobs.json
   def create
+    logger.info "call to create"
     @job = Job.new(job_params)
+    logger.info @job
 
     respond_to do |format|
       if @job.save
-        format.html { redirect_to user_dashboard_path, notice: "Job was successfully created." }
+        logger.info "saved job"
+        format.html { redirect_to @job, notice: "Job was successfully created." }
         format.json { render :show, status: :created, location: @job }
       else
+        logger.info "unable to save job"
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @job.errors, status: :unprocessable_entity }
       end
@@ -77,6 +89,7 @@ class JobsController < ApplicationController
         :notes,
         :trees,
         :equipment,
+        :vehicles,
         :crew_size,
         :est_hours,
         :price,

@@ -1,10 +1,22 @@
-<p style="color: green"><%= notice %></p>
+<div data-controller="mapsjob" id="mapsjob" class="min-h-screen bg-light">
+  <div class="hidden">
+    <div data-mapsjob-target="jobid"><%= @jobid %></div>
+  </div>
+  <div class="relative">
+    <div id="map" class="h-[60vh]"></div>
+  </div>
+  <div class="windowpanedark m-2">
+    <p>Trees</p>
+    <div id="jobtrees">
+      <%= render @jobtrees %>  
+    </div>
+  </div>
 
-<%= render @job %>
-
-<div>
-  <%= link_to "Edit this job", edit_job_path(@job) %> |
-  <%= link_to "Back to jobs", jobs_path %>
-
-  <%= button_to "Destroy this job", @job, method: :delete %>
+  <div class="flex items-center justify-center gap-4 p-2" id="treecontrols">
+  </div>
+  <%= button_to "Destroy this job", @job, method: :delete, class:"darkbutton-s" %>
 </div>
+
+
+  
+

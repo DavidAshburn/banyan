@@ -53,7 +53,7 @@
       <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
         <%= form.label :vehicles %>
         <div class="grid grid-cols-2" data-jobform-target="vehiclecheckboxes">
-          <% @profile.vehicles.each do |vehicle| %>
+          <% @vehicles.each do |vehicle| %>
             <div class="flex justify-between items-center text-end p-2 bg-green-300 text-dark">
               <input type="checkbox" data-vehicle="<%= vehicle %>">
               <p><%= vehicle %></p>
@@ -64,7 +64,7 @@
       <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
         <%= form.label :equipment %>
         <div class="grid grid-cols-2" data-jobform-target="equipmentcheckboxes">
-          <% @profile.equipment.each do |item| %>
+          <% @equipment.each do |item| %>
             <div class="flex justify-between items-center text-end p-2 bg-green-300 text-dark">
               <input type="checkbox" data-equipment="<%= item %>">
               <p><%= item%></p>
@@ -83,12 +83,12 @@
         <%= form.text_field :vehicles, id:'vehiclesinput' %>
         <p>equipment</p>
         <%= form.text_field :equipment, id:'equipmentinput' %>
+        <%= %>
       </div>
       <div class="grid gap-2" data-jobform-target="treelist">
       </div>
       <div>
         <%= form.submit class:"darkbutton-s"%>
-        <%= link_to 'Back', :back, class:"darkbutton-s"%>
       </div>
     </div>
   </div>
