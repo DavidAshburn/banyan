@@ -4,7 +4,14 @@ import mapboxgl from 'mapbox-gl';
 
 // Connects to data-controller="jobform"
 export default class extends Controller {
-  static targets = ['pid', 'treelist', 'vehiclecheckboxes', 'equipmentcheckboxes','vehiclesinput','equipmentinput'];
+  static targets = [
+    'pid',
+    'treelist',
+    'vehiclecheckboxes',
+    'equipmentcheckboxes',
+    'vehiclesinput',
+    'equipmentinput',
+  ];
   connect() {
     //datetime picker elements in form
     let start = document.getElementById('startdate');
@@ -14,7 +21,6 @@ export default class extends Controller {
       dateFormat: 'Y-m-d H:i',
       onClose: function (selectedDates, dateStr, instance) {
         document.getElementById('job_start').value = dateStr;
-        console.log(dateStr);
       },
     });
     const fpend = flatpickr('#enddate', {
@@ -22,16 +28,20 @@ export default class extends Controller {
       dateFormat: 'Y-m-d H:i',
       onClose: function (selectedDates, dateStr, instance) {
         document.getElementById('job_end').value = dateStr;
-        console.log(dateStr);
       },
     });
 
     //colors for toggleMarker
-    this.startcolor = "#07a7cb";
-    this.brightcolor = "#6ee7b7"
+    this.startcolor = '#07a7cb';
+    this.brightcolor = '#6ee7b7';
 
-    //state for selected trees sent to form input id:treesinput
-    this.selectedTrees = [];
+    //state for array inputs
+    this.state = {
+      selectedTrees: [],
+      selectedVehicles: [],
+      selectedEquipment: [],
+      trees: [],
+    };
 
     //fetch property and tree data, then populate map
     let property_id = this.pidTarget.innerText;
@@ -42,13 +52,16 @@ export default class extends Controller {
       .then((propertydata) => {
         let property = propertydata[0];
         let treedata = propertydata[1];
-        this.trees = treedata;
+        this.state.trees = treedata;
 
-        this.mapboxInit(accesstoken, [property.longitude, property.latitude]);
+        this.mapboxInit(accesstoken, [
+          property.longitude,
+          property.latitude,
+        ]);
 
         if (treedata.length > 0) {
-          this.initPopups(treedata); //this.popups gets passed in to toggleMarker
-          this.setMarkersAndBounds(treedata, this.getMarkerAvgCenter(treedata));
+          this.initPopups();
+          this.setMarkersAndBounds();
         } else {
           this.propertymarker = new mapboxgl.Marker({
             color: this.startcolor,
@@ -56,88 +69,104 @@ export default class extends Controller {
             .setLngLat([property.longitude, property.latitude])
             .addTo(this.map);
         }
-
-        
       });
     this.setVehicleListeners();
     this.setEquipmentListeners();
   }
+  //logging only while i debug tree submission
   setVehicleListeners() {
-    if(this.vehiclecheckboxesTarget.children.length > 0) {
-      for(let frame of this.vehiclecheckboxesTarget.children) {
-          frame.firstElementChild.addEventListener('click', () => {
-            let output = [];
-            for(let item of this.vehiclecheckboxesTarget.children) {
-              if(item.firstElementChild.checked)
-                output.push(item.firstElementChild.dataset.vehicle);
-            }
-            document.getElementById('vehiclesinput').value = output;
+    if (this.vehiclecheckboxesTarget.children.length > 0) {
+      for (let frame of this.vehiclecheckboxesTarget.children) {
+        frame.firstElementChild.addEventListener('click', () => {
+          let output = [];
+          for (let item of this.vehiclecheckboxesTarget.children) {
+            if (item.firstElementChild.checked)
+              output.push(item.firstElementChild.dataset.vehicle);
+          }
+          console.log(output);
+          //document.getElementById('vehiclesinput').value = output;
         });
-      };
+      }
     }
   }
   setEquipmentListeners() {
-    if(this.equipmentcheckboxesTarget.children.length > 0) {
-      for(let frame of this.equipmentcheckboxesTarget.children) {
-          frame.firstElementChild.addEventListener('click', () => {
-            let output = [];
-            for(let item of this.equipmentcheckboxesTarget.children) {
-              if(item.firstElementChild.checked)
-                output.push(item.firstElementChild.dataset.equipment);
-            }
-            document.getElementById('equipmentinput').value = output;
+    if (this.equipmentcheckboxesTarget.children.length > 0) {
+      for (let frame of this.equipmentcheckboxesTarget.children) {
+        frame.firstElementChild.addEventListener('click', () => {
+          let output = [];
+          for (let item of this.equipmentcheckboxesTarget.children) {
+            if (item.firstElementChild.checked)
+              output.push(item.firstElementChild.dataset.equipment);
+          }
+          console.log(output);
+          //document.getElementById('equipmentinput').value = output;
         });
-      };
+      }
     }
   }
+
   //this.connect() Utilities
   mapboxInit(token, center) {
     mapboxgl.accessToken = token;
     this.map = new mapboxgl.Map({
       container: 'jobmap', // container ID
       center: center, // starting position [lng, lat]
-      zoom: 12, // starting zoom
+      zoom: 15, // starting zoom
       //cooperativeGestures: true,
       style: `mapbox://styles/mapbox/satellite-v9`,
     });
   }
-  setMarkersAndBounds(treedata, center) {
+  setMarkersAndBounds() {
     //mapbounds collection
-
+    let center = this.getMarkerAvgCenter(this.state.trees);
     let features = [{ lon: center[0], lat: center[1] }];
-    let treeIndex = 0;
-    for (let item of treedata) {
-      let treeIndexValue = treeIndex;
+
+    for (let i = 0; i < this.state.trees.length; i++) {
+      //make marker for each tree
       let marker = new mapboxgl.Marker({
         color: this.startcolor,
       })
-        .setLngLat([item.longitude, item.latitude])
+        .setLngLat([
+          this.state.trees[i].longitude,
+          this.state.trees[i].latitude,
+        ])
         .addTo(this.map);
-
-      marker.getElement().addEventListener('click',()=>{
-        this.toggleMarker(marker, this.startcolor, this.brightcolor, this.map, treeIndexValue);
+      //add listener to call ToggleMarker onClick
+      //Toggles the Marker and manipulates our form input, adding and removing the tree IDs
+      //i tracks the popup index in
+      marker.getElement().addEventListener('click', () => {
+        this.toggleMarker(
+          marker,
+          this.startcolor,
+          this.brightcolor,
+          this.map,
+          this.state.trees[i].id
+        );
       });
+      //add listeners to show/hidePopup on hover
       marker.getElement().addEventListener('mouseenter', () => {
-        this.showPopup(treeIndexValue);
+        this.showPopup(i);
       });
       marker.getElement().addEventListener('mouseleave', () => {
-        this.hidePopup(treeIndexValue);
+        this.hidePopup(i);
       });
 
-      features.push({ lon: item.longitude, lat: item.latitude });
-      treeIndex++;
+      //add this tree to mapbounds collection
+      features.push({
+        lon: this.state.trees[i].longitude,
+        lat: this.state.trees[i].latitude,
+      });
     }
-    //mapbounds setting
+    //mapbounds initial setting
     const bounds = new mapboxgl.LngLatBounds(
       features[0],
       features[0]
     );
+    //add all of our trees we collected above and fitBounds
     for (let item of features) {
       bounds.extend(item);
     }
     this.map.fitBounds(bounds, { padding: 100 });
-    this.map.setMaxZoom(18);
-    this.map.setMaxZoom(22);
   }
   getMarkerAvgCenter(treedata) {
     let lat = 0;
@@ -149,26 +178,28 @@ export default class extends Controller {
     let center = [lon / treedata.length, lat / treedata.length];
     return center;
   }
-  toggleMarker(marker, start, bright, map, treeIndexValue) {
-
+  //treedataIndex ties the treedata to marker
+  toggleMarker(marker, start, bright, map, treeId) {
+    //base my action on the current color
     let nextcolor;
     let addremove;
-    if(marker._color == start) {
+    if (marker._color == start) {
       nextcolor = bright;
       addremove = true;
     } else {
-      nextcolor = start
+      nextcolor = start;
       addremove = false;
     }
 
-    if(addremove) {
-      this.addToTreeList(treeIndexValue);
-      this.addToFormInput(treeIndexValue);
+    if (addremove) {
+      this.addToTreeList(treeId);
+      this.addToFormInput(treeId);
     } else {
-      this.removeFromTreeList(treeIndexValue);
-      this.removeFromFormInput(treeIndexValue);
+      this.removeFromTreeList(treeId);
+      this.removeFromFormInput(treeId);
     }
 
+    //swap out the marker for a new one in the alternate color
     let backup = marker;
     marker.remove;
 
@@ -178,27 +209,34 @@ export default class extends Controller {
       .setLngLat(backup.getLngLat())
       .addTo(map);
 
-    newmarker.getElement().addEventListener('click',()=>{
-      this.toggleMarker(newmarker, start, bright, map, treeIndexValue);
+    //new toggleMarker event listener for the new Marker
+    newmarker.getElement().addEventListener('click', () => {
+      this.toggleMarker(newmarker, start, bright, map, treeId);
     });
-    newmarker.getElement().addEventListener('mouseenter', () => { 
-      this.showPopup(treeIndexValue);
+
+    //hover popup event listeners for the new Marker
+    let popupindex = this.indexOfID(treeId);
+    newmarker.getElement().addEventListener('mouseenter', () => {
+      this.showPopup(popupindex);
     });
     newmarker.getElement().addEventListener('mouseleave', () => {
-      this.hidePopup(treeIndexValue);
+      this.hidePopup(popupindex);
     });
   }
-  initPopups(treedata) {
-    this.popups = []
-    for(let item of treedata) {
-      let newpop = new mapboxgl.Popup({anchor:'top-left', closeButton: false})
-      .setHTML(
-        `<div className='grid p-2 gap-2 w-40'><p>${item.species}</p><p>${item.dbh} DBH</p><p>${item.crown} crown</p></div>`
+  initPopups() {
+    this.popups = [];
+    for (let item of this.state.trees) {
+      let newpop = new mapboxgl.Popup({
+        anchor: 'top-left',
+        closeButton: false,
+      })
+        .setHTML(
+          `<div className='grid p-2 gap-2 w-40'><p>${item.species}</p><p>${item.dbh} DBH</p><p>${item.crown} crown</p></div>`
         )
-      .setLngLat([item.longitude, item.latitude])
+        .setLngLat([item.longitude, item.latitude]);
 
       this.popups.push(newpop);
-    };
+    }
   }
   showPopup(index) {
     this.popups[index].addTo(this.map);
@@ -206,50 +244,58 @@ export default class extends Controller {
   hidePopup(index) {
     this.popups[index].remove();
   }
-  addToTreeList(treeindex) {
-    let tree = this.trees[treeindex];
+  addToTreeList(treeid) {
+    let tree = this.state.trees.find((tree) => tree.id == treeid);
     let row = document.createElement('div');
-    row.classList.add('flex','gap-2','px-2');
+    row.classList.add('flex', 'gap-2', 'px-2');
 
     let species = document.createElement('p');
-    let stext = document.createTextNode(this.capitalize(tree.species))
+    let stext = document.createTextNode(
+      this.capitalize(tree.species)
+    );
     species.appendChild(stext);
     row.appendChild(species);
 
     let dbh = document.createElement('p');
-    let dtext = document.createTextNode(tree.dbh + '"')
+    let dtext = document.createTextNode(tree.dbh + '"');
     dbh.appendChild(dtext);
     row.appendChild(dbh);
 
     let crown = document.createElement('p');
-    let ctext = document.createTextNode(this.capitalize(tree.crown))
+    let ctext = document.createTextNode(this.capitalize(tree.crown));
     crown.appendChild(ctext);
     row.appendChild(crown);
-    row.dataset.treeindex = treeindex;
+    row.dataset.treeid = treeid;
 
     this.treelistTarget.appendChild(row);
   }
-  removeFromTreeList(treeindex) {
-    let targetrow;
-    for(let item of this.treelistTarget.children) {
-      if(item.dataset.treeindex == treeindex){
-        targetrow = item;
+  removeFromTreeList(treeid) {
+    for (let item of this.treelistTarget.children) {
+      if (item.dataset.treeid == treeid) {
+        this.treelistTarget.removeChild(item);
       }
     }
-    this.treelistTarget.removeChild(targetrow);
   }
-  addToFormInput(treeindex) {
-    this.selectedTrees.push(treeindex);
-    document.getElementById('treesinput').value = this.selectedTrees;
+  addToFormInput(treeid) {
+    this.state.selectedTrees.push(treeid);
+    document.getElementById('treesinput').value =
+      this.state.selectedTrees;
   }
-  removeFromFormInput(treeindex) {
-    let index = this.selectedTrees.indexOf(treeindex);
-    if(index > -1) {
-      this.selectedTrees.splice(index, 1);
+  removeFromFormInput(treeid) {
+    let index = this.state.selectedTrees.indexOf(treeid);
+    if (index > -1) {
+      this.state.selectedTrees.splice(index, 1);
     }
-    document.getElementById('treesinput').value = this.selectedTrees;
+    document.getElementById('treesinput').value =
+      this.state.selectedTrees;
   }
   capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1)
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  indexOfID(id) {
+    for (let i = 0; i < this.state.trees.length; i++) {
+      if (this.state.trees[i].id == id) return i;
+    }
+    return -1;
   }
 }

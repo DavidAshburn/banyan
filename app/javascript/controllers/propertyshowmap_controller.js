@@ -4,7 +4,7 @@ import mapboxgl from 'mapbox-gl';
 // Connects to data-controller="propshowmap"
 export default class extends Controller {
   static targets = ['pid', 'setmarkerbutton', 'movemarkerbutton'];
-  
+
   connect() {
     this.startcolor = '#07a7cb';
     this.highcolor = '#f87954';
@@ -66,11 +66,16 @@ export default class extends Controller {
     }
 
     //mapbounds setting
-    const bounds = new mapboxgl.LngLatBounds(features[0],features[0]);
+    const bounds = new mapboxgl.LngLatBounds(
+      features[0],
+      features[0]
+    );
     for (let item of features) {
       bounds.extend(item);
     }
-    this.map.fitBounds(bounds, { padding: 200 });
+    this.map.fitBounds(bounds, { padding: 100 });
+    this.map?.setMaxZoom(17);
+    this.map?.setMaxZoom(22);
   }
   getMarkerAvgCenter(treedata) {
     let lat = 0;
@@ -116,7 +121,7 @@ export default class extends Controller {
   postPropLatLng() {
     let center = this.propertymarker._lngLat;
     let property_id = this.pidTarget.innerText;
-    let token = document.getElementsByName('csrf-token')[0].content
+    let token = document.getElementsByName('csrf-token')[0].content;
 
     fetch(
       '/edit/locupdate?pid=' +
@@ -124,10 +129,14 @@ export default class extends Controller {
         '&lng=' +
         center.lng +
         '&lat=' +
-        center.lat, { method: 'POST',  headers: {
-          "X-CSRF-Token": token,
+        center.lat,
+      {
+        method: 'POST',
+        headers: {
+          'X-CSRF-Token': token,
           // 'Content-Type': 'application/x-www-form-urlencoded',
-        }, }
+        },
+      }
     )
       .then((response) => response.json())
       .then((data) => {
