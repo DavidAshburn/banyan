@@ -9,8 +9,7 @@ export default class extends Controller {
     'treelist',
     'vehiclecheckboxes',
     'equipmentcheckboxes',
-    'vehiclesinput',
-    'equipmentinput',
+    'hiddenforms'
   ];
   connect() {
     //datetime picker elements in form
@@ -37,9 +36,6 @@ export default class extends Controller {
 
     //state for array inputs
     this.state = {
-      selectedTrees: [],
-      selectedVehicles: [],
-      selectedEquipment: [],
       trees: [],
     };
 
@@ -52,7 +48,7 @@ export default class extends Controller {
       .then((propertydata) => {
         let property = propertydata[0];
         let treedata = propertydata[1];
-        this.state.trees = treedata;
+        this.trees = treedata;
 
         this.mapboxInit(accesstoken, [
           property.longitude,
@@ -118,17 +114,17 @@ export default class extends Controller {
   }
   setMarkersAndBounds() {
     //mapbounds collection
-    let center = this.getMarkerAvgCenter(this.state.trees);
+    let center = this.getMarkerAvgCenter(this.trees);
     let features = [{ lon: center[0], lat: center[1] }];
 
-    for (let i = 0; i < this.state.trees.length; i++) {
+    for (let i = 0; i < this.trees.length; i++) {
       //make marker for each tree
       let marker = new mapboxgl.Marker({
         color: this.startcolor,
       })
         .setLngLat([
-          this.state.trees[i].longitude,
-          this.state.trees[i].latitude,
+          this.trees[i].longitude,
+          this.trees[i].latitude,
         ])
         .addTo(this.map);
       //add listener to call ToggleMarker onClick
@@ -140,7 +136,7 @@ export default class extends Controller {
           this.startcolor,
           this.brightcolor,
           this.map,
-          this.state.trees[i].id
+          this.trees[i].id
         );
       });
       //add listeners to show/hidePopup on hover
@@ -153,8 +149,8 @@ export default class extends Controller {
 
       //add this tree to mapbounds collection
       features.push({
-        lon: this.state.trees[i].longitude,
-        lat: this.state.trees[i].latitude,
+        lon: this.trees[i].longitude,
+        lat: this.trees[i].latitude,
       });
     }
     //mapbounds initial setting
@@ -225,7 +221,7 @@ export default class extends Controller {
   }
   initPopups() {
     this.popups = [];
-    for (let item of this.state.trees) {
+    for (let item of this.trees) {
       let newpop = new mapboxgl.Popup({
         anchor: 'top-left',
         closeButton: false,
@@ -245,7 +241,7 @@ export default class extends Controller {
     this.popups[index].remove();
   }
   addToTreeList(treeid) {
-    let tree = this.state.trees.find((tree) => tree.id == treeid);
+    let tree = this.trees.find((tree) => tree.id == treeid);
     let row = document.createElement('div');
     row.classList.add('flex', 'gap-2', 'px-2');
 
@@ -277,24 +273,26 @@ export default class extends Controller {
     }
   }
   addToFormInput(treeid) {
-    this.state.selectedTrees.push(treeid);
-    document.getElementById('treesinput').value =
-      this.state.selectedTrees;
+    let newinput = document.createElement('input', { type:"textbox", name:"job[trees][]"});
+    newinput.type = 'textbox';
+    newinput.name = 'job[trees][]';
+    newinput.value = treeid;
+    
+    this.hiddenformsTarget.appendChild(newinput);
   }
   removeFromFormInput(treeid) {
-    let index = this.state.selectedTrees.indexOf(treeid);
-    if (index > -1) {
-      this.state.selectedTrees.splice(index, 1);
+    for(let item of this.hiddenformsTarget.children) {
+      if(item.value == treeid) {
+        item.remove();
+      }
     }
-    document.getElementById('treesinput').value =
-      this.state.selectedTrees;
   }
   capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
   indexOfID(id) {
-    for (let i = 0; i < this.state.trees.length; i++) {
-      if (this.state.trees[i].id == id) return i;
+    for (let i = 0; i < this.trees.length; i++) {
+      if (this.trees[i].id == id) return i;
     }
     return -1;
   }

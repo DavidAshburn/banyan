@@ -31,17 +31,14 @@ class JobsController < ApplicationController
 
   # POST /jobs or /jobs.json
   def create
-    logger.info "call to create"
     @job = Job.new(job_params)
-    logger.info @job
+    @job.trees = params['job']['trees']
 
     respond_to do |format|
       if @job.save
-        logger.info "saved job"
         format.html { redirect_to @job, notice: "Job was successfully created." }
         format.json { render :show, status: :created, location: @job }
       else
-        logger.info "unable to save job"
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @job.errors, status: :unprocessable_entity }
       end
