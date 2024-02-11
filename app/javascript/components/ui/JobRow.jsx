@@ -66,6 +66,12 @@ export default function JobRow({ jobdata }) {
 
           <div className="grid col-span-full grid-cols-3 gap-2 border-t border-stone-400 rounded-md">
             <p className="col-span-full text-sm text-stone-500">
+              vehicles
+            </p>
+            {job.vehicles.map((x, i) => (
+              <p key={i}>{x}</p>
+            ))}
+            <p className="col-span-full text-sm text-stone-500">
               equipment
             </p>
             {job.equipment.map((x, i) => (

@@ -71,31 +71,27 @@ export default class extends Controller {
   }
   //logging only while i debug tree submission
   setVehicleListeners() {
-    if (this.vehiclecheckboxesTarget.children.length > 0) {
-      for (let frame of this.vehiclecheckboxesTarget.children) {
-        frame.firstElementChild.addEventListener('click', () => {
-          let output = [];
-          for (let item of this.vehiclecheckboxesTarget.children) {
-            if (item.firstElementChild.checked)
-              output.push(item.firstElementChild.dataset.vehicle);
-          }
-          console.log(output);
-          //document.getElementById('vehiclesinput').value = output;
-        });
-      }
+    if (this.vehiclecheckboxesTarget.children.length == 0) return;
+
+    for (let frame of this.vehiclecheckboxesTarget.children) {
+      frame.firstElementChild.addEventListener('click', (event) => {
+        if(event.target.checked) {
+          this.addHiddenArrayInput('vehicles', event.target.dataset.vehicle)
+        } else {
+          this.removeHiddenArrayInput('vehicles', event.target.dataset.vehicle)
+        }
+      });
     }
   }
   setEquipmentListeners() {
     if (this.equipmentcheckboxesTarget.children.length > 0) {
       for (let frame of this.equipmentcheckboxesTarget.children) {
-        frame.firstElementChild.addEventListener('click', () => {
-          let output = [];
-          for (let item of this.equipmentcheckboxesTarget.children) {
-            if (item.firstElementChild.checked)
-              output.push(item.firstElementChild.dataset.equipment);
+        frame.firstElementChild.addEventListener('click', (event) => {
+          if(event.target.checked) {
+            this.addHiddenArrayInput('equipment', event.target.dataset.equipment)
+          } else {
+            this.removeHiddenArrayInput('equipment', event.target.dataset.equipment)
           }
-          console.log(output);
-          //document.getElementById('equipmentinput').value = output;
         });
       }
     }
@@ -189,10 +185,10 @@ export default class extends Controller {
 
     if (addremove) {
       this.addToTreeList(treeId);
-      this.addToFormInput(treeId);
+      this.addHiddenArrayInput('trees', treeId)
     } else {
       this.removeFromTreeList(treeId);
-      this.removeFromFormInput(treeId);
+      this.removeHiddenArrayInput('trees',treeId)
     }
 
     //swap out the marker for a new one in the alternate color
@@ -272,21 +268,6 @@ export default class extends Controller {
       }
     }
   }
-  addToFormInput(treeid) {
-    let newinput = document.createElement('input', { type:"textbox", name:"job[trees][]"});
-    newinput.type = 'textbox';
-    newinput.name = 'job[trees][]';
-    newinput.value = treeid;
-    
-    this.hiddenformsTarget.appendChild(newinput);
-  }
-  removeFromFormInput(treeid) {
-    for(let item of this.hiddenformsTarget.children) {
-      if(item.value == treeid) {
-        item.remove();
-      }
-    }
-  }
   capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -296,4 +277,21 @@ export default class extends Controller {
     }
     return -1;
   }
+
+  //generic for trees, equipment, and vehicles parameters, require handling in jobs#create
+  addHiddenArrayInput(attributename, value) {
+    let newinput = document.createElement('input');
+    newinput.type = 'textbox';
+    newinput.name = `job[${attributename}][]`
+    newinput.value = value;
+    this.hiddenformsTarget.appendChild(newinput);
+  }
+  removeHiddenArrayInput(attributename, value) {
+    for(let item of this.hiddenformsTarget.children) {
+      if(item.name == `job[${attributename}][]` && item.value == value) {
+        item.remove();
+      }
+    }
+  }
+
 }
