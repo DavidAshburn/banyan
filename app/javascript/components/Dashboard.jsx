@@ -40,10 +40,10 @@ export default function Dashboard() {
           <a href="/properties/new" className="navlink">
             +Property
           </a>
-          <a href="/user/profile" className="navlink">
-            Profile
+          <a href="/user/calendar" className="navlink">
+            Calendar
           </a>
-          <a href="/user/configuration" className="navlink">
+          <a href="/user/profile" className="navlink">
             Config
           </a>
         </div>

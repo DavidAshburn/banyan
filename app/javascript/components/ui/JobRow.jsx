@@ -25,12 +25,22 @@ export default function JobRow({ jobdata }) {
     thisdate.setMinutes(timeparts[1]);
     thisdate.setSeconds(0);
 
-    return thisdate.toLocaleString();
+    let options = {
+      weekday: "long",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric"
+    }
+
+    return new Intl.DateTimeFormat("en-US", options).format(thisdate);
   }
 
   const job = jobdata.job;
   const property = jobdata.property;
   const client = jobdata.client;
+  const vehicles = jobdata.vehicles || [];
+  const equipment = jobdata.equipment || [];
 
   return (
     <div
@@ -45,16 +55,18 @@ export default function JobRow({ jobdata }) {
       <div className={'col-span-full ' + display}>
         <div className="grid gap-2 grid-cols-2 border border-dark rounded-md mx-4 py-2">
           <div className="grid grid-cols-2 p-2 gap-2 col-span-full border-dull rounded-md bg-emerald-200">
-            <p>Start: {formatDate(job.start)}</p>
-            <p>End: {formatDate(job.end)}</p>
+            <div className="grid">
+              <p className="col-span-full text-sm text-stone-500">start</p>
+              <p>{formatDate(job.start)}</p>
+            </div>
+            <div className="grid">
+              <p className="col-span-full text-sm text-stone-500">end</p>
+              <p>{formatDate(job.end)}</p>
+            </div>
           </div>
           <a
             href={
-              '/maps/job?plat=' +
-              property.latitude +
-              '&plon=' +
-              property.longitude +
-              '&jobid=' +
+              '/jobs/' +
               job.id
             }
             className="col-span-full bg-emerald-200"
@@ -68,13 +80,13 @@ export default function JobRow({ jobdata }) {
             <p className="col-span-full text-sm text-stone-500">
               vehicles
             </p>
-            {job.vehicles.map((x, i) => (
+            {vehicles.map((x, i) => (
               <p key={i}>{x}</p>
             ))}
             <p className="col-span-full text-sm text-stone-500">
               equipment
             </p>
-            {job.equipment.map((x, i) => (
+            {equipment.map((x, i) => (
               <p key={i}>{x}</p>
             ))}
           </div>

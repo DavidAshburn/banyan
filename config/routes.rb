@@ -4,18 +4,18 @@ Rails.application.routes.draw do
   resources :properties
   resources :clients
   resources :trees
-  get 'maps/find'
   get 'user/dashboard'
   get 'user/profile'
   get 'user/debug'
-  get 'mapping/new'
+  get 'user/calendar'
+
+  get 'maps/edit', to: 'maps#edit'
 
   root 'home#index'
   devise_for :users
 
   get 'data/clients', to: 'data#clients'
-  get 'maps/edit', to: 'maps#edit'
-  get 'maps/job', to: 'maps#job'
+
   get 'data/jobtrees', to: 'data#jobtrees'
   get 'data/jobs', to: 'data#jobs' #different from jobsdash?
   get 'data/jobsdash', to: 'data#jobsdash' #userjobs?

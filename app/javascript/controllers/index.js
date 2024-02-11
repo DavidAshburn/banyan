@@ -16,8 +16,8 @@ application.register("jobform", JobformController)
 import MapseditController from "./mapsedit_controller"
 application.register("mapsedit", MapseditController)
 
-import MapsjobController from "./mapsjob_controller"
-application.register("mapsjob", MapsjobController)
+import JobshowController from "./jobshow_controller"
+application.register("jobshow", JobshowController)
 
 import PropertyformController from "./propertyform_controller"
 application.register("propertyform", PropertyformController)
