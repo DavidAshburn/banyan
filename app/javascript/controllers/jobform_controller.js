@@ -18,15 +18,22 @@ export default class extends Controller {
     const fpstart = flatpickr('#startdate', {
       enableTime: true,
       dateFormat: 'Y-m-d H:i',
+      //most of this is to insert the UTC offset from the client computer
       onClose: function (selectedDates, dateStr, instance) {
-        document.getElementById('job_start').value = dateStr;
+        let input = document.getElementById('jobstart');
+        let out = new Date(dateStr).toISOString();
+        input.value = out;
+        console.log(input.value);
       },
     });
     const fpend = flatpickr('#enddate', {
       enableTime: true,
       dateFormat: 'Y-m-d H:i',
       onClose: function (selectedDates, dateStr, instance) {
-        document.getElementById('job_end').value = dateStr;
+        let input = document.getElementById('jobend');
+        let out = new Date(dateStr).toISOString();
+        input.value = out;
+        console.log(input.value);
       },
     });
 
@@ -76,9 +83,9 @@ export default class extends Controller {
     for (let frame of this.vehiclecheckboxesTarget.children) {
       frame.firstElementChild.addEventListener('click', (event) => {
         if(event.target.checked) {
-          this.addHiddenArrayInput('vehicles', event.target.dataset.vehicle)
+          this.addHiddenArrayInput('vehicles', event.target.dataset.vehicle, 'textbox')
         } else {
-          this.removeHiddenArrayInput('vehicles', event.target.dataset.vehicle)
+          this.removeHiddenArrayInput('vehicles', event.target.dataset.vehicle, 'textbox')
         }
       });
     }
@@ -96,7 +103,6 @@ export default class extends Controller {
       }
     }
   }
-
   //this.connect() Utilities
   mapboxInit(token, center) {
     mapboxgl.accessToken = token;
@@ -159,6 +165,7 @@ export default class extends Controller {
       bounds.extend(item);
     }
     this.map.fitBounds(bounds, { padding: 100 });
+    this.map.setMaxZoom(20);
   }
   getMarkerAvgCenter(treedata) {
     let lat = 0;
@@ -185,7 +192,7 @@ export default class extends Controller {
 
     if (addremove) {
       this.addToTreeList(treeId);
-      this.addHiddenArrayInput('trees', treeId)
+      this.addHiddenArrayInput('trees', treeId, 'number')
     } else {
       this.removeFromTreeList(treeId);
       this.removeHiddenArrayInput('trees',treeId)
@@ -279,9 +286,9 @@ export default class extends Controller {
   }
 
   //generic for trees, equipment, and vehicles parameters, require handling in jobs#create
-  addHiddenArrayInput(attributename, value) {
+  addHiddenArrayInput(attributename, value, type) {
     let newinput = document.createElement('input');
-    newinput.type = 'textbox';
+    newinput.type = type;
     newinput.name = `job[${attributename}][]`
     newinput.value = value;
     this.hiddenformsTarget.appendChild(newinput);
@@ -293,5 +300,10 @@ export default class extends Controller {
       }
     }
   }
+
+  debug() {
+    console.log(document.getElementById('job_start').value);
+  }
+  
 
 }

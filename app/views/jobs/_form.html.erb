@@ -18,12 +18,10 @@
       <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
         <%= form.label :start %>
         <input id="startdate"></input>
-        <%= form.datetime_field :start, class: "hidden" %>
       </div>
       <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
         <%= form.label :end %>
         <input id="enddate"></input>
-        <%= form.datetime_field :end, class: "hidden" %>
       </div>
       <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
         <%= form.label :estimator %>
@@ -75,10 +73,15 @@
         </div>
       </div>
       <div class="grid" data-jobform-target="hiddenforms"></div>
+      <div class="hidden">
+        <input type="textbox" name="job[start]" id="jobstart">
+        <input type="textbox" name="job[end]" id="jobend">
+      </div>
       <div class="grid gap-2" data-jobform-target="treelist">
       </div>
       <div>
         <%= form.submit class:"darkbutton-s"%>
+        <button data-action="jobform#debug">Debug</button>
       </div>
     </div>
   </div>
