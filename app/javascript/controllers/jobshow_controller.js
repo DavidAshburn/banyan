@@ -2,10 +2,17 @@ import { Controller } from '@hotwired/stimulus';
 import mapboxgl from 'mapbox-gl';
 
 export default class extends Controller {
-  static targets = ['jobid'];
+  static targets = ['jobid', 'jobstart','jobend','jobstartview','jobendview'];
 
   connect() {
     this.job_id = this.jobidTarget.innerText;
+
+
+
+    
+    this.jobstartviewTarget.innerText = this.getlocalTime(this.jobstartTarget.innerText);
+    this.jobendviewTarget.innerText = this.getlocalTime(this.jobendTarget.innerText);
+    
 
     const accesstoken =
       'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
@@ -23,6 +30,7 @@ export default class extends Controller {
           this.map.setMaxZoom(18);
           this.map.setMaxZoom(21);
       });
+    
     
     //event listeners for each row item so they can switch the marker color
     
@@ -73,5 +81,12 @@ export default class extends Controller {
     if(features.length == 1) {
       this.map.setZoom(8);
     }
+  }
+
+  getlocalTime(datetime) {
+    console.log(datetime);
+
+    let input = new Date(datetime);
+    return new Date(input.getTime()).toLocaleString()
   }
 }

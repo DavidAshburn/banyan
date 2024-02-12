@@ -3,12 +3,9 @@
     <div data-jobshow-target="jobid"><%= @jobid %></div>
   </div>
   <div class="grid h-screen lg:grid-cols-[1fr_3fr] grid-rows-[3fr_1fr] gap-2">
-
-    <div id="map" class="row-span-full col-span-full"></div>
-
-    <div class="mainpane col-start-2 row-start-2 z-50">
+    <div class="mainpane">
       <p class="panetitle">Trees</p>
-      <div id="jobtrees" class="panecontent overflow-scroll">
+      <div id="jobtrees" class="panecontent max-h-[75svh] overflow-scroll">
         <div class="grid grid-cols-3 px-2 text-center">
           <p>Species</p>
           <p>DBH</p>
@@ -23,24 +20,26 @@
         <% end %>
       </div>
     </div>
-
-    <div class="mainpane col-start-1 row-start-2 z-50">
+    <div id="map" class=""></div>
+    <div class="mainpane">
       <p class="panetitle">Notes</p>
       <div class="panecontent">
         <p><%= @job.notes %></p>
       </div>
     </div>
-
-    <div class="mainpane col-start-1 row-start-1 z-50">
+    
+    <div class="mainpane">
       <p class="panetitle">Info</p>
       <div class="grid-cols-2 panecontent">
         <div class="grid grid-cols-[1fr_4fr] items-center col-span-full">
           <p>Start:</p>
-          <p><%= @job.start.strftime('%m/%d/%y %I:%M %p') %></P>
+          <p data-jobshow-target="jobstartview"></p>
+          <p data-jobshow-target="jobstart" class="hidden"><%= @job.start %></P>
         </div>
         <div class="grid grid-cols-[1fr_4fr] items-center col-span-full">
           <p>End: </p>
-          <p><%= @job.end.strftime('%m/%d/%y %I:%M %p') %></P>
+          <p data-jobshow-target="jobendview"></p>
+          <p data-jobshow-target="jobend" class="hidden"><%= @job.end  %></P>
         </div>
         <div class="grid grid-cols-2 items-center">
           <p>Foreman: </p>
@@ -76,14 +75,9 @@
         </div>
       </div>
     </div>
-
-  </div>
-  <div class="grid md:grid-cols-2 gap-2">
-
     
 
     
-
   </div>
   <div class="flex items-center justify-center gap-4 p-2" id="treecontrols">
   </div>
