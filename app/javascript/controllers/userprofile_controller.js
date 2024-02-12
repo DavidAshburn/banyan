@@ -4,18 +4,22 @@ export default class extends Controller {
     'speciesin',
     'vehiclesin',
     'equipmentin',
+    'worktypesin',
     'pidin',
     'speciesform',
     'vehiclesform',
     'equipmentform',
+    'worktypesform',
     'specieslist',
     'vehicleslist',
     'equipmentlist',
+    'worktypeslist',
   ];
   connect() {
     this.latestSpecies = [];
     this.latestVehicles = [];
     this.latestEquipment = [];
+    this.latestWorktypes = [];
 
     fetch('/data/profile?pid=' + this.pidinTarget.innerText)
       .then((response) => response.json())
@@ -23,6 +27,7 @@ export default class extends Controller {
         this.latestSpecies = profile.species;
         this.latestVehicles = profile.vehicles;
         this.latestEquipment = profile.equipment;
+        this.latestWorktypes = profile.worktypes;
       });
   }
 
@@ -51,7 +56,6 @@ export default class extends Controller {
       );
       this.clearInputs();
     }
-    console.log(this.latestSpecies);
   }
 
   addVehicle() {
@@ -106,6 +110,32 @@ export default class extends Controller {
     this.clearInputs();
   }
 
+  addWorktype() {
+    let token = document.getElementsByName('csrf-token')[0].content;
+    let input = this.worktypesinTarget;
+
+    if (input.value.length) {
+      this.latestWorktypes.push(input.value);
+    }
+    fetch('/edit/profileworktypes?name=' + input.value, {
+      method: 'POST',
+      headers: {
+        'X-CSRF-Token': token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        /*handle POST errors*/
+      });
+    this.appendP(
+      this.worktypeslistTarget,
+      input.value,
+      this.latestWorktypes.length - 1,
+      'worktypes'
+    );
+    this.clearInputs();
+  }
+
   removeItem(event) {
     let token = document.getElementsByName('csrf-token')[0].content;
     let removeTarget = event.target.parentElement.firstElementChild;
@@ -131,6 +161,7 @@ export default class extends Controller {
     this.speciesinTarget.value = '';
     this.vehiclesinTarget.value = '';
     this.equipmentinTarget.value = '';
+    this.worktypesinTarget.value = '';
   }
 
   appendP(target, content, itemindex, itemtype) {
@@ -167,14 +198,19 @@ export default class extends Controller {
     this.equipmentformTarget.classList.toggle('hidden');
     this.hideOthers(2);
   }
+  showWorktypes() {
+    this.worktypesformTarget.classList.toggle('hidden');
+    this.hideOthers(3);
+  }
   hideOthers(index) {
     let targets = [
       this.speciesformTarget,
       this.vehiclesformTarget,
       this.equipmentformTarget,
+      this.worktypesformTarget,
     ];
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < targets.length; i++) {
       if (i != index) {
         targets[i].classList.toggle('hidden', true);
       }

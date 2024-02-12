@@ -20,6 +20,8 @@ export default class extends Controller {
 
         if (treedata.length > 0)
           this.setMarkersAndBounds(treedata, property.longitude, property.latitude);
+          this.map.setMaxZoom(18);
+          this.map.setMaxZoom(21);
       });
     
     //event listeners for each row item so they can switch the marker color

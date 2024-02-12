@@ -85,6 +85,30 @@
                 </div>
               </div>
 
+              <div class="grid gap-2 grid-cols-[1fr_5fr]">
+                <button
+                  class="lightbutton-s w-20"
+                  data-action = 'userprofile#showWorktypes'
+                >Add Work Type</button>
+                <div class="profilecatlist" data-userprofile-target='worktypeslist'>
+                  <p class="rounded border-b border-stone-50 col-span-full text-sm">
+                    Types:
+                  </p>
+                  <% @profile.equipment.each_with_index do |item, index| %>
+                    <div class="profilecatpair">
+                      <p data-itemindex=<%= index %> data-itemtype="worktypes"><%= item %></p>
+                      <button data-action="userprofile#removeItem" class="profilecatbutton">x</button>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="hidden col-start-2" data-userprofile-target='worktypesform'>
+                  <div class="grid gap-2 grid-cols-[3fr_2fr] max-w-80">
+                    <input type="text" data-userprofile-target="worktypesin" class="border border-dark rounded p-2">
+                    <button class="darkbutton-s" data-action="userprofile#addWorktype">Add</button>
+                  </div>
+                </div>
+              </div>
+
               <a href="/user/dashboard" class="darkbutton-s mt-12">
                 Dashboard
               </a>

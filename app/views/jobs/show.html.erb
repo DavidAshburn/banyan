@@ -2,13 +2,13 @@
   <div class="hidden">
     <div data-jobshow-target="jobid"><%= @jobid %></div>
   </div>
-  <div class="grid lg:grid-cols-2 gap-2">
+  <div class="grid h-screen lg:grid-cols-[1fr_3fr] grid-rows-[3fr_1fr] gap-2">
 
-    <div id="map" class="h-[40vh] lg:h-[60vh] rounded-[0.5rem]"></div>
+    <div id="map" class="row-span-full col-span-full"></div>
 
-    <div class="mainpane">
+    <div class="mainpane col-start-2 row-start-2 z-50">
       <p class="panetitle">Trees</p>
-      <div id="jobtrees" class="panecontent">
+      <div id="jobtrees" class="panecontent overflow-scroll">
         <div class="grid grid-cols-3 px-2 text-center">
           <p>Species</p>
           <p>DBH</p>
@@ -24,10 +24,14 @@
       </div>
     </div>
 
-  </div>
-  <div class="grid md:grid-cols-2 gap-2">
+    <div class="mainpane col-start-1 row-start-2 z-50">
+      <p class="panetitle">Notes</p>
+      <div class="panecontent">
+        <p><%= @job.notes %></p>
+      </div>
+    </div>
 
-    <div class="max-h-[40vh] lg:max-h-[60vh] grid gap-2 mainpane">
+    <div class="mainpane col-start-1 row-start-1 z-50">
       <p class="panetitle">Info</p>
       <div class="grid-cols-2 panecontent">
         <div class="grid grid-cols-[1fr_4fr] items-center col-span-full">
@@ -73,12 +77,12 @@
       </div>
     </div>
 
-    <div class="grid gap-2 mainpane">
-      <p class="panetitle">Notes</p>
-      <div class="panecontent">
-        <p><%= @job.notes %></p>
-      </div>
-    </div>
+  </div>
+  <div class="grid md:grid-cols-2 gap-2">
+
+    
+
+    
 
   </div>
   <div class="flex items-center justify-center gap-4 p-2" id="treecontrols">

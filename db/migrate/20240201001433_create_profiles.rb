@@ -6,6 +6,7 @@ class CreateProfiles < ActiveRecord::Migration[7.0]
       t.string :species, array: true, default: []
       t.string :vehicles, array: true, default: []
       t.string :equipment, array: true, default: []
+      t.string :worktypes, array: true, default: []
       t.boolean :prefers_dark, default: false
 
       t.integer :user_id

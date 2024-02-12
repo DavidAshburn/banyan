@@ -22,8 +22,10 @@ class JobsController < ApplicationController
     @job = Job.new
     @pid = params[:pid]
     @profile = current_user.profile
-    @vehicles = current_user.profile.vehicles
-    @equipment = current_user.profile.equipment
+    @vehicles = current_user.profile.vehicles || []
+    @equipment = current_user.profile.equipment || []
+    @species = current_user.profile.species || []
+    @worktypes = current_user.profile.worktypes || []
 
   end
 

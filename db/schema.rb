@@ -52,6 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_05_211755) do
     t.string "species", default: [], array: true
     t.string "vehicles", default: [], array: true
     t.string "equipment", default: [], array: true
+    t.string "worktypes", default: [], array: true
     t.boolean "prefers_dark", default: false
     t.integer "user_id"
     t.datetime "created_at", null: false
