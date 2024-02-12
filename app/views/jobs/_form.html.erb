@@ -72,16 +72,15 @@
           <% end %>
         </div>
       </div>
-      <div class="grid" data-jobform-target="hiddenforms"></div>
+      <div class="grid hidden" data-jobform-target="hiddenforms"></div>
       <div class="hidden">
         <input type="textbox" name="job[start]" id="jobstart">
         <input type="textbox" name="job[end]" id="jobend">
       </div>
-      <div class="grid gap-2" data-jobform-target="treelist">
+      <div class="grid gap-2 hidden" data-jobform-target="treelist">
       </div>
       <div>
         <%= form.submit class:"darkbutton-s"%>
-        <button data-action="jobform#debug">Debug</button>
       </div>
     </div>
   </div>
