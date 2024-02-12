@@ -4,7 +4,7 @@
 
 @layer components {
   .navlink {
-    @apply py-4 bg-dark text-light border-r-4 border-r-coral text-center text-sm;
+    @apply py-4 bg-dark text-light border-r-4 border-r-accent text-center text-sm;
   }
   .darkbutton {
     @apply p-2 px-4 rounded bg-dark text-light font-bold text-2xl text-center w-fit;
@@ -18,12 +18,6 @@
   .lightbutton-s {
     @apply p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit;
   }
-  .coralbutton {
-    @apply p-2 px-4 rounded bg-lcoral border-2 border-coral text-coral font-bold text-2xl text-center w-fit;
-  }
-  .coralbutton-s {
-    @apply p-2 rounded bg-lcoral border-2 border-coral text-coral font-bold text-sm text-center w-fit;
-  }
   .profilecatlist {
     @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 items-center gap-2 py-2;
   }
@@ -36,6 +30,15 @@
   .formcontainer {
     @apply grid gap-2 p-2 sm:grid-cols-[1fr_640px_1fr] md:grid-cols-[1fr_768px_1fr] font-inter;
   }
+  .mainpane {
+    @apply border-[6px] border-dark rounded-lg bg-white font-inter h-fit w-full;
+  }
+  .panetitle {
+    @apply bg-dark border-b-4 border-accent h-8 text-white pl-2 text-lg leading-7;
+  }
+  .panecontent {
+    @apply grid gap-2 p-2;
+  }
 }
 
 .abs-center {
@@ -43,58 +46,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-
-.windowpanedark {
-  border-width: 6px;
-  border-color: #275c51;
-  border-radius: 0.5rem;
-  background-color: white;
-  font-family: "Inter Tight", serif;
-  height: fit-content;
-  width: 100%;
-}
-
-.windowpanedark > p {
-  background-color: #275c51;
-  border-bottom-width: 4px;
-  border-color: #f87954;
-  height: 2rem;
-  color: white;
-  padding-left: 0.5rem;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
-.windowpanedark > div {
-  display: grid;
-  gap: 0.5rem;
-  padding: 0.5rem;
-}
-
-.windowpanelight {
-  border-width: 6px;
-  border-color: #d5fdef;
-  border-radius: 0.5rem;
-  background-color: white;
-  text-color: #d5fdef;
-  font-family: "Josefin Slab", serif;
-  height: fit-content;
-}
-
-.windowpanelight > p {
-  background-color: #d5fdef;
-  border-bottom-width: 4px;
-  border-color: #f87954;
-  height: 2rem;
-  text-color: #275c51;
-  padding-left: 0.5rem;
-}
-
-.windowpanelight > div {
-  display: grid;
-  gap: 0.5rem;
-  padding: 0.5rem;
 }
 
 

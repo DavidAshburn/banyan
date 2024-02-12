@@ -130,14 +130,17 @@ class DataController < ApplicationController
 
   def getdebug
 
-    @debug = Client.all.map{|client| {
-      name: client.name,
-      contact_name: client.contact_name,
-      phone: client.phone,
-      email: client.email,
-      mail_address: client.mail_address,
-      notes: client.notes,
-    } }
+    jobs = current_user.jobs.order(:start)
+    @debug = [];
+
+    jobs.each do |job|
+      @debug.push({
+        title: job.address,
+        start: job.start,
+        end: job.end,
+        fullDay: false,
+      })
+    end
 
     respond_to do |format|
       format.json { render json: @debug }

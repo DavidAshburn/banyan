@@ -17,5 +17,8 @@
 
   <body>
     <%= yield %>
+    <% if user_signed_in? %>
+      <%= render 'layouts/botnav' %>
+    <% end %>
   </body>
 </html>

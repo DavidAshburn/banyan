@@ -1,15 +1,10 @@
 import React from 'react';
 
-export default function Windowpane({ title, content, light }) {
-  let style
-  light == '1' ? style = 'windowpanelight': style = 'windowpanedark';
-  
+export default function Windowpane({ title, content }) {
   return (
-    <div className={style}>
-      <p>
-        {title}
-      </p>
-      <div>{content}</div>
+    <div className="mainpane">
+      <p className="panetitle">{title}</p>
+      <div className="panecontent">{content}</div>
     </div>
   );
 }

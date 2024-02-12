@@ -9,7 +9,6 @@ class UserController < ApplicationController
     @profile = current_user.profile
   end
 
-  def configuration
-
+  def debug
   end
 end
