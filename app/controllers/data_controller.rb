@@ -130,12 +130,11 @@ class DataController < ApplicationController
 
   def getdebug
 
-    jobs = current_user.jobs.order(:start)
     @debug = [];
 
-    jobs.each do |job|
+    current_user.jobs.each do |job|
       @debug.push({
-        title: job.address,
+        title: Property.find(job.property_id).address,
         start: job.start,
         end: job.end,
         fullDay: false,
