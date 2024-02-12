@@ -12,18 +12,7 @@ export default function JobRow({ jobdata }) {
   }
 
   function formatDate(string) {
-    let thisdate = new Date();
-
-    let datetime = string.split('T');
-    let dateparts = datetime[0].split('-');
-    let timeparts = datetime[1].split(':');
-
-    thisdate.setFullYear(dateparts[0]);
-    thisdate.setMonth(dateparts[1]);
-    thisdate.setDate(dateparts[2]);
-    thisdate.setHours(timeparts[0]);
-    thisdate.setMinutes(timeparts[1]);
-    thisdate.setSeconds(0);
+    let thisdate = new Date(string);
 
     let options = {
       weekday: "long",
