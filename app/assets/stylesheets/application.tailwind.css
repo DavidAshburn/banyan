@@ -4,7 +4,7 @@
 
 @layer components {
   .navlink {
-    @apply py-4 bg-dark text-light border-r-4 border-r-accent text-center text-sm;
+    @apply py-4 bg-dark text-light border-r-4 border-r-accent2 text-center text-sm;
   }
   .darkbutton {
     @apply p-2 px-4 rounded bg-dark text-light font-bold text-2xl text-center w-fit;
@@ -31,10 +31,10 @@
     @apply grid gap-2 p-2 sm:grid-cols-[1fr_640px_1fr] md:grid-cols-[1fr_768px_1fr] font-inter;
   }
   .mainpane {
-    @apply border-[6px] border-dark rounded-lg bg-white font-inter h-fit w-full;
+    @apply border-2 border-dark rounded-lg bg-white font-inter h-fit w-full;
   }
   .panetitle {
-    @apply bg-dark border-b-4 border-accent h-8 text-white pl-2 text-lg leading-7;
+    @apply bg-dark border-b-[6px] border-accent2 h-8 text-white pl-2 text-lg leading-7 font-josefin font-extrabold;
   }
   .panecontent {
     @apply grid gap-2 p-2;

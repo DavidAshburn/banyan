@@ -54,7 +54,7 @@ export default function JobRow({ jobdata }) {
 
       <div className={'col-span-full ' + display}>
         <div className="grid gap-2 grid-cols-2 border border-dark rounded-md mx-4 py-2">
-          <div className="grid grid-cols-2 p-2 gap-2 col-span-full border-dull rounded-md bg-emerald-200">
+          <div className="grid grid-cols-2 p-2 gap-2 col-span-full border-dull rounded-md bg-accent">
             <div className="grid">
               <p className="col-span-full text-sm text-stone-500">start</p>
               <p>{formatDate(job.start)}</p>
@@ -69,7 +69,7 @@ export default function JobRow({ jobdata }) {
               '/jobs/' +
               job.id
             }
-            className="col-span-full bg-emerald-200"
+            className="col-span-full bg-accent"
           >
             {property.address}
           </a>
