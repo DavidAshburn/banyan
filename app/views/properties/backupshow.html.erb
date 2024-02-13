@@ -1,0 +1,36 @@
+<p style="color: green"><%= notice %></p>
+
+<div data-controller="propertyshowmap" >
+  <div class="hidden" data-propertyshowmap-target="pid" id="pid"><%= @property.id %></div>
+  <div class="grid lg:grid-cols-[1fr_6fr_1fr] grid-rows-[1fr_4fr] h-screen p-4">
+    
+    <div id="propshowmap" class="col-span-full row-span-full"></div>
+
+    <div class="row-start-1 lg:col-start-2 z-50">
+      <div class="mainpane">
+        <p class="panetitle"><%= @property.address%></p>
+        <div class="panecontent">
+          <div class="grid grid-cols-2 gap-2">
+              <p class="rounded border-b border-stone-50"><%= @property.name%></p>
+              <p class="rounded border-b border-stone-50"><%= @property.contact_name%></p>
+              <p class="rounded border-b border-stone-50"><%= @property.phone%></p>
+              <p class="rounded border-b border-stone-50"><%= @property.email%></p>
+              <p class="rounded border-b border-stone-50">Type: <%= @property.property_type%></p>
+              <p class="rounded border-b border-stone-50">Tree Access: <%= @property.tree_access%></p>
+
+              <%= button_to "Delete this property", @property, method: :delete, class:"darkbutton-s" %>
+              <div class='flex items-center justify-center gap-2 p-2 col-start-2'>
+                <a href="/maps/edit?pid=<%= @property.id %>" class="darkbutton-s">Edit Map</a>
+                <a href="/jobs/new?pid=<%= @property.id %>" class="darkbutton-s">New Job</a>
+                <button data-action="propertyshowmap#editPropMarker" data-propertyshowmap-target="movemarkerbutton" class="lightbutton-s">Move Marker</button>
+                <button data-action="propertyshowmap#setPropMarker" data-propertyshowmap-target="setmarkerbutton"class="lightbutton-s hidden">Save Marker</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+</div>
+

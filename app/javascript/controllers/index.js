@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import CalendarController from "./calendar_controller"
+application.register("calendar", CalendarController)
+
 import DashjobsmapController from "./dashjobsmap_controller"
 application.register("dashjobsmap", DashjobsmapController)
 
@@ -13,11 +16,11 @@ application.register("debug", DebugController)
 import JobformController from "./jobform_controller"
 application.register("jobform", JobformController)
 
-import MapseditController from "./mapsedit_controller"
-application.register("mapsedit", MapseditController)
-
 import JobshowController from "./jobshow_controller"
 application.register("jobshow", JobshowController)
+
+import MapseditController from "./mapsedit_controller"
+application.register("mapsedit", MapseditController)
 
 import PropertyformController from "./propertyform_controller"
 application.register("propertyform", PropertyformController)
@@ -27,6 +30,9 @@ application.register("propertyshowmap", PropertyshowmapController)
 
 import RdashboardController from "./rdashboard_controller"
 application.register("rdashboard", RdashboardController)
+
+import ReactpropshowController from "./reactpropshow_controller"
+application.register("reactpropshow", ReactpropshowController)
 
 import UserprofileController from "./userprofile_controller"
 application.register("userprofile", UserprofileController)

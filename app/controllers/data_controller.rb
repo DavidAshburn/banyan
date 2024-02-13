@@ -128,6 +128,23 @@ class DataController < ApplicationController
 
   end
 
+  def getcalendar
+    @data = [];
+
+    current_user.jobs.each do |job|
+      @data.push({
+        title: Property.find(job.property_id).address,
+        start: job.start,
+        end: job.end,
+        fullDay: false,
+      })
+    end
+
+    respond_to do |format|
+      format.json { render json: @data }
+    end
+  end
+
   def getdebug
 
     @debug = [];
@@ -145,4 +162,6 @@ class DataController < ApplicationController
       format.json { render json: @debug }
     end
   end
+
+
 end

@@ -6,13 +6,18 @@
 # yarn
   React
   ReactDom
-  Flatpickr //cant import
+  Flatpickr
+  Mapbox
+  FullCalendar
+    core
+    interactivity
+    daygrid
+    lists
 
 Dashboard Menu
-  Calendar
+  Calendar - stubbed in debug
   Config // route and component stubbed as Profile
-    Tree Species for Dropdown Labels
-    Equipment for Dropdown Labels
+    Tree Species for Dropdown Labels - accepts input
     Theming
     Estimation
       man/hours
@@ -25,18 +30,9 @@ Views
   Show Day
     Map with locations marked
       Calculate drive time and predict problems based on estimated start/end times
-  Create Job
-    calculate estimate based on man/hours, rates from config
 
-  WIP
-
-  Show Property //basics done
-    Tree Statistics
-    Property Tree Management 'Health'
-    Soil type overlay (find information source)
-      recommend fertilization options
-  Show Job //need tree list
-
+Property 
+  Zones, key on tree and description in property?
 
 //
 scheduled jobs / reminders for repruning
@@ -50,3 +46,5 @@ automate reminder emails to clients -
 constant contact was their crm
 
 send emails with work orders to foreman and crew
+
+filters on show property/create job

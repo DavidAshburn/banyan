@@ -9,6 +9,9 @@ class UserController < ApplicationController
     @profile = current_user.profile
   end
 
+  def calendar
+  end
+
   def debug
   end
 end
