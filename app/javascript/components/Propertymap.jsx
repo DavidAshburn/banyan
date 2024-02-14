@@ -12,8 +12,6 @@ export default function Propertymap() {
     const [trees, setTrees] = useState([]);
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [longitude, setLongitude] = useState(0);
-    const [latitude, setLatitude] = useState(0);
     const [zoom, setZoom] = useState(9);
     const [popups, setPopups] = useState([]);
 
@@ -92,9 +90,7 @@ export default function Propertymap() {
           .then((data) => {
             setProperty(data[0]);
             setTrees(data[1]);
-            setLongitude(data[0].longitude);
-            setLatitude(data[0].latitude);
-            setZoom(14);
+            setZoom(15);
             let tpopups = initPopups(data[1]);
             setMarkersAndBounds(data[1], [data[0].longitude, data[0].latitude], '#07a7cb', map.current, tpopups);
             });
