@@ -28,8 +28,6 @@ export default function JobRow({ jobdata }) {
   const job = jobdata.job;
   const property = jobdata.property;
   const client = jobdata.client;
-  const vehicles = jobdata.vehicles || [];
-  const equipment = jobdata.equipment || [];
 
   return (
     <div
@@ -69,13 +67,13 @@ export default function JobRow({ jobdata }) {
             <p className="col-span-full text-sm text-stone-500">
               vehicles
             </p>
-            {vehicles.map((x, i) => (
+            {job.vehicles.map((x, i) => (
               <p key={i}>{x}</p>
             ))}
             <p className="col-span-full text-sm text-stone-500">
               equipment
             </p>
-            {equipment.map((x, i) => (
+            {job.equipment.map((x, i) => (
               <p key={i}>{x}</p>
             ))}
           </div>
