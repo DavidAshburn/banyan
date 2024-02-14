@@ -6,10 +6,6 @@ export default class extends Controller {
 
   connect() {
     this.job_id = this.jobidTarget.innerText;
-
-
-
-    
     this.jobstartviewTarget.innerText = this.getlocalTime(this.jobstartTarget.innerText);
     this.jobendviewTarget.innerText = this.getlocalTime(this.jobendTarget.innerText);
     

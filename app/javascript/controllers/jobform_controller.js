@@ -302,7 +302,6 @@ export default class extends Controller {
   }
 
   debug() {
-    console.log(document.getElementById('job_start').value);
   }
   
 
