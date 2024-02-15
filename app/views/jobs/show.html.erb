@@ -30,7 +30,7 @@
     
     <div class="mainpane">
       <p class="panetitle">Info</p>
-      <div class="grid-cols-2 panecontent">
+      <div class="grid-cols-2 md:grid-cols-4 panecontent">
         <div class="grid grid-cols-[1fr_4fr] items-center col-span-full">
           <p>Start:</p>
           <p data-jobshow-target="jobstartview"></p>
@@ -41,33 +41,33 @@
           <p data-jobshow-target="jobendview"></p>
           <p data-jobshow-target="jobend" class="hidden"><%= @job.end  %></P>
         </div>
-        <div class="grid grid-cols-2 items-center">
+        <div class="flex gap-4">
           <p>Foreman: </p>
           <p><%= @job.foreman %></P>
         </div>
-        <div class="grid grid-cols-2 items-center">
+        <div class="flex gap-4">
           <p>Estimator: </p>
           <p><%= @job.estimator %></P>
         </div>
-        <div class="grid grid-cols-2 items-center">
+        <div class="flex gap-4">
           <p>Crew Size: </p>
           <p><%= @job.crew_size %></P>
         </div>
-        <div class="grid grid-cols-2 items-center">
+        <div class="flex gap-4">
           <p>Est Hours: </p>
           <p><%= @job.est_hours %></P>
         </div>
-        <div class="grid grid-cols-2 items-center">
+        <div class="flex gap-4">
           <p>Price: </p>
           <p>$<%= @job.price %></P>
         </div>
-        <div class="grid grid-cols-2 col-span-full items-center">
+        <div class="grid grid-cols-2 items-center">
           <p class="col-span-full text-center">Vehicles</p>
           <% @vehicles.each do |vehicle| %>
             <p><%= vehicle %></P>
           <% end %>
         </div>
-        <div class="grid grid-cols-2 col-span-full items-center">
+        <div class="grid grid-cols-2 items-center">
           <p class="col-span-full text-center">Equipment</p>
           <% @equipment.each do |item| %>
             <p><%= item %></P>
