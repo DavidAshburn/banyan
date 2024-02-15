@@ -71,6 +71,10 @@ export default function Filters({trees, markers, map}) {
             trees.forEach((tree, i) => {
                 if(tree.dbh < min) baselist[i] = false;
             })
+        } else {
+            trees.forEach((tree, i) => {
+                baselist[i] = true;
+            })
         }
         setMinDBHList(baselist);
         updateMarkers();
@@ -85,6 +89,10 @@ export default function Filters({trees, markers, map}) {
         if(max != -1) {
             trees.forEach((tree, i) => {
                 if(tree.dbh > max) baselist[i] = false;
+            })
+        } else {
+            trees.forEach((tree, i) => {
+                baselist[i] = true;
             })
         }
         setMaxDBHList(baselist);
@@ -113,6 +121,10 @@ export default function Filters({trees, markers, map}) {
         if(targetsize != 'Any') {
             trees.forEach((tree, i) => {
                 if(tree.crown != targetsize) baselist[i] = false;
+            })
+        } else {
+            trees.forEach((tree, i) => {
+                baselist[i] = true;
             })
         }
         setCrownList(baselist);
