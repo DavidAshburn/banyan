@@ -15,17 +15,18 @@ export default function Filters({trees, markers, map}) {
             if(trees[i].dbh > max) item.remove();
         })
     }
-    function expandFilters() {
+    function toggleFilters() {
         let box = document.getElementById('filterbox');
-        box.style.gridTemplateRows == '0fr 0fr' ? 
+
+        box.style.gridTemplateRows != '1fr 1fr' ? 
         box.style.gridTemplateRows = '1fr 1fr':
         box.style.gridTemplateRows = '0fr 0fr';
     }
 
     return(
         <div>
-            <button className="text-center w-full underline" onClick={expandFilters}>Filters</button>
-            <div className="filterbox bg-accent3" id="filterbox">
+            <button className="text-center w-full underline" onClick={toggleFilters}>Filters</button>
+            <div className="filterbox" id="filterbox">
                 <div className="flex justify-between items-center overflow-hidden">
                     <button className="underline" onClick={dbhOver}>DBH over </button>
                     <input type="number" name="dbhmin" id="dbhmin" defaultValue="10" className="text-dark w-12" />
