@@ -81,8 +81,6 @@ export default function Propertymap() {
         }
     }
 
-    
-
     useEffect(() => {
 
         const pid = window.location.href.split('/').slice(-1);
