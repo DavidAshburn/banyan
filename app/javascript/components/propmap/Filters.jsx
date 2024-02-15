@@ -131,7 +131,6 @@ export default function Filters({trees, markers, map}) {
     return(
         <div>
             <button className="text-center w-full " onClick={toggleFilters}>Filters</button>
-            <button type="button" onClick={() => {getCrownSizes(trees)}}>debug</button>
             <div className="filterbox" id="filterbox">
                 <div className="flex justify-between items-center overflow-hidden">
                     <p>DBH over</p>
@@ -152,7 +151,6 @@ export default function Filters({trees, markers, map}) {
                     </select>
                 </div>
             </div>
-            <button type="button" onClick={debug}>Debug2</button>
         </div>
     )
 }
