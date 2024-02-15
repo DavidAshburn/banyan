@@ -48,5 +48,12 @@
   transform: translate(-50%, -50%);
 }
 
+.filterbox {
+  padding: .5rem;
+  display: grid;
+  grid-template-rows: 0fr 0fr;
+  transition: grid-template-rows 500ms;
+}
+
 
 

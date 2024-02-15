@@ -1,4 +1,4 @@
-<div data-controller="propertyshowmap" >
+<!--div data-controller="propertyshowmap" >
   <div class="hidden" data-propertyshowmap-target="pid" id="pid"><%= @property.id %></div>
   <div class="grid lg:grid-cols-[1fr_6fr_1fr] grid-rows-[1fr_4fr] h-screen p-4">
     <div id="propshowmap" class="col-span-full row-span-full"></div>
@@ -26,6 +26,31 @@
       </div>
     </div>
 
+  </div-->
+
+  <div data-controller="reactpropshow" id="reactpropshow">
+    <div class="grid grid-rows-[200px_1fr] md:grid-cols-[1fr_4fr] md:grid-rows-1">
+      <div class="flex flex-col justify-between gap-2 p-2 bg-dark text-light">
+        <div class="grid gap-2 h-fit text-center">
+          <p class="underline">Filter</p>
+          <p class="underline">Reset</p>
+        </div>
+        <div class="self-end">
+          <div class="mainpane w-full">
+            <p class="panetitle"></p>
+            <div class="grid gap-2 p-2 text-dark">
+              <p>Client:</p>
+              <p>Phone:</p>
+              <p>Email:</p>
+              <p>Type:</p>
+              <p>Parking:</p>
+              <p>Access:</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="h-[100svh] w-full"></div>
+    </div>
   </div>
 
 </div>

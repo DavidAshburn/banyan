@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect} from 'react';
 import mapboxgl from 'mapbox-gl';
-import Propertyinfo from './ui/Propertyinfo';
+import Propertyinfo from './propmap/Propertyinfo';
+import Filters from './propmap/Filters';
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
 
@@ -74,22 +75,17 @@ export default function Propertymap() {
         map.setMaxZoom(17);
         map.setMaxZoom(22);
     }
-    function filterMarkers(trees, markers) {
-        markers.each((item, i) => {
-            if(!bigCheck(trees[i])) item.remove();
-        })
-    }
     function resetMarkers(markers, map) {
         for(let item of markers) {
             item.addTo(map);
         }
     }
-    function bigCheck(tree) {
-        if(tree.dbh > 6) return true;
-        return false;
-    }
+
+    
 
     useEffect(() => {
+
+        const pid = window.location.href.split('/').slice(-1);
 
         if (map.current) return;
         map.current = new mapboxgl.Map({
@@ -100,7 +96,7 @@ export default function Propertymap() {
             style: `mapbox://styles/mapbox/satellite-v9`,
         });
 
-        fetch(`/data/proptrees?pid=1`)
+        fetch(`/data/proptrees?pid=` + pid)
             .then((response) => response.json())
             .then((data) => {
                 setProperty(data[0]);
@@ -123,9 +119,9 @@ export default function Propertymap() {
     return(
         <div className="grid grid-rows-[200px_1fr] md:grid-cols-[1fr_4fr] md:grid-rows-1">
             <div className="flex flex-col justify-between gap-2 p-2 bg-dark text-light">
-                <div className="grid gap-2 h-fit">
-                    <button className="underline" onClick={() => {filterMarkers(trees, markers)}}>Filter</button>
-                    <button className="underline" onClick={() => {resetMarkers(marksers,map.current)}}>Reset</button>
+                <div className="grid gap-2">
+                    <Filters trees = {trees} markers = {markers} map = {map.current} />
+                    <button className="underline" onClick={() => {resetMarkers(markers,map.current)}}>Reset</button>
                 </div>
                 <div className="self-end">
                     <Propertyinfo property = {property} client={client}/>

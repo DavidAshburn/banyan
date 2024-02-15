@@ -1,9 +1,24 @@
 <div data-controller="reactpropshow" id="reactpropshow">
     <div class="grid grid-rows-[200px_1fr] md:grid-cols-[1fr_4fr] md:grid-rows-1">
-        <div class="p-2 bg-dark text-light">
-            <p>Filters</p>
-            <p>Other</p>
+            <div class="flex flex-col justify-between gap-2 p-2 bg-dark text-light">
+                <div class="grid gap-2 h-fit text-center">
+                    <p class="underline">Filter</p>
+                    <p class="underline">Reset</p>
+                </div>
+                <div class="self-end">
+                    <div class="mainpane w-full">
+                        <p class="panetitle"></p>
+                        <div class="grid gap-2 p-2 text-dark">
+                            <p>Client:</p>
+                            <p>Phone:</p>
+                            <p>Email:</p>
+                            <p>Type:</p>
+                            <p>Parking:</p>
+                            <p>Access:</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="h-[100svh] w-full"></div>
         </div>
-        <div class="h-[100svh] w-full"></div>
-    </div>
 </div>
