@@ -10,8 +10,7 @@ export default class extends Controller {
     this.jobendviewTarget.innerText = this.getlocalTime(this.jobendTarget.innerText);
     
 
-    const accesstoken =
-      'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
+    const accesstoken = document.getElementById('mapboxpub').innerText;
 
     fetch('/data/jobtrees?jid=' + this.job_id)
       .then((response) => response.json())

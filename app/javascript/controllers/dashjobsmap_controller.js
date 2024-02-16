@@ -5,9 +5,8 @@ export default class extends Controller {
   static targets = [];
 
   connect() {
-    const accesstoken =
-      'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
-    this.mapboxInit(accesstoken);
+    mapboxgl.accessToken = document.getElementById('mapboxpub').innerText;
+    this.mapboxInit();
 
     fetch('/data/jobsdash')
       .then((response) => response.json())
@@ -19,9 +18,8 @@ export default class extends Controller {
       });
 
   }
-  mapboxInit(token) {
+  mapboxInit() {
     const honolulu = [-157.858093, 21.315603];
-    mapboxgl.accessToken = token;
     this.map = new mapboxgl.Map({
       container: 'jobsmap', // container ID
       center: honolulu, // starting position [lng, lat]

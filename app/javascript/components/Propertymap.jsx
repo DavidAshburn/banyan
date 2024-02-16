@@ -3,13 +3,11 @@ import mapboxgl from 'mapbox-gl';
 import Propertyinfo from './propmap/Propertyinfo';
 import Filters from './propmap/Filters';
 
-mapboxgl.accessToken = 'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
-
-
-
+//mapboxgl.accessToken = 'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
 
 export default function Propertymap() {
 
+    mapboxgl.accessToken = document.getElementById('mapboxpub').innerText;
     const [property, setProperty] = useState({});
     const [trees, setTrees] = useState([]);
     const mapContainer = useRef(null);
@@ -33,7 +31,6 @@ export default function Propertymap() {
     
           tpopups.push(newpop);
         }
-        setPopups(tpopups);
         return tpopups;
     }
     function setMarkersAndBounds(treedata, center, startcolor, map, popups) {
@@ -101,17 +98,15 @@ export default function Propertymap() {
                 setTrees(data[1]);
                 setZoom(15);
                 let tpopups = initPopups(data[1]);
+                setPopups(tpopups);
                 setMarkersAndBounds(data[1], [data[0].longitude, data[0].latitude], '#07a7cb', map.current, tpopups);
                 
                 fetch('/data/client?cid=' + data[0].client_id)
                     .then((response) => response.json())
                     .then((data) => {
                         setClient(data.client);
-                        });
+                });
         });
-
-        
-            
     });
 
     return(

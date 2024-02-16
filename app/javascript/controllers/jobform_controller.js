@@ -2,7 +2,16 @@ import { Controller } from '@hotwired/stimulus';
 import flatpickr from 'flatpickr';
 import mapboxgl from 'mapbox-gl';
 
-// Connects to data-controller="jobform"
+// TODO
+/*
+  refactor to use state arrays to track which markers are selected
+  the current implementation keeps adding markers without removing them from memory
+  .remove() doesn't delete a marker it only takes it off the map
+  we can use an array of unselected markers and an array of selected markers
+  and swap which one is .addTo(map) onClick as we update the state array which tracks selected trees
+  similar to what I'm doing in the react properties#show
+  we eleiminate listeners and memory leak, we can use React if we want now too
+*/
 export default class extends Controller {
   static targets = [
     'pid',
@@ -48,8 +57,7 @@ export default class extends Controller {
 
     //fetch property and tree data, then populate map
     let property_id = this.pidTarget.innerText;
-    const accesstoken =
-      'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
+    const accesstoken = document.getElementById('mapboxpub').innerText;
     fetch('/data/proptrees?pid=' + property_id)
       .then((response) => response.json())
       .then((propertydata) => {
@@ -237,6 +245,24 @@ export default class extends Controller {
       this.popups.push(newpop);
     }
   }
+
+  
+
+  //generic for trees, equipment, and vehicles parameters, require handling in jobs#create
+  addHiddenArrayInput(attributename, value, type) {
+    let newinput = document.createElement('input');
+    newinput.type = type;
+    newinput.name = `job[${attributename}][]`
+    newinput.value = value;
+    this.hiddenformsTarget.appendChild(newinput);
+  }
+  removeHiddenArrayInput(attributename, value) {
+    for(let item of this.hiddenformsTarget.children) {
+      if(item.name == `job[${attributename}][]` && item.value == value) {
+        item.remove();
+      }
+    }
+  }
   showPopup(index) {
     this.popups[index].addTo(this.map);
   }
@@ -284,25 +310,4 @@ export default class extends Controller {
     }
     return -1;
   }
-
-  //generic for trees, equipment, and vehicles parameters, require handling in jobs#create
-  addHiddenArrayInput(attributename, value, type) {
-    let newinput = document.createElement('input');
-    newinput.type = type;
-    newinput.name = `job[${attributename}][]`
-    newinput.value = value;
-    this.hiddenformsTarget.appendChild(newinput);
-  }
-  removeHiddenArrayInput(attributename, value) {
-    for(let item of this.hiddenformsTarget.children) {
-      if(item.name == `job[${attributename}][]` && item.value == value) {
-        item.remove();
-      }
-    }
-  }
-
-  debug() {
-  }
-  
-
 }

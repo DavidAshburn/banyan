@@ -10,8 +10,7 @@ export default class extends Controller {
     this.highcolor = '#f87954';
 
     let property_id = this.pidTarget.innerText;
-    const accesstoken =
-      'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
+    mapboxgl.accessToken = document.getElementById('mapboxpub').innerText;
 
     fetch('/data/proptrees?pid=' + property_id)
       .then((response) => response.json())
@@ -19,7 +18,7 @@ export default class extends Controller {
         let property = propertydata[0];
         let treedata = propertydata[1];
         this.latestCenter = [property.longitude, property.latitude];
-        this.mapboxInit(accesstoken, this.latestCenter);
+        this.mapboxInit(this.latestCenter);
 
         if (treedata.length > 0) {
           let calcCenter = this.getMarkerAvgCenter(treedata);
@@ -37,8 +36,7 @@ export default class extends Controller {
   }
 
   //this.connect() Utilities
-  mapboxInit(token, center) {
-    mapboxgl.accessToken = token;
+  mapboxInit(center) {
     this.map = new mapboxgl.Map({
       container: 'propshowmap', // container ID
       center: center, // starting position [lng, lat]

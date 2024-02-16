@@ -19,8 +19,7 @@ export default class extends Controller {
     const prefix =
       'https://api.mapbox.com/geocoding/v5/mapbox.places/';
     const middle = '.json?access_token=';
-    const accesstoken =
-      'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
+    const accesstoken = document.getElementById('mapboxpub').innerText;
 
       //geocode the address field when focus is lost
     this.addressIn?.addEventListener('blur', (event) => {

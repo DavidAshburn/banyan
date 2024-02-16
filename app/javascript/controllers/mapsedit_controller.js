@@ -9,9 +9,7 @@ export default class extends Controller {
     //dont need geocode if property always has lat long now
 
     this.property_id = this.pidTarget.value;
-    const accesstoken =
-      'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
-
+    const accesstoken = document.getElementById('mapboxpub').innerText;
     
 
     fetch('/data/proptrees?pid=' + this.property_id)

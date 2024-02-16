@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import mapboxgl from 'mapbox-gl';
 import ClientRow from './ui/ClientRow';
 import DashHead from './ui/DashHead';
 import JobRow from './ui/JobRow';
@@ -6,6 +7,8 @@ import Windowpane from './ui/Windowpane';
 
 
 export default function Dashboard() {
+
+  mapboxgl.accessToken = document.getElementById('mapboxpub').innerText;
   let [clientdata, setClientData] = useState([]);
   let [jobsdata, setJobsData] = useState([]);
   let [user, setUser] = useState({});
