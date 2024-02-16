@@ -119,7 +119,6 @@ export default function Propertymap() {
             <div className="flex flex-col justify-between gap-2 p-2 bg-dark text-light">
                 <div className="grid gap-2">
                     <Filters trees = {trees} markers = {markers} map = {map.current} />
-                    <button className="underline" onClick={() => {resetMarkers(markers,map.current)}}>Reset</button>
                 </div>
                 <div className="self-end">
                     <Propertyinfo property = {property} client={client}/>

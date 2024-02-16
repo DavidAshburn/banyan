@@ -5,7 +5,7 @@ export default function Filters({trees, markers, map}) {
 
     const [maxdbhlist, setMaxDBHList] = useState([]);
     const [mindbhlist, setMinDBHList] = useState([]);
-    const [crownlist, setCrownList] = useState([true,true,true]);
+    const [crownlist, setCrownList] = useState([]);
 
     useEffect(()=> {
         let temp = [];
@@ -20,10 +20,6 @@ export default function Filters({trees, markers, map}) {
     useEffect(()=> {
         updateMarkers();
     }, [maxdbhlist, mindbhlist, crownlist]);
-
-    function debug() {
-        console.log(crownlist);
-    }
 
     function updateMarkers() {
         console.log('update');
@@ -72,9 +68,9 @@ export default function Filters({trees, markers, map}) {
                 if(tree.dbh < min) baselist[i] = false;
             })
         } else {
-            trees.forEach((tree, i) => {
-                baselist[i] = true;
-            })
+            for(let item of baselist) {
+                item = true;
+            }
         }
         setMinDBHList(baselist);
         updateMarkers();
@@ -91,9 +87,9 @@ export default function Filters({trees, markers, map}) {
                 if(tree.dbh > max) baselist[i] = false;
             })
         } else {
-            trees.forEach((tree, i) => {
-                baselist[i] = true;
-            })
+            for(let item of baselist) {
+                item = true;
+            }
         }
         setMaxDBHList(baselist);
         updateMarkers();
@@ -105,7 +101,7 @@ export default function Filters({trees, markers, map}) {
         }
         let list = Object.keys(sizes).sort();
         let options = [];
-        options.push(<option key={10000} value='any'>Any</option>)
+        options.push(<option key={10000} value='Any'>Any</option>)
         for(let i = 0; i < list.length; i++) {
             options.push(<option key={i} value={list[i]}>{list[i]}</option>)
         }
@@ -123,13 +119,11 @@ export default function Filters({trees, markers, map}) {
                 if(tree.crown != targetsize) baselist[i] = false;
             })
         } else {
-            trees.forEach((tree, i) => {
-                baselist[i] = true;
-            })
+            for(let item of baselist) {
+                item = true;
+            }
         }
         setCrownList(baselist);
-        updateMarkers();
-            
         updateMarkers();
     }
     function toggleFilters() {
