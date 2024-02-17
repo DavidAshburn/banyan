@@ -50,10 +50,8 @@ export default class extends Controller {
     this.startcolor = '#07a7cb';
     this.brightcolor = '#6ee7b7';
 
-    //state for array inputs
-    this.state = {
-      trees: [],
-    };
+    //state for trees input
+    this.treesoutput = {};
 
     //fetch property and tree data, then populate map
     let property_id = this.pidTarget.innerText;
@@ -200,6 +198,7 @@ export default class extends Controller {
 
     if (addremove) {
       this.addToTreeList(treeId);
+      this.updateTreesOut()
       this.addHiddenArrayInput('trees', treeId, 'number')
     } else {
       this.removeFromTreeList(treeId);

@@ -21,6 +21,7 @@ class JobsController < ApplicationController
   def new
     @job = Job.new
     @pid = params[:pid]
+    @uid = current_user.id
     @profile = current_user.profile
     @vehicles = current_user.profile.vehicles || []
     @equipment = current_user.profile.equipment || []
@@ -36,7 +37,6 @@ class JobsController < ApplicationController
   # POST /jobs or /jobs.json
   def create
     @job = Job.new(job_params)
-    @job.trees = params['job']['trees']
     @job.vehicles = params['job']['vehicles']
     @job.equipment = params['job']['equipment']
 

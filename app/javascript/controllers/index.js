@@ -25,11 +25,11 @@ application.register("mapsedit", MapseditController)
 import PropertyformController from "./propertyform_controller"
 application.register("propertyform", PropertyformController)
 
-import PropertyshowmapController from "./propertyshowmap_controller"
-application.register("propertyshowmap", PropertyshowmapController)
-
 import RdashboardController from "./rdashboard_controller"
 application.register("rdashboard", RdashboardController)
+
+import ReactnewjobController from "./reactnewjob_controller"
+application.register("reactnewjob", ReactnewjobController)
 
 import ReactpropshowController from "./reactpropshow_controller"
 application.register("reactpropshow", ReactpropshowController)

@@ -1,7 +1,16 @@
-<div class="hidden" id="mapboxpub"><%= ENV["MAPBOX_PUB"] %></div>
-<div data-controller="jobform">
-  <div class="hidden" data-jobform-target="pid"><%=@pid %></div>
+<div class="hidden" id="mapboxpub">
+  
+  <p id="mapboxpub"><%= ENV["MAPBOX_PUB"] %></p>
+  <p id="pid"><%= @pid %></p>
+  <p id="uid"><%= @uid %></p>
+</div>
 
+
+<div data-controller="reactnewjob" id="newjobform"></div>
+
+<!--div data-controller="jobform">
+  
+  <div class="hidden" data-jobform-target="pid"><%=@pid %></div>
   <div id="jobmap" class="h-[60dvh] lg:h-[100dvh] lg:w-full"></div>
   <div class="md:mx-[5vw] lg:z-2 lg:absolute lg:top-0 lg:right-0">
     <%= render "form", job: @job %>
@@ -10,4 +19,4 @@
   <div>
     <%= link_to "Back to jobs", jobs_path %>
   </div>
-</div>
+</div-->
