@@ -195,7 +195,7 @@ export default function Filters({ trees, markers, map }) {
 
   return (
     <div>
-      <button className="text-center w-full " onClick={toggleFilters}>
+      <button className="text-center w-full underline bg-accent3 rounded-xl p-4 w-[5rem]" onClick={toggleFilters}>
         Filters
       </button>
       <div className="filterbox" id="filterbox">

@@ -107,7 +107,7 @@ export default function Propertymap() {
                         setClient(data.client);
                 });
         });
-    });
+    }, []);
 
     return(
         <div className="grid grid-rows-[200px_1fr] md:grid-cols-[1fr_4fr] md:grid-rows-1">
