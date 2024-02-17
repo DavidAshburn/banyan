@@ -7,7 +7,6 @@ export default function NewJob() {
     const [end, setEnd] = useState("");
     const [estimator, setEstimator] = useState("");
     const [foreman, setForeman] = useState("");
-    const [trees, setTrees] = useState({});
     const [notes, setNotes] = useState("");
     const [crew_size, setCrewSize] = useState(0);
     const [est_hours, setEstHours] = useState(0);
@@ -22,7 +21,6 @@ export default function NewJob() {
             .then((data) => {
                 setProfile(data);
             });
-        setTrees({'1':'crown reduction','2':'crown thinning'});
     }, []);
 
 
@@ -30,7 +28,11 @@ export default function NewJob() {
         event.preventDefault();
         let token = document.getElementsByName('csrf-token')[0].content;
 
-        const postData = { start, end, estimator, foreman, trees, notes, crew_size, est_hours, price, user_id, property_id };
+        const trees = {'1':'crown reduction','2':'crown thinning'};
+        const vehicles = ['F150'];
+        const equipment = ['Grinder'];
+
+        const postData = { start, end, estimator, foreman, trees, notes, crew_size, est_hours, price, user_id, property_id, vehicles, equipment };
 
         const response = await fetch('/jobs.json', {
             method: 'POST',
@@ -41,10 +43,11 @@ export default function NewJob() {
             body: JSON.stringify(postData)
         });
 
-        if (!response.ok) {
-            console.log('error occurred');
-        } else {
-            console.log{'response ok'};
+        if(response.ok) {
+            let next = '../user/dashboard';
+            window.open(next);
+        }else{
+            console.log('error');
         }
     }
 
