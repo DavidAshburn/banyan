@@ -1,4 +1,5 @@
 class Job < ApplicationRecord
+  serialize :trees, Hash
 
   belongs_to :property
   belongs_to :user

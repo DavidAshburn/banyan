@@ -37,6 +37,8 @@ class JobsController < ApplicationController
   # POST /jobs or /jobs.json
   def create
     @job = Job.new(job_params)
+    myhash = JSON.parse(params['job']['trees'])
+    @job.trees = myhash
     @job.vehicles = params['job']['vehicles']
     @job.equipment = params['job']['equipment']
 
@@ -90,14 +92,14 @@ class JobsController < ApplicationController
         :estimator,
         :foreman,
         :notes,
-        :trees,
-        :equipment,
-        :vehicles,
         :crew_size,
         :est_hours,
         :price,
         :property_id,
-        :user_id
+        :user_id,
+        :trees => {},
+        :equipment => [],
+        :vehicles => [],
         )
     end
 end

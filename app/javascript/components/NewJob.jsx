@@ -28,7 +28,7 @@ export default function NewJob() {
         event.preventDefault();
         let token = document.getElementsByName('csrf-token')[0].content;
 
-        const trees = {'1':'crown reduction','2':'crown thinning'};
+        const trees = JSON.stringify({'1':'crown reduction','2':'crown thinning'});
         const vehicles = ['F150'];
         const equipment = ['Grinder'];
 
