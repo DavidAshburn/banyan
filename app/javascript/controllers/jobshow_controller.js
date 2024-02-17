@@ -20,6 +20,10 @@ export default class extends Controller {
 
         this.mapboxInit(accesstoken, [property.longitude,property.latitude]);
 
+        console.log(treedata);
+        console.log(property);
+
+
         if (treedata.length > 0)
           this.setMarkersAndBounds(treedata, property.longitude, property.latitude);
           this.map.setMaxZoom(18);
@@ -61,6 +65,7 @@ export default class extends Controller {
 
       //build mapbounds collection
       features.push({ lon: item.longitude, lat: item.latitude });
+      console.log(item);
     }
 
     //mapbounds setting

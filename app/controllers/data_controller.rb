@@ -61,7 +61,7 @@ class DataController < ApplicationController
     property = thisjob.property
 
     #job.trees is an array of Tree ids
-    jobtrees = thisjob.trees.map{|item| Tree.find(item)}
+    jobtrees = thisjob.trees.keys.map{|item| Tree.find(item.to_i)}
     #@jobtrees = @json.trees.map{ |x| Tree.find(x) }
 
     @jobdata = {trees:jobtrees,property:property}

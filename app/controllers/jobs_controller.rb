@@ -13,8 +13,8 @@ class JobsController < ApplicationController
     @vehicles = @job.vehicles || []
     @equipment = @job.equipment || []
 
-    #job.trees is an array of Tree ids
-    @jobtrees = @job.trees.map{|item| Tree.find(item)}
+    #job.trees is a has of id:worktype items
+    @jobtrees = @job.trees.keys.map{|item| Tree.find(item)}
   end
 
   # GET /jobs/new
