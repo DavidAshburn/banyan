@@ -3,10 +3,11 @@
   <div class="hidden">
     <div data-jobshow-target="jobid"><%= @jobid %></div>
   </div>
-  <div class="grid h-screen lg:grid-cols-[1fr_3fr] grid-rows-[3fr_1fr] gap-2">
-    <div class="mainpane">
+  <div class="grid max-lg:min-h-screen grid-cols-1 grid-rows-[60dvh_1fr_1fr_1fr] lg:h-screen lg:grid-cols-[1fr_3fr] lg:grid-rows-[3fr_1fr] gap-2">
+    <div id="map" class="lg:col-start-2 lg:row-start-1"></div>
+    <div class="mainpane lg:col-start-1 lg:row-start-1">
       <p class="panetitle">Trees</p>
-      <div id="jobtrees" class="panecontent max-h-[75svh] overflow-scroll">
+      <div id="jobtrees" class="panecontent max-lg:h-[20dvh] lg:max-h-[75svh] overflow-scroll">
         <div class="grid grid-cols-3 px-2 text-center">
           <p>Species</p>
           <p>DBH</p>
@@ -21,14 +22,12 @@
         <% end %>
       </div>
     </div>
-    <div id="map" class="max-lg:h-[60dvh]""></div>
     <div class="mainpane">
       <p class="panetitle">Notes</p>
       <div class="panecontent">
         <p><%= @job.notes %></p>
       </div>
     </div>
-    
     <div class="mainpane">
       <p class="panetitle">Info</p>
       <div class="grid-cols-2 md:grid-cols-4 panecontent">
@@ -74,6 +73,7 @@
             <p><%= item %></P>
           <% end %>
         </div>
+        <%= button_to "Destroy this job", @job, method: :delete, class:"darkbutton-s" %>
       </div>
     </div>
     
@@ -82,7 +82,7 @@
   </div>
   <div class="flex items-center justify-center gap-4 p-2" id="treecontrols">
   </div>
-  <%= button_to "Destroy this job", @job, method: :delete, class:"darkbutton-s" %>
+  
 </div>
 
 
