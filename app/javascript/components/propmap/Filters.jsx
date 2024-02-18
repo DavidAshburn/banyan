@@ -22,7 +22,6 @@ export default function Filters({ trees, markers, map }) {
   }, [maxdbhlist, mindbhlist, crownlist, specieslist]);
 
   function updateMarkers() {
-    console.log('update');
     let checkarrays = [
       maxdbhlist,
       mindbhlist,

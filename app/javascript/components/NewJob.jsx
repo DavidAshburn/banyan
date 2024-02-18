@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Filters from './propmap/Filters';
-import Treelist from './newjob/Treelist';
+import Treerow from './newjob/Treerow';
 import mapboxgl from 'mapbox-gl';
 
 //mapboxgl.accessToken = 'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
@@ -37,7 +37,15 @@ export default function Propertymap() {
   const property_id = document.getElementById('pid').innerText;
   const user_id = document.getElementById('uid').innerText;
   const [profile, setProfile] = useState({});
-  const [chosentrees, setChosenTrees] = useState([]);
+
+
+  const [chosentrees, _setChosenTrees] = useState([]);
+  const chosenRef = useRef(chosentrees);
+
+  function setChosenTrees(trees) {
+    chosenRef.current = trees;
+    _setChosenTrees(trees);
+  }
 
   function initPopups(trees) {
     let tpopups = [];
@@ -76,7 +84,7 @@ export default function Propertymap() {
         .addTo(map);
 
       marker.getElement().addEventListener('click', () => {
-        toggleMarker(marker, startcolor, brightcolor, map, item.id, chosentrees, treedata, popups);
+        toggleMarker(marker, startcolor, brightcolor, map, item.id, chosenRef, treedata, popups);
       });
       marker.getElement().addEventListener('mouseenter', () => {
         popups[tindex].addTo(map);
@@ -108,7 +116,7 @@ export default function Propertymap() {
       item.addTo(map);
     }
   }
-  function toggleMarker(marker, start, bright, map, treeId, chosentrees, treedata, popups) {
+  function toggleMarker(marker, start, bright, map, treeId, chosenRef, treedata, popups) {
     //base my action on the current color
     let nextcolor;
     let addremove;
@@ -121,9 +129,9 @@ export default function Propertymap() {
     }
 
     if (addremove) {
-      addToTreeList(treeId, chosentrees);
+      addToTreeList(treeId, chosenRef, treedata);
     } else {
-      removeFromTreeList(treeId, chosentrees);
+      removeFromTreeList(treeId, chosenRef);
     }
 
     //swap out the marker for a new one in the alternate color
@@ -142,7 +150,7 @@ export default function Propertymap() {
     }
     //new toggleMarker event listener for the new Marker
     newmarker.getElement().addEventListener('click', () => {
-      toggleMarker(newmarker, start, bright, map, treeId, chosentrees, treedata, popups);
+      toggleMarker(newmarker, start, bright, map, treeId, chosenRef, treedata, popups);
     });
     
     newmarker.getElement().addEventListener('mouseenter', () => {
@@ -153,16 +161,24 @@ export default function Propertymap() {
     });
     
   }
-  function addToTreeList(treeid, chosentrees) {
-    let t = chosentrees;
-    t.push(treeid);
+  function addToTreeList(treeid, chosenRef, treedata) {
+    let t = [...chosenRef.current];
+
+    t.push(treedata.find((el)=> el.id == treeid));
     setChosenTrees(t);
+    console.log(t);
   }
-  function removeFromTreeList(treeid, chosentrees) {
-    let i = chosentrees.findIndex((el) => el == treeid);
-    let t = chosentrees;
-    t.splice(i, 1);
+  function removeFromTreeList(treeid, chosenRef) {
+    let targetdex = 0;
+    for(let i = 0; i < chosenRef.current.length; i++) {
+      if(chosenRef.current[i].id == treeid) {
+        targetdex = i;
+      }
+    }
+    let t = [...chosenRef.current];
+    t.splice(targetdex, 1);
     setChosenTrees(t);
+    console.log(t)
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -243,8 +259,9 @@ export default function Propertymap() {
     });
   }, []);
 
+
   return (
-    <div className="grid grid-cols-[3fr_7fr] grid-rows-[80svh_10svh_60svh_2rem] lg:grid-cols-[1fr_2fr] xl:grid-cols-[1fr_3fr] lg:grid-rows-[2fr_1fr] bg-light">
+    <div className="grid grid-cols-[3fr_7fr] grid-rows-[80svh_10svh_60svh_2rem] lg:grid-cols-[1fr_2fr] xl:grid-cols-[1fr_3fr] lg:grid-rows-[3fr_1fr] bg-light">
       <div
         ref={mapContainer}
         className="max-lg:col-span-2 max-lg:row-span-2 max-lg:col-start-1 max-lg:row-start-1 lg:col-start-2 bg-accent2"
@@ -338,10 +355,12 @@ export default function Propertymap() {
         </div>
       </div>
       <div
-        className="hidden lg:grid lg:col-start-2 lg:row-start-2 overflow-scroll bg-slate-100"
+        className="hidden lg:grid lg:col-start-2 lg:row-start-2 bg-emerald-200"
         id="treelist"
       >
-        <Treelist trees={chosentrees} workoptions={profile.worktypes}/>
+        {chosenRef.current.map((tree,i) => 
+          <p key={i}>{tree.species} : {tree.dbh}</p>
+        )}
       </div>
     </div>
   );
