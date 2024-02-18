@@ -55,6 +55,16 @@ class DataController < ApplicationController
     end
   end
 
+  def newjob
+    property = Property.find(params[:pid])
+    profile = current_user.profile
+
+    @newjobdata = {property: property, profile: profile, trees: property.trees, client:property.client}
+    respond_to do |format|
+      format.json { render json: @newjobdata}
+    end
+  end
+
   def jobtrees
 
     thisjob = Job.find(params[:jid])

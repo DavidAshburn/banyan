@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Filters from './propmap/Filters';
+import Treelist from './newjob/Treelist';
 import mapboxgl from 'mapbox-gl';
 
 //mapboxgl.accessToken = 'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
@@ -17,11 +18,12 @@ export default function Propertymap() {
   const map = useRef(null);
   const [zoom, setZoom] = useState(9);
   const [markers, setMarkers] = useState([]);
-  const [popups, setPopups] = useState([]);
+  
   const [client, setClient] = useState({});
   //marker toggling
   const [startcolor, setStartColor] = useState('#07a7cb');
   const [brightcolor, setBrightColor] = useState('#6ee7b7');
+  const [popups, setPopups] = useState([]);
 
   //form state
   const [start, setStart] = useState('');
@@ -35,6 +37,7 @@ export default function Propertymap() {
   const property_id = document.getElementById('pid').innerText;
   const user_id = document.getElementById('uid').innerText;
   const [profile, setProfile] = useState({});
+  const [chosentrees, setChosenTrees] = useState([]);
 
   function initPopups(trees) {
     let tpopups = [];
@@ -52,6 +55,7 @@ export default function Propertymap() {
     }
     return tpopups;
   }
+
   function setMarkersAndBounds(
     treedata,
     center,
@@ -72,15 +76,14 @@ export default function Propertymap() {
         .setLngLat([item.longitude, item.latitude])
         .addTo(map);
 
-      //add listeners to show/hidePopup on hover
+      marker.getElement().addEventListener('click', () => {
+        toggleMarker(marker, startcolor, brightcolor, map, item.id, chosentrees, treedata, popups);
+      });
       marker.getElement().addEventListener('mouseenter', () => {
         popups[tindex].addTo(map);
       });
       marker.getElement().addEventListener('mouseleave', () => {
         popups[tindex].remove();
-      });
-      marker.getElement().addEventListener('click', () => {
-        toggleMarker(marker, startcolor, brightcolor, map, item.id);
       });
 
       features.push({ lon: item.longitude, lat: item.latitude });
@@ -106,7 +109,7 @@ export default function Propertymap() {
       item.addTo(map);
     }
   }
-  function toggleMarker(marker, start, bright, map, treeId) {
+  function toggleMarker(marker, start, bright, map, treeId, chosentrees, treedata, popups) {
     //base my action on the current color
     let nextcolor;
     let addremove;
@@ -119,11 +122,9 @@ export default function Propertymap() {
     }
 
     if (addremove) {
-      addToTreeList(treeId);
-      addHiddenArrayInput('trees', treeId, 'number');
+      addToTreeList(treeId, chosentrees);
     } else {
-      removeFromTreeList(treeId);
-      removeHiddenArrayInput('trees', treeId);
+      removeFromTreeList(treeId, chosentrees);
     }
 
     //swap out the marker for a new one in the alternate color
@@ -136,85 +137,45 @@ export default function Propertymap() {
       .setLngLat(backup.getLngLat())
       .addTo(map);
 
+    let tindex = -1;
+    for(let i = 0; i < treedata.length; i++) {
+      if(treedata[i].id == treeId) tindex = i; 
+    }
     //new toggleMarker event listener for the new Marker
     newmarker.getElement().addEventListener('click', () => {
-      toggleMarker(newmarker, start, bright, map, treeId);
+      toggleMarker(newmarker, start, bright, map, treeId, chosentrees, treedata, popups);
     });
-
-    //hover popup event listeners for the new Marker
-    const indexofID = (id) => {
-      trees.forEach((tree, i) => {
-        if (tree.id == i) return i;
-      });
-    };
-
-    let tindex = indexOfID(treeId);
+    
     newmarker.getElement().addEventListener('mouseenter', () => {
       popups[tindex].addTo(map);
     });
     newmarker.getElement().addEventListener('mouseleave', () => {
       popups[tindex].remove();
     });
+    
   }
-  function addHiddenArrayInput(attributename, value, type) {
-    let newinput = document.createElement('input');
-    newinput.type = type;
-    newinput.name = `job[${attributename}][]`;
-    newinput.value = value;
-    document.getElementById('hiddenforms').appendChild(newinput);
+
+  function addToTreeList(treeid, chosentrees) {
+    let t = chosentrees;
+    t.push(treeid);
+    setChosenTrees(t);
   }
-  function removeHiddenArrayInput(attributename, value) {
-    for (let item of document.getElementById('hiddenforms')
-      .children) {
-      if (
-        item.name == `job[${attributename}][]` &&
-        item.value == value
-      ) {
-        item.remove();
-      }
-    }
-  }
-  function addToTreeList(treeid) {
-    let tree = trees.find((entry) => entry.id == treeid);
-    let row = document.createElement('div');
-    row.classList.add('flex', 'gap-2', 'px-2');
-
-    let species = document.createElement('p');
-    let stext = document.createTextNode(
-      this.capitalize(tree.species)
-    );
-    species.appendChild(stext);
-    row.appendChild(species);
-
-    let dbh = document.createElement('p');
-    let dtext = document.createTextNode(tree.dbh + '"');
-    dbh.appendChild(dtext);
-    row.appendChild(dbh);
-
-    let crown = document.createElement('p');
-    let ctext = document.createTextNode(this.capitalize(tree.crown));
-    crown.appendChild(ctext);
-    row.appendChild(crown);
-    row.dataset.treeid = treeid;
-
-    document.getElementById('treelist').appendChild(row);
-  }
-  function removeFromTreeList(treeid) {
-    for (let item of document.getElementById('treelist').children) {
-      if (item.dataset.treeid == treeid) {
-        document.getElementById('treelist').removeChild(item);
-      }
-    }
+  function removeFromTreeList(treeid, chosentrees) {
+    let i = chosentrees.findIndex((el) => el == treeid);
+    let t = chosentrees.splice(i, 1);
+    setChosenTrees(t);
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     let token = document.getElementsByName('csrf-token')[0].content;
 
-    const trees = JSON.stringify({
-      1: 'crown reduction',
-      2: 'crown thinning',
-    });
+    const trees = {};
+    for(let child of document.getElementById('treelist').children) {
+      let id = child.dataset.treeid;
+      let work = document.getElementById(`treework${id}`).value;
+      trees[id] = work;
+    }
     const vehicles = ['F150'];
     const equipment = ['Grinder'];
 
@@ -234,6 +195,8 @@ export default function Propertymap() {
       equipment,
     };
 
+    console.log(postData);
+    /*
     const response = await fetch('/jobs.json', {
       method: 'POST',
       headers: {
@@ -249,6 +212,7 @@ export default function Propertymap() {
     } else {
       console.log('error');
     }
+    */
   };
 
   useEffect(() => {
@@ -261,29 +225,24 @@ export default function Propertymap() {
       style: `mapbox://styles/mapbox/satellite-v9`,
     });
 
-    fetch(`/data/proptrees?pid=` + property_id)
+    fetch(`/data/newjob?pid=` + property_id)
       .then((response) => response.json())
       .then((data) => {
-        setProperty(data[0]);
-        setTrees(data[1]);
-        setZoom(15);
-        let tpopups = initPopups(data[1]);
+        setProperty(data.property);
+        setTrees(data.trees);
+        setClient(data.client);
+        setProfile(data.profile);
+        let tpopups = initPopups(data.trees);
         setPopups(tpopups);
         setMarkersAndBounds(
-          data[1],
-          [data[0].longitude, data[0].latitude],
+          data.trees,
+          [data.property.longitude, data.property.latitude],
           startcolor,
           brightcolor,
           map.current,
           tpopups
         );
-
-        fetch('/data/client?cid=' + data[0].client_id)
-          .then((response) => response.json())
-          .then((data) => {
-            setClient(data.client);
-          });
-      });
+    });
   }, []);
 
   return (
@@ -366,7 +325,6 @@ export default function Propertymap() {
               id="pricein"
               onChange={(e) => setPrice(e.target.value)}
             />
-            <div class="grid hidden" id="hiddenforms"></div>
             <button type="submit" className="col-start-2">
               Make Job
             </button>
@@ -383,7 +341,9 @@ export default function Propertymap() {
       <div
         className="hidden lg:grid lg:col-start-2 lg:row-start-2 overflow-scroll bg-slate-100"
         id="treelist"
-      ></div>
+      >
+        <Treelist trees={chosentrees} workoptions={profile.worktypes}/>
+      </div>
     </div>
   );
 }
