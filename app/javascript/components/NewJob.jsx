@@ -55,7 +55,6 @@ export default function Propertymap() {
     }
     return tpopups;
   }
-
   function setMarkersAndBounds(
     treedata,
     center,
@@ -154,7 +153,6 @@ export default function Propertymap() {
     });
     
   }
-
   function addToTreeList(treeid, chosentrees) {
     let t = chosentrees;
     t.push(treeid);
@@ -162,10 +160,10 @@ export default function Propertymap() {
   }
   function removeFromTreeList(treeid, chosentrees) {
     let i = chosentrees.findIndex((el) => el == treeid);
-    let t = chosentrees.splice(i, 1);
+    let t = chosentrees;
+    t.splice(i, 1);
     setChosenTrees(t);
   }
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     let token = document.getElementsByName('csrf-token')[0].content;
@@ -336,6 +334,7 @@ export default function Propertymap() {
             markers={markers}
             map={map.current}
           />
+          <button onClick={()=>{console.log(chosentrees)}}>check</button>
         </div>
       </div>
       <div
