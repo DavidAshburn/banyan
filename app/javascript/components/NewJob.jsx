@@ -37,7 +37,7 @@ export default function Propertymap() {
   const [price, setPrice] = useState(0);
   const property_id = document.getElementById('pid').innerText;
   const user_id = document.getElementById('uid').innerText;
-  const [profile, setProfile] = useState({});
+  const [profile, setProfile] = useState({vehicles:[],equipment:[]});
 
 
   const [chosentrees, _setChosenTrees] = useState([]);
@@ -189,8 +189,17 @@ export default function Propertymap() {
       let work = document.getElementById(`treework${id}`).value;
       trees[id] = work;
     }
-    const vehicles = ['F150'];
-    const equipment = ['Grinder'];
+    const vehicles = [];
+    for(let child of document.getElementById('vehiclechecks').children) {
+      let check = child.firstElementChild;
+      if(check.checked) vehicles.push(check.value)
+    }
+
+    const equipment = [];
+    for(let child of document.getElementById('equipmentchecks').children) {
+      let check = child.firstElementChild;
+      if(check.checked) equipment.push(check.value)
+    }
 
     const postData = {
       start,
@@ -209,7 +218,7 @@ export default function Propertymap() {
     };
 
     console.log(postData);
-    /*
+    
     const response = await fetch('/jobs.json', {
       method: 'POST',
       headers: {
@@ -225,7 +234,7 @@ export default function Propertymap() {
     } else {
       console.log('error');
     }
-    */
+    
   };
 
   useEffect(() => {
@@ -338,6 +347,28 @@ export default function Propertymap() {
               id="pricein"
               onChange={(e) => setPrice(e.target.value)}
             />
+            <div className="col-span-full">
+              <label htmlFor="vehicles">Vehicles</label>
+              <div className="grid grid-cols-2" id="vehiclechecks">
+                {profile.vehicles.map((vehicle, i) => 
+                  <div className="flex justify-between items-center text-end p-2 bg-green-300 text-dark" key={i}>
+                    <input type="checkbox" value={vehicle}/>
+                    <p>{vehicle}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="col-span-full">
+              <label htmlFor="equipment">Equipment</label>
+              <div className="grid grid-cols-2" id="equipmentchecks">
+                {profile.equipment.map((equip, i) => 
+                  <div className="flex justify-between items-center text-end p-2 bg-green-300 text-dark" key={i}>
+                    <input type="checkbox" value={equip}/>
+                    <p>{equip}</p>
+                  </div>
+                )}
+              </div>
+            </div>
             <button type="submit" className="col-start-2">
               Make Job
             </button>

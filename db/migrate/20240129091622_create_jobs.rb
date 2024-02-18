@@ -8,7 +8,7 @@ class CreateJobs < ActiveRecord::Migration[7.0]
       t.string :estimator
       t.string :foreman, default: ''
       t.text :notes, default: ""
-      t.text :trees, default: "{}"
+      t.jsonb :trees, default: {}
       t.string :equipment, array: true, default: []
       t.string :vehicles, array: true, default: []
       t.integer :crew_size, default: 0

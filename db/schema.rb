@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_05_211755) do
     t.string "estimator"
     t.string "foreman", default: ""
     t.text "notes", default: ""
-    t.string "trees", default: "{}"
+    t.jsonb "trees", default: {}
     t.string "equipment", default: [], array: true
     t.string "vehicles", default: [], array: true
     t.integer "crew_size", default: 0
