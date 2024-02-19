@@ -91,7 +91,11 @@ export default function ShowJob() {
     
         let input = new Date(datetime);
         return new Date(input.getTime()).toLocaleString()
-      }
+    }
+
+    function destroyJob(id) {
+        console.log('tbw');
+    }
 
     useEffect(()=> {
 

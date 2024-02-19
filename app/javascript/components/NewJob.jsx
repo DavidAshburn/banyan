@@ -226,7 +226,7 @@ export default function Propertymap() {
 
     if (response.ok) {
       let next = '../user/dashboard';
-      window.open(next);
+      window.open(next, '_self');
     } else {
       console.log('error');
     }
