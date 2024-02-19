@@ -263,6 +263,14 @@ export default function Propertymap() {
     });
   }, []);
 
+  function debugFunk() {
+    let el = document.getElementById('starttime');
+    console.log(el.value);
+    let d = new Date();
+    let offset = d.getTimezoneOffset();
+    console.log(offset);
+  }
+
   return (
     <div className="grid grid-cols-[3fr_7fr] grid-rows-[80svh_10svh_60svh_2rem] lg:grid-cols-[1fr_2fr] xl:grid-cols-[1fr_3fr] lg:grid-rows-[1fr_12rem] bg-light">
       <div
@@ -284,7 +292,7 @@ export default function Propertymap() {
               className="text-dark rounded-lg h-[2rem] col-span-2"
               type="datetime-local"
               value={start}
-              id="text"
+              id="starttime"
               onChange={(e) => setStart(e.target.value)}
             />
             <label htmlFor="endin">End</label>
@@ -292,7 +300,7 @@ export default function Propertymap() {
               className="text-dark rounded-lg h-[2rem] col-span-2"
               type="datetime-local"
               value={end}
-              id="text"
+              id="endtime"
               onChange={(e) => setEnd(e.target.value)}
             />
             <label htmlFor="estimatorin">Estimator</label>
@@ -376,7 +384,7 @@ export default function Propertymap() {
             markers={markers}
             map={map.current}
           />
-          <button onClick={()=>{console.log(chosentrees)}}>check</button>
+          <button onClick={debugFunk}>check</button>
         </div>
       </div>
       <div

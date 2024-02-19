@@ -23,6 +23,11 @@
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "text-dark px-2" %>
       </div>
 
+      <div class="field">
+        <%= f.label :time_zone %><br />
+        <%= f.time_zone_select :time_zone %>
+      </div>
+
       <div class="actions">
         <%= f.submit "Sign up" %>
       </div>
