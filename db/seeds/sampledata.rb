@@ -637,17 +637,3 @@ trees8 = [
   ]
 ]
 makeTrees(trees8, Wes3.id)
-
-
-
-clients = [
-    ["Ben Gaudette","","123-123-1234","ben@me.com","1754 ala noe way, honolulu hi 96819","",
-    ],
-    ["Adam bentley","","456-456-4567","a@m.com","545 oakvale terrace walnut creek ca 94597","",
-    ],
-    ["Johnson Holdings","John Johnson","987-123-1234","john@johnson.com","3200 delmont ave, oakland ca","",
-    ],
-    ["Agoron Landscaping","terd ferguson","928-444-5555","terd@agoron.com","41 Valley Ct pleasant hill ca","",
-    ],
-]
-makeClients(clients)
