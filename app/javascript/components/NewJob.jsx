@@ -112,11 +112,7 @@ export default function Propertymap() {
     map.setMaxZoom(17);
     map.setMaxZoom(22);
   }
-  function resetMarkers(markers, map) {
-    for (let item of markers) {
-      item.addTo(map);
-    }
-  }
+
   function toggleMarker(marker, start, bright, map, treeId, chosenRef, treedata, popups) {
     //base my action on the current color
     let nextcolor;

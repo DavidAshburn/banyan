@@ -13,12 +13,6 @@ application.register("dashjobsmap", DashjobsmapController)
 import DebugController from "./debug_controller"
 application.register("debug", DebugController)
 
-import JobformController from "./jobform_controller"
-application.register("jobform", JobformController)
-
-import JobshowController from "./jobshow_controller"
-application.register("jobshow", JobshowController)
-
 import MapseditController from "./mapsedit_controller"
 application.register("mapsedit", MapseditController)
 
@@ -27,6 +21,9 @@ application.register("propertyform", PropertyformController)
 
 import RdashboardController from "./rdashboard_controller"
 application.register("rdashboard", RdashboardController)
+
+import ReactjobshowController from "./reactjobshow_controller"
+application.register("reactjobshow", ReactjobshowController)
 
 import ReactnewjobController from "./reactnewjob_controller"
 application.register("reactnewjob", ReactnewjobController)

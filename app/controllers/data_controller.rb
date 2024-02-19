@@ -72,9 +72,8 @@ class DataController < ApplicationController
 
     #we use keys to get the treeids
     jobtrees = thisjob.trees.keys.map{|item| Tree.find(item.to_i)}
-    #@jobtrees = @json.trees.map{ |x| Tree.find(x) }
 
-    @jobdata = {trees:jobtrees,property:property,work:thisjob.trees}
+    @jobdata = {trees:jobtrees,property:property,work:thisjob.trees,job:thisjob}
     respond_to do |format|
       format.json { render json: @jobdata}
     end
