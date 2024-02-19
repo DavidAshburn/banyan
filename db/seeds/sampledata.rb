@@ -57,6 +57,7 @@ TestUser = User.create(
 	password: "password",
 	password_confirmation: "password",
   id: 999,
+  time_zone: 'Hawaii',
 	)
 
 Ralph = Client.create(
