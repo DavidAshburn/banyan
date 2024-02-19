@@ -94,7 +94,7 @@
                   <p class="rounded border-b border-stone-50 col-span-full text-sm">
                     Types:
                   </p>
-                  <% @profile.equipment.each_with_index do |item, index| %>
+                  <% @profile.worktypes.each_with_index do |item, index| %>
                     <div class="profilecatpair">
                       <p data-itemindex=<%= index %> data-itemtype="worktypes"><%= item %></p>
                       <button data-action="userprofile#removeItem" class="profilecatbutton">x</button>
