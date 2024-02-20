@@ -76,26 +76,17 @@ export default function Propertymap() {
             .setLngLat([tree.longitude, tree.latitude]);
 
 
-        openmark.getElement().addEventListener('click', () => {
+        openmark.getElement().addEventListener('click', (e) => {
+            e.stopPropagation();
             toggleMark(tree.id, elRef, map, chosenRef, treesRef);
-        });
-        openmark.getElement().addEventListener('mouseenter', () => {
             elRef.current[tree.id].popup.addTo(map);
         });
-        openmark.getElement().addEventListener('mouseleave', () => {
-            elRef.current[tree.id].popup.remove();
-        });
 
-        chosenmark.getElement().addEventListener('click', () => {
+        chosenmark.getElement().addEventListener('click', (e) => {
+            e.stopPropagation();
             toggleMark(tree.id, elRef, map, chosenRef, treesRef);
-        });
-        chosenmark.getElement().addEventListener('mouseenter', () => {
-            elRef.current[tree.id].popup.addTo(map);
-        });
-        chosenmark.getElement().addEventListener('mouseleave', () => {
             elRef.current[tree.id].popup.remove();
         });
-
 
         telements[tree.id] = {
             open:openmark,
@@ -172,7 +163,13 @@ export default function Propertymap() {
         <div className="grid grid-rows-[200px_1fr] md:grid-cols-[1fr_4fr] md:grid-rows-1">
             <div className="flex flex-col justify-between gap-2 p-2 bg-dark text-light">
                 <div className="grid gap-2">
-                <Filters trees={trees} elRef={elementsRef} map={map.current} />
+                    <Filters trees={trees} elRef={elementsRef} map={map.current} />
+                    <a
+                        href={'/jobs/new?pid=' + property.id}
+                        className="p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit"
+                    >
+                        New Job
+                    </a>
                 </div>
                 <div className="self-end">
                     <Propertyinfo property = {property} client={client}/>
