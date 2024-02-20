@@ -184,7 +184,11 @@ export default function ShowJob() {
                     <p>Work</p>
                     </div>
                     {trees.map((tree,i) => 
-                        <div className="grid grid-cols-3 bg-dull rounded-xl p-2 text-center" key={i}>
+                        <div className="grid grid-cols-3 bg-dull rounded-xl p-2 text-center" 
+                        key={i}
+                        onMouseEnter={()=>{elementsRef.current[tree.id].popup.addTo(map.current)}}
+                        onMouseLeave={()=>{elementsRef.current[tree.id].popup.remove()}}
+                        >
                             <p>{ capitalize(tree.species) }</p>
                             <p>{ tree.dbh }"</p>
                             <p>{ capitalize(work[tree.id]) }</p>
