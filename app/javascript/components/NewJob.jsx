@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Filters from './propmap/Filters';
-import Treelist from './newjob/Treelist';
 import mapboxgl from 'mapbox-gl';
 
 //mapboxgl.accessToken = 'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
@@ -184,8 +183,8 @@ export default function Propertymap() {
       equipment,
     };
 
-    console.log(postData);
-    /*
+    //console.log(postData);
+    
     const response = await fetch('/jobs.json', {
       method: 'POST',
       headers: {
@@ -201,7 +200,7 @@ export default function Propertymap() {
     } else {
       console.log('error');
     }
-    */
+    
   };
 
   useEffect(() => {
@@ -356,6 +355,7 @@ export default function Propertymap() {
       </div>
       <div
         className="hidden lg:flex lg:flex-col justify-start lg:col-start-2 lg:row-start-2 overflow-scroll p-2 gap-4 bg-emerald-200"
+        id="treelist"
       >
           {
             chosenRef.current.map((tree, i)=> 
