@@ -124,8 +124,9 @@ export default function Propertymap() {
         }
         map.fitBounds(bounds, { padding: 100 });
         map.setMaxZoom(20);
-      }
+    }
 
+    
 
     useEffect(() => {
 
@@ -135,7 +136,7 @@ export default function Propertymap() {
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             center: [-157.858,21.315],
-            zoom: 15,
+            zoom: 13,
             //cooperativeGestures: true,
             style: `mapbox://styles/mapbox/satellite-v9`,
         });
@@ -144,10 +145,19 @@ export default function Propertymap() {
             .then((response) => response.json())
             .then((data) => {
                 setProperty(data[0]);
-                setTrees(data[1]);
+                setTrees(data[1])
+                
 
                 buildElements(data[1], map.current, elementsRef, chosenRef, treesRef);
                 setBounds(data[0], data[1], map.current);
+
+                if(data[1].length == 0) {
+                    let propertymark = new mapboxgl.Marker({
+                        color: startcolor,
+                    })
+                        .setLngLat([data[0].longitude, data[0].latitude])
+                        .addTo(map.current);
+                }
                 
                 fetch('/data/client?cid=' + data[0].client_id)
                     .then((response) => response.json())
