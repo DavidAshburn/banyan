@@ -7,91 +7,139 @@ export default function ShowJob() {
     const [property, setProperty] = useState({});
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [zoom, setZoom] = useState(9);
-    const [markers, setMarkers] = useState([]);
-    const [popups, setPopups] = useState([]);
-    const [startcolor, setStartColor] = useState('#07a7cb');
 
     const [job, setJob] = useState({})
-    const [trees, setTrees] = useState([]);
     const [work, setWork] = useState([]);
     const [vehicles, setVehicles] = useState([]);
     const [equipment, setEquipment] = useState([]);
 
+    const [startcolor, setStartColor] = useState('#07a7cb');
+    const [brightcolor, setBrightColor] = useState('#6ee7b7');
+    const [trees, _setTrees] = useState([]);
+    const treesRef = useRef(trees);
+    function setTrees(list) {
+        treesRef.current = list;
+        _setTrees(list);
+    }
+
+    const [chosen, _setChosen] = useState([]);
+    const chosenRef = useRef(chosen);
+    function setChosen(list) {
+        chosenRef.current = list;
+        _setChosen(list);
+    }
+    function addtoChosen(id, chosenRef, treesRef) {
+        let tree = treesRef.current.find((tree) => tree.id == id);
+        let newchosen = [...chosenRef.current, tree];
+        setChosen(newchosen);
+    }
+    function removeChosen(id, chosenRef) {
+        let newchosen = [...chosenRef.current];
+        let dex = newchosen.findIndex((tree)=> tree.id == id);
+        newchosen.splice(dex,1);
+        setChosen(newchosen);
+    }
+
+    //elements
+    const [elements, _setElements] = useState({});
+    const elementsRef = useRef(elements);
+    function setElements(obj) {
+        elementsRef.current = obj;
+        _setElements(obj);
+    }
+
+    function buildElements(treedata, map, elRef, chosenRef, treesRef, work) {
+        let telements = {};
+        for(let tree of treedata) {
+        let pop = new mapboxgl.Popup({
+            anchor: 'top-left',
+            closeButton: false,
+        })
+            .setHTML(
+            `<div className='grid p-2 gap-2 w-40 font-josefin'><p>${tree.species}</p><p>${tree.dbh} DBH</p><p>${work[tree.id]}</p></div>`
+            )
+            .setLngLat([tree.longitude, tree.latitude]);
+        
+        let openmark = new mapboxgl.Marker({
+            color: startcolor,
+        })
+            .setLngLat([tree.longitude, tree.latitude])
+            .addTo(map);
+
+        let chosenmark = new mapboxgl.Marker({
+            color: brightcolor,
+        })
+            .setLngLat([tree.longitude, tree.latitude]);
+
+
+        openmark.getElement().addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMark(tree.id, elRef, map, chosenRef, treesRef);
+            elRef.current[tree.id].popup.addTo(map);
+        });
+
+        chosenmark.getElement().addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMark(tree.id, elRef, map, chosenRef, treesRef);
+            elRef.current[tree.id].popup.remove();
+        });
+
+        telements[tree.id] = {
+            open:openmark,
+            chosen:chosenmark,
+            popup:pop,
+            selected:false,
+        }
+        }
+        setElements(telements);
+    }
+    function toggleMark(treeid, elRef, map, chosenRef, treesRef, work) {
+        let el = elRef.current[treeid];
+        if(el.selected) {
+        el.chosen.remove();
+        el.selected = false;
+        el.open.addTo(map);
+        removeChosen(treeid, chosenRef);
+        } else {
+        el.open.remove();
+        el.chosen.addTo(map);
+        el.selected = true;
+        addtoChosen(treeid, chosenRef, treesRef);
+        }
+        elRef.current[treeid] = el;
+        _setElements(elRef.current);
+    }
+    function setBounds(property, trees, map) {
+        let baseLL = new mapboxgl.LngLat(property.longitude, property.latitude);
+        //mapbounds setting
+        const bounds = new mapboxgl.LngLatBounds(
+          baseLL,
+          baseLL
+        );
+        for (let item of trees) {
+          let thisll = new mapboxgl.LngLat(item.longitude, item.latitude);
+          bounds.extend(thisll);
+        }
+        map.fitBounds(bounds, { padding: 100 });
+        map.setMaxZoom(20);
+      }
+
     function capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-    function initPopups(trees) {
-        let tpopups = [];
-        for (let item of trees) {
-            let newpop = new mapboxgl.Popup({
-                anchor: 'top-left',
-                closeButton: false,
-            })
-                .setHTML(
-                `<div className='grid p-2 gap-2 w-40 font-josefin'><p>${item.species}</p><p>${item.dbh} DBH</p><p>${item.crown} crown</p></div>`
-                )
-                .setLngLat([item.longitude, item.latitude]);
-        
-            tpopups.push(newpop);
-        }
-        return tpopups;
-    }
-    function setMarkersAndBounds(
-        treedata,
-        center,
-        startcolor,
-        map,
-        popups) {
-        //mapbounds collection
-        let features = [{ lon: center[0], lat: center[1] }];
-        let index = 0;
-        let tmarkers = [];
-        for (let item of treedata) {
-            let tindex = index;
-            let marker = new mapboxgl.Marker({
-                color: startcolor,
-            })
-                .setLngLat([item.longitude, item.latitude])
-                .addTo(map);
-
-            marker.getElement().addEventListener('mouseenter', () => {
-                popups[tindex].addTo(map);
-            });
-            marker.getElement().addEventListener('mouseleave', () => {
-                popups[tindex].remove();
-            });
-        
-            //build mapbounds collection
-            features.push({ lon: item.longitude, lat: item.latitude });
-            tmarkers.push(marker);
-            index++;
-        }
-        setMarkers(tmarkers);
+    function formatDate(string) {
+        let thisdate = new Date(string);
     
-        //mapbounds setting
-        const bounds = new mapboxgl.LngLatBounds(
-          features[0],
-          features[0]
-        );
-        for (let item of features) {
-          bounds.extend(item);
+        let options = {
+          weekday: "long",
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric"
         }
-        map.fitBounds(bounds, { padding: 100 });
-        map.setMaxZoom(17);
-        map.setMaxZoom(22);
     
-        if(features.length == 1) {
-          map.setZoom(8);
-        }
-    }
-    
-    function getlocalTime(datetime) {
-        console.log(datetime);
-    
-        let input = new Date(datetime);
-        return new Date(input.getTime()).toLocaleString()
-    }
+        return new Intl.DateTimeFormat("en-US", options).format(thisdate);
+      }
 
     function destroyJob(id) {
         console.log('tbw');
@@ -103,7 +151,7 @@ export default function ShowJob() {
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             center: [-157.858,21.315],
-            zoom: zoom,
+            zoom: 14,
             //cooperativeGestures: true,
             style: `mapbox://styles/mapbox/satellite-v9`,
         });
@@ -116,9 +164,10 @@ export default function ShowJob() {
                 setProperty(data.property);
                 setWork(data.work);
                 setJob(data.job);
-                let tpopups = initPopups(data.trees);
-                setPopups(tpopups);
-                setMarkersAndBounds(data.trees, [data.property.longitude, data.property.latitude], startcolor, map.current, tpopups);
+
+                buildElements(data.trees, map.current, elementsRef, chosenRef, treesRef, data.work);
+                setBounds(data.property, data.trees, map.current);
+
             });
     },[]);
 
@@ -132,13 +181,13 @@ export default function ShowJob() {
                     <div className="grid grid-cols-3 px-2 text-center">
                     <p>Species</p>
                     <p>DBH</p>
-                    <p>Crown</p>
+                    <p>Work</p>
                     </div>
                     {trees.map((tree,i) => 
                         <div className="grid grid-cols-3 bg-dull rounded-xl p-2 text-center" key={i}>
                             <p>{ capitalize(tree.species) }</p>
                             <p>{ tree.dbh }"</p>
-                            <p>{ capitalize(tree.crown) }</p>
+                            <p>{ capitalize(work[tree.id]) }</p>
                         </div>
                     )}
                 </div>
@@ -154,11 +203,11 @@ export default function ShowJob() {
                 <div className="grid-cols-2 md:grid-cols-4 panecontent">
                     <div className="grid grid-cols-[1fr_4fr] items-center col-span-full">
                     <p>Start:</p>
-                    <p>{getlocalTime(job.start)}</p>
+                    <p>{job.start}</p>
                     </div>
                     <div className="grid grid-cols-[1fr_4fr] items-center col-span-full">
                     <p>End: </p>
-                    <p>{getlocalTime(job.end)}</p>
+                    <p>{job.end}</p>
                     </div>
                     <div className="flex gap-4">
                     <p>Foreman: </p>

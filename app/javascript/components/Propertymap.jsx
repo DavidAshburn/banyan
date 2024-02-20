@@ -3,8 +3,6 @@ import mapboxgl from 'mapbox-gl';
 import Propertyinfo from './propmap/Propertyinfo';
 import Filters from './propmap/Filters';
 
-//mapboxgl.accessToken = 'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
-
 export default function Propertymap() {
 
     //map essentials
