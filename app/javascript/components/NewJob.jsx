@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Filters from './propmap/Filters';
-import Treerow from './newjob/Treerow';
+import Treelist from './newjob/Treelist';
 import mapboxgl from 'mapbox-gl';
 
 //mapboxgl.accessToken = 'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
@@ -13,18 +13,14 @@ export default function Propertymap() {
   mapboxgl.accessToken =
     document.getElementById('mapboxpub').innerText;
   const [property, setProperty] = useState({});
-  const [trees, setTrees] = useState([]);
+  const [client, setClient] = useState({});
+  const [profile, setProfile] = useState({vehicles:[],equipment:[]});
+
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [zoom, setZoom] = useState(9);
-  const [markers, setMarkers] = useState([]);
-  
-  const [client, setClient] = useState({});
-  //marker toggling
+
   const [startcolor, setStartColor] = useState('#07a7cb');
   const [brightcolor, setBrightColor] = useState('#6ee7b7');
-  const [popups, setPopups] = useState([]);
-
 
   //form state
   const [start, setStart] = useState('');
@@ -37,144 +33,119 @@ export default function Propertymap() {
   const [price, setPrice] = useState(0);
   const property_id = document.getElementById('pid').innerText;
   const user_id = document.getElementById('uid').innerText;
-  const [profile, setProfile] = useState({vehicles:[],equipment:[]});
 
-
-  const [chosentrees, _setChosenTrees] = useState([]);
-  const chosenRef = useRef(chosentrees);
-
-  function setChosenTrees(trees) {
-    chosenRef.current = trees;
-    _setChosenTrees(trees);
+  //Refs
+  const [trees, _setTrees] = useState([]);
+  const treesRef = useRef(trees);
+  function setTrees(list) {
+    treesRef.current = list;
+    _setTrees(list);
   }
 
-  function initPopups(trees) {
-    let tpopups = [];
-    for (let item of trees) {
-      let newpop = new mapboxgl.Popup({
+  const [workoptions, _setWorkOptions] = useState([]);
+  const workRef = useRef(workoptions);
+  function setWorkOptions(list) {
+    workRef.current = list;
+    _setWorkOptions(list);
+  }
+
+  const [chosen, _setChosen] = useState([]);
+  const chosenRef = useRef(chosen);
+  function setChosen(list) {
+    chosenRef.current = list;
+    _setChosen(list);
+  }
+  function addtoChosen(id, chosenRef, treesRef) {
+    let tree = treesRef.current.find((tree) => tree.id == id);
+    let newchosen = [...chosenRef.current, tree];
+    setChosen(newchosen);
+  }
+  function removeChosen(id, chosenRef) {
+    let newchosen = [...chosenRef.current];
+    let dex = newchosen.findIndex((tree)=> tree.id == id);
+    newchosen.splice(dex,1);
+    setChosen(newchosen);
+  }
+
+  //elements
+  const [elements, _setElements] = useState({});
+  const elementsRef = useRef(elements);
+  function setElements(obj) {
+    elementsRef.current = obj;
+    _setElements(obj);
+  }
+
+  function buildElements(treedata, map, elRef, chosenRef, treesRef) {
+    let telements = {};
+    for(let tree of treedata) {
+      let pop = new mapboxgl.Popup({
         anchor: 'top-left',
         closeButton: false,
       })
         .setHTML(
-          `<div className='grid p-2 gap-2 w-40 font-josefin'><p>${item.species}</p><p>${item.dbh} DBH</p><p>${item.crown} crown</p></div>`
+          `<div className='grid p-2 gap-2 w-40 font-josefin'><p>${tree.species}</p><p>${tree.dbh} DBH</p><p>${tree.crown} crown</p></div>`
         )
-        .setLngLat([item.longitude, item.latitude]);
-
-      tpopups.push(newpop);
-    }
-    return tpopups;
-  }
-  function setMarkersAndBounds(
-    treedata,
-    center,
-    startcolor,
-    brightcolor,
-    map,
-    popups
-  ) {
-    //mapbounds collection
-    let features = [{ lon: center[0], lat: center[1] }];
-    let index = 0;
-    let tmarkers = [];
-    for (let item of treedata) {
-      let tindex = index;
-      let marker = new mapboxgl.Marker({
+        .setLngLat([tree.longitude, tree.latitude]);
+      
+      let openmark = new mapboxgl.Marker({
         color: startcolor,
       })
-        .setLngLat([item.longitude, item.latitude])
+        .setLngLat([tree.longitude, tree.latitude])
         .addTo(map);
 
-      marker.getElement().addEventListener('click', () => {
-        toggleMarker(marker, startcolor, brightcolor, map, item.id, chosenRef, treedata, popups);
+      let chosenmark = new mapboxgl.Marker({
+        color: brightcolor,
+      })
+        .setLngLat([tree.longitude, tree.latitude]);
+
+
+      openmark.getElement().addEventListener('click', () => {
+        toggleMark(tree.id, elRef, map, chosenRef, treesRef);
       });
-      marker.getElement().addEventListener('mouseenter', () => {
-        popups[tindex].addTo(map);
+      openmark.getElement().addEventListener('mouseenter', () => {
+        elRef.current[tree.id].popup.addTo(map);
       });
-      marker.getElement().addEventListener('mouseleave', () => {
-        popups[tindex].remove();
+      openmark.getElement().addEventListener('mouseleave', () => {
+        elRef.current[tree.id].popup.remove();
       });
 
-      features.push({ lon: item.longitude, lat: item.latitude });
-      tmarkers.push(marker);
-      index++;
-    }
-    setMarkers(tmarkers);
+      chosenmark.getElement().addEventListener('click', () => {
+        toggleMark(tree.id, elRef, map, chosenRef, treesRef);
+      });
+      chosenmark.getElement().addEventListener('mouseenter', () => {
+        elRef.current[tree.id].popup.addTo(map);
+      });
+      chosenmark.getElement().addEventListener('mouseleave', () => {
+        elRef.current[tree.id].popup.remove();
+      });
 
-    //mapbounds setting
-    const bounds = new mapboxgl.LngLatBounds(
-      features[0],
-      features[0]
-    );
-    for (let item of features) {
-      bounds.extend(item);
-    }
-    map.fitBounds(bounds, { padding: 100 });
-    map.setMaxZoom(17);
-    map.setMaxZoom(22);
-  }
 
-  function toggleMarker(marker, start, bright, map, treeId, chosenRef, treedata, popups) {
-    //base my action on the current color
-    let nextcolor;
-    let addremove;
-    if (marker._color == start) {
-      nextcolor = bright;
-      addremove = true;
-    } else {
-      nextcolor = start;
-      addremove = false;
-    }
-
-    if (addremove) {
-      addToTreeList(treeId, chosenRef, treedata);
-    } else {
-      removeFromTreeList(treeId, chosenRef);
-    }
-
-    //swap out the marker for a new one in the alternate color
-    let backup = marker;
-    marker.remove;
-
-    let newmarker = new mapboxgl.Marker({
-      color: nextcolor,
-    })
-      .setLngLat(backup.getLngLat())
-      .addTo(map);
-
-    let tindex = -1;
-    for(let i = 0; i < treedata.length; i++) {
-      if(treedata[i].id == treeId) tindex = i; 
-    }
-    //new toggleMarker event listener for the new Marker
-    newmarker.getElement().addEventListener('click', () => {
-      toggleMarker(newmarker, start, bright, map, treeId, chosenRef, treedata, popups);
-    });
-    
-    newmarker.getElement().addEventListener('mouseenter', () => {
-      popups[tindex].addTo(map);
-    });
-    newmarker.getElement().addEventListener('mouseleave', () => {
-      popups[tindex].remove();
-    });
-    
-  }
-  function addToTreeList(treeid, chosenRef, treedata) {
-    let t = [...chosenRef.current];
-
-    t.push(treedata.find((el)=> el.id == treeid));
-    setChosenTrees(t);
-  }
-  function removeFromTreeList(treeid, chosenRef) {
-    let targetdex = 0;
-    for(let i = 0; i < chosenRef.current.length; i++) {
-      if(chosenRef.current[i].id == treeid) {
-        targetdex = i;
+      telements[tree.id] = {
+        open:openmark,
+        chosen:chosenmark,
+        popup:pop,
+        selected:false,
       }
     }
-    let t = [...chosenRef.current];
-    t.splice(targetdex, 1);
-    setChosenTrees(t);
+    setElements(telements);
   }
+  function toggleMark(treeid, elRef, map, chosenRef, treesRef) {
+    let el = elRef.current[treeid];
+    if(el.selected) {
+      el.chosen.remove();
+      el.selected = false;
+      el.open.addTo(map);
+      removeChosen(treeid, chosenRef);
+    } else {
+      el.open.remove();
+      el.chosen.addTo(map);
+      el.selected = true;
+      addtoChosen(treeid, chosenRef, treesRef);
+    }
+    elRef.current[treeid] = el;
+    _setElements(elRef.current);
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     let token = document.getElementsByName('csrf-token')[0].content;
@@ -214,7 +185,7 @@ export default function Propertymap() {
     };
 
     console.log(postData);
-    
+    /*
     const response = await fetch('/jobs.json', {
       method: 'POST',
       headers: {
@@ -230,7 +201,7 @@ export default function Propertymap() {
     } else {
       console.log('error');
     }
-    
+    */
   };
 
   useEffect(() => {
@@ -238,7 +209,7 @@ export default function Propertymap() {
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       center: [-157.858, 21.315],
-      zoom: zoom,
+      zoom: 12,
       //cooperativeGestures: true,
       style: `mapbox://styles/mapbox/satellite-v9`,
     });
@@ -250,25 +221,26 @@ export default function Propertymap() {
         setTrees(data.trees);
         setClient(data.client);
         setProfile(data.profile);
-        let tpopups = initPopups(data.trees);
-        setPopups(tpopups);
-        setMarkersAndBounds(
-          data.trees,
-          [data.property.longitude, data.property.latitude],
-          startcolor,
-          brightcolor,
-          map.current,
-          tpopups
-        );
+        setWorkOptions(data.profile.worktypes);
+
+        buildElements(data.trees, map.current, elementsRef, chosenRef, treesRef);
+        setBounds(data.property, data.trees, map.current);
     });
   }, []);
 
-  function debugFunk() {
-    let el = document.getElementById('starttime');
-    console.log(el.value);
-    let d = new Date();
-    let offset = d.getTimezoneOffset();
-    console.log(offset);
+  function setBounds(property, trees, map) {
+    let baseLL = new mapboxgl.LngLat(property.longitude, property.latitude);
+    //mapbounds setting
+    const bounds = new mapboxgl.LngLatBounds(
+      baseLL,
+      baseLL
+    );
+    for (let item of trees) {
+      let thisll = new mapboxgl.LngLat(item.longitude, item.latitude);
+      bounds.extend(thisll);
+    }
+    map.fitBounds(bounds, { padding: 100 });
+    map.setMaxZoom(20);
   }
 
   return (
@@ -379,21 +351,29 @@ export default function Propertymap() {
           </form>
         </div>
         <div className="panecontent">
-          <Filters
-            trees={trees}
-            markers={markers}
-            map={map.current}
-          />
-          <button onClick={debugFunk}>check</button>
+          <Filters trees={trees} elRef={elementsRef} map={map.current} />
         </div>
       </div>
       <div
         className="hidden lg:flex lg:flex-col justify-start lg:col-start-2 lg:row-start-2 overflow-scroll p-2 gap-4 bg-emerald-200"
-        id="treelist"
       >
-        {chosenRef.current.map((tree,i) => 
-          <Treerow tree={tree} workoptions={profile.worktypes} trees={trees} map={map} popups={popups} key={i} />
-        )}
+          {
+            chosenRef.current.map((tree, i)=> 
+            <div 
+            className="grid grid-cols-3 gap-2 p-2 bg-white rounded-lg min-h-12"
+            key={i}
+            data-treeid={tree.id}
+            onMouseEnter={()=>{elementsRef.current[tree.id].popup.addTo(map.current)}}
+            onMouseLeave={()=>{elementsRef.current[tree.id].popup.remove()}}
+            >   
+              <p>{tree.species}</p>
+              <p>{tree.dbh}"</p>
+              <select name="work" id={'treework'+tree.id}>
+                  {workRef.current.map((option, i) => (<option value={option} key={i}>{option}</option>))}
+              </select>
+            </div>
+            )
+          }
       </div>
     </div>
   );

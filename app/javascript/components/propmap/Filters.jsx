@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
-export default function Filters({ trees, markers, map }) {
+export default function Filters({ trees, elRef, map }) {
   const [maxdbhlist, setMaxDBHList] = useState([]);
   const [mindbhlist, setMinDBHList] = useState([]);
   const [crownlist, setCrownList] = useState([]);
   const [specieslist, setSpeciesList] = useState([]);
 
+  const [startcolor, setStartColor] = useState('#07a7cb');
+  const [brightcolor, setBrightColor] = useState('#6ee7b7');
+
+
   useEffect(() => {
-    let temp = [];
-    for (let tree of trees) {
-      temp.push(true);
-    }
+    let temp = trees.map((tree) => tree.id);
     setCrownList(temp);
     setMinDBHList(temp);
     setMaxDBHList(temp);
@@ -18,34 +19,43 @@ export default function Filters({ trees, markers, map }) {
   }, [trees]);
 
   useEffect(() => {
-    updateMarkers();
+    updateMarkers(elRef, map);
   }, [maxdbhlist, mindbhlist, crownlist, specieslist]);
 
-  function updateMarkers() {
+  function updateMarkers(elRef, map) {
+    if (crownlist.length == 0) return;
+
     let checkarrays = [
-      maxdbhlist,
       mindbhlist,
       crownlist,
       specieslist,
     ];
-    if (crownlist.length == 0) return;
+    console.log(checkarrays);
+    let base = maxdbhlist;
+    let selected = [];
 
-    let baselist = [];
-    for (let item of trees) {
-      baselist.push(true);
-    }
-    for (let list of checkarrays) {
-      list.forEach((tree, i) => {
-        if (tree == false) baselist[i] = false;
-      });
-    }
-    markers.forEach((marker, i) => {
-      if (baselist[i]) {
-        marker.addTo(map);
-      } else {
-        marker.remove();
+    for(let id of base) {
+      let passes = true;
+      for(let item of checkarrays) {
+        if(!item.includes(id)) passes = false;
       }
-    });
+      if(passes) selected.push(id);
+    }
+    for(let [key, val] of Object.entries(elRef.current)) {
+      if(selected.includes(parseInt(key))) {
+        if(val.selected) {
+          val.chosen.addTo(map);
+        } else {
+          val.open.addTo(map);
+        }
+      } else {
+        if(val.selected) {
+          val.chosen.remove();
+        } else {
+          val.open.remove();
+        }
+      }
+    }
   }
   function getDBHRange(trees) {
     let max = 0;
@@ -68,42 +78,31 @@ export default function Filters({ trees, markers, map }) {
     return options;
   }
   function dbhOver(trees) {
-    console.log('over');
     let min = parseInt(document.getElementById('dbhmin').value);
-    let baselist = [];
-    for (let item of trees) {
-      baselist.push(true);
-    }
-    if (min != -1) {
-      trees.forEach((tree, i) => {
-        if (tree.dbh <= min) baselist[i] = false;
-      });
-    } else {
-      for (let item of baselist) {
-        item = true;
+    let baselist = trees.map((tree) => tree.id);
+    
+    if(min != -1) {
+      baselist = [];
+      for (let item of trees) {
+        if(item.dbh > min) baselist.push(item.id);
       }
     }
+    
     setMinDBHList(baselist);
-    updateMarkers();
+    updateMarkers(elRef, map);
   }
   function dbhUnder(trees) {
-    console.log('under');
     let max = parseInt(document.getElementById('dbhmax').value);
-    let baselist = [];
-    for (let item of trees) {
-      baselist.push(true);
-    }
-    if (max != -1) {
-      trees.forEach((tree, i) => {
-        if (tree.dbh > max) baselist[i] = false;
-      });
-    } else {
-      for (let item of baselist) {
-        item = true;
+    let baselist = trees.map((tree) => tree.id);
+    
+    if(min != -1) {
+      baselist = [];
+      for (let item of trees) {
+        if(item.dbh < max) baselist.push(item.id);
       }
     }
     setMaxDBHList(baselist);
-    updateMarkers();
+    updateMarkers(elRef, map);
   }
   function getCrownSizes(trees) {
     let sizes = {};
@@ -129,21 +128,15 @@ export default function Filters({ trees, markers, map }) {
   function crownSize(trees) {
     console.log('crown');
     let targetsize = document.getElementById('crownsize').value;
-    let baselist = [];
-    for (let item of trees) {
-      baselist.push(true);
-    }
+    let baselist = trees.map((tree) => tree.id);
     if (targetsize != 'Any') {
-      trees.forEach((tree, i) => {
-        if (tree.crown != targetsize) baselist[i] = false;
-      });
-    } else {
-      for (let item of baselist) {
-        item = true;
+      baselist = [];
+      for(let item of trees) {
+        if (item.crown == targetsize) baselist.push(item.id);
       }
     }
     setCrownList(baselist);
-    updateMarkers();
+    updateMarkers(elRef, map);
   }
   function getSpecies(trees) {
     let species = {};
@@ -168,21 +161,15 @@ export default function Filters({ trees, markers, map }) {
   }
   function filterSpecies(trees) {
     let targetspecies = document.getElementById('species').value;
-    let baselist = [];
-    for (let item of trees) {
-      baselist.push(true);
-    }
+    let baselist = trees.map((tree) => tree.id);
     if (targetspecies != 'Any') {
-      trees.forEach((tree, i) => {
-        if (tree.species != targetspecies) baselist[i] = false;
-      });
-    } else {
-      for (let item of baselist) {
-        item = true;
+      baselist = [];
+      for(let item of trees) {
+        if (item.species == targetspecies) baselist.push(item.id);
       }
     }
     setSpeciesList(baselist);
-    updateMarkers();
+    updateMarkers(elRef, map);
   }
   function toggleFilters() {
     let box = document.getElementById('filterbox');

@@ -1,19 +1,33 @@
 import React, {useState,useEffect} from "react";
-import Treerow from "./Treerow";
 
-export default function Treelist({ chosentrees, workoptions }) {
+export default function Treelist({ trees, elref, workoptions, map}) {
 
-    const [trees, setTrees] = useState(chosentrees);
-
-    useEffect(()=> { setTrees(chosentrees) }, [chosentrees])
-
-    console.log('treelist');
-    console.log(trees);
-    if(trees.length < 1) return;
+    let selected = [];
+    for(let tree of trees) {
+        console.log(elref.current[tree.id].selected)
+        if(elref.current[tree.id].selected) selected.push(tree);
+    }
+    if(workoptions.length == 0) {
+        workoptions = ['Prune','Remove','Fertilize','Inspect']
+    }
 
     return(
-        <div className="flex flex-col gap-2 p-2 border-2 border-red-400 min-h-8" id="treerows">
-            {chosentrees.map((tree,i)=> <Treerow tree={tree} workoptions={workoptions} key={i}/>)}
+        <div className="flex flex-col gap-2 p-2 border-2 border-red-400 min-h-8" id="treelist">
+            {selected.map((tree,i)=> 
+                <div 
+                className="grid grid-cols-3 gap-2 p-2 bg-white rounded-lg min-h-12" 
+                data-treeid={tree.id}
+                onMouseEnter={()=>{elref.current[tree.id].popup.addTo(map)}}
+                onMouseLeave={()=>{elref.current[tree.id].popup.remove()}}
+                >   
+                    <p>{tree.species}</p>
+                    <p>{tree.dbh}"</p>
+                    <select name="work" id={'treework'+tree.id}>
+                        {workoptions.map((option, i) => (<option value={option} key={i}>{option}</option>))}
+                    </select>
+                </div>
+            
+            )}
         </div>
     )
 }
