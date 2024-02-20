@@ -95,7 +95,7 @@ export default function Filters({ trees, elRef, map }) {
     let max = parseInt(document.getElementById('dbhmax').value);
     let baselist = trees.map((tree) => tree.id);
     
-    if(min != -1) {
+    if(max != -1) {
       baselist = [];
       for (let item of trees) {
         if(item.dbh < max) baselist.push(item.id);
