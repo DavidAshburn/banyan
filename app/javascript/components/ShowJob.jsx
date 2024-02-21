@@ -93,7 +93,7 @@ export default function ShowJob() {
         }
         setElements(telements);
     }
-    function toggleMark(treeid, elRef, map, chosenRef, treesRef, work) {
+    function toggleMark(treeid, elRef, map, chosenRef, treesRef) {
         let el = elRef.current[treeid];
         if(el.selected) {
         el.chosen.remove();
@@ -127,22 +127,20 @@ export default function ShowJob() {
     function capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-    function formatDate(string) {
-        let thisdate = new Date(string);
-    
-        let options = {
-          weekday: "long",
-          month: "short",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric"
-        }
-    
-        return new Intl.DateTimeFormat("en-US", options).format(thisdate);
-      }
 
-    function destroyJob(id) {
-        console.log('tbw');
+    const destroyJob = async (id)=> {
+
+        let token = document.getElementsByName('csrf-token')[0].content;
+        const response = await fetch('../jobs/'+id, {
+            method: 'DELETE',
+            headers: {
+              'X-CSRF-Token': token,
+            },
+          });
+
+        let next = '../user/dashboard';
+        window.open(next, '_self');
+
     }
 
     useEffect(()=> {

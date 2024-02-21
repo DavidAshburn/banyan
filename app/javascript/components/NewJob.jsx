@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Filters from './propmap/Filters';
+import Treerow from './ui/Treerow';
 import mapboxgl from 'mapbox-gl';
 
 //mapboxgl.accessToken = 'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
@@ -12,9 +13,11 @@ export default function Propertymap() {
   mapboxgl.accessToken =
     document.getElementById('mapboxpub').innerText;
   const [property, setProperty] = useState({});
+  const [trees, setTrees] = useState([]);
   const [client, setClient] = useState({});
   const [profile, setProfile] = useState({vehicles:[],equipment:[]});
-
+  const [workoptions, setWorkOptions] = useState([]);
+  
   const mapContainer = useRef(null);
   const map = useRef(null);
 
@@ -33,29 +36,16 @@ export default function Propertymap() {
   const property_id = document.getElementById('pid').innerText;
   const user_id = document.getElementById('uid').innerText;
 
-  //Refs
-  const [trees, _setTrees] = useState([]);
-  const treesRef = useRef(trees);
-  function setTrees(list) {
-    treesRef.current = list;
-    _setTrees(list);
-  }
-
-  const [workoptions, _setWorkOptions] = useState([]);
-  const workRef = useRef(workoptions);
-  function setWorkOptions(list) {
-    workRef.current = list;
-    _setWorkOptions(list);
-  }
-
+  //chosenRef and elementsRef are needed as pointers to markerstate that dont get stale on DOM listeners that dont re-render
+  //treedata for current selection
+  // [Tree,Tree,...]
   const [chosen, _setChosen] = useState([]);
   const chosenRef = useRef(chosen);
   function setChosen(list) {
     chosenRef.current = list;
     _setChosen(list);
   }
-  function addtoChosen(id, chosenRef, treesRef) {
-    let tree = treesRef.current.find((tree) => tree.id == id);
+  function addtoChosen(chosenRef, tree) {
     let newchosen = [...chosenRef.current, tree];
     setChosen(newchosen);
   }
@@ -66,7 +56,13 @@ export default function Propertymap() {
     setChosen(newchosen);
   }
 
-  //elements
+  //marker and popup collection for all trees
+  /* 
+    { id: {open: mapboxgl.Marker, chosen: mapboxgl.Marker, popup: mapboxgl.Popup, selected: bool},
+      id: {open: mapboxgl.Marker, chosen: mapboxgl.Marker, popup: mapboxgl.Popup, selected: bool},
+      ...,    
+    } 
+  */
   const [elements, _setElements] = useState({});
   const elementsRef = useRef(elements);
   function setElements(obj) {
@@ -74,7 +70,7 @@ export default function Propertymap() {
     _setElements(obj);
   }
 
-  function buildElements(treedata, map, elRef, chosenRef, treesRef) {
+  function buildElements(treedata, map, elRef, chosenRef) {
     let telements = {};
     for(let tree of treedata) {
       let pop = new mapboxgl.Popup({
@@ -99,7 +95,7 @@ export default function Propertymap() {
 
 
       openmark.getElement().addEventListener('click', () => {
-        toggleMark(tree.id, elRef, map, chosenRef, treesRef);
+        toggleMark(tree.id, elRef, map, chosenRef, tree);
       });
       openmark.getElement().addEventListener('mouseenter', () => {
         elRef.current[tree.id].popup.addTo(map);
@@ -109,7 +105,7 @@ export default function Propertymap() {
       });
 
       chosenmark.getElement().addEventListener('click', () => {
-        toggleMark(tree.id, elRef, map, chosenRef, treesRef);
+        toggleMark(tree.id, elRef, map, chosenRef, tree);
       });
       chosenmark.getElement().addEventListener('mouseenter', () => {
         elRef.current[tree.id].popup.addTo(map);
@@ -117,7 +113,6 @@ export default function Propertymap() {
       chosenmark.getElement().addEventListener('mouseleave', () => {
         elRef.current[tree.id].popup.remove();
       });
-
 
       telements[tree.id] = {
         open:openmark,
@@ -128,7 +123,8 @@ export default function Propertymap() {
     }
     setElements(telements);
   }
-  function toggleMark(treeid, elRef, map, chosenRef, treesRef) {
+
+  function toggleMark(treeid, elRef, map, chosenRef, tree) {
     let el = elRef.current[treeid];
     if(el.selected) {
       el.chosen.remove();
@@ -139,8 +135,9 @@ export default function Propertymap() {
       el.open.remove();
       el.chosen.addTo(map);
       el.selected = true;
-      addtoChosen(treeid, chosenRef, treesRef);
+      addtoChosen(chosenRef, tree);
     }
+    
     elRef.current[treeid] = el;
     _setElements(elRef.current);
   }
@@ -198,7 +195,7 @@ export default function Propertymap() {
       let next = '../user/dashboard';
       window.open(next, '_self');
     } else {
-      console.log('error');
+      console.log('POST error on NewJob');
     }
     
   };
@@ -222,7 +219,7 @@ export default function Propertymap() {
         setProfile(data.profile);
         setWorkOptions(data.profile.worktypes);
 
-        buildElements(data.trees, map.current, elementsRef, chosenRef, treesRef);
+        buildElements(data.trees, map.current, elementsRef, chosenRef);
         setBounds(data.property, data.trees, map.current);
     });
   }, []);
@@ -239,7 +236,7 @@ export default function Propertymap() {
       bounds.extend(thisll);
     }
     map.fitBounds(bounds, { padding: 100 });
-    map.setMaxZoom(20);
+    map.setMaxZoom(19);
   }
 
   return (
@@ -344,7 +341,7 @@ export default function Propertymap() {
                 )}
               </div>
             </div>
-            <button type="submit" className="col-start-2">
+            <button type="submit" className="col-start-2 bg-dark text-light font-bold p-2 rounded-md">
               Make Job
             </button>
           </form>
@@ -358,21 +355,7 @@ export default function Propertymap() {
         id="treelist"
       >
           {
-            chosenRef.current.map((tree, i)=> 
-            <div 
-            className="grid grid-cols-3 gap-2 p-2 bg-white rounded-lg min-h-12"
-            key={i}
-            data-treeid={tree.id}
-            onMouseEnter={()=>{elementsRef.current[tree.id].popup.addTo(map.current)}}
-            onMouseLeave={()=>{elementsRef.current[tree.id].popup.remove()}}
-            >   
-              <p>{tree.species}</p>
-              <p>{tree.dbh}"</p>
-              <select name="work" id={'treework'+tree.id}>
-                  {workRef.current.map((option, i) => (<option value={option} key={i}>{option}</option>))}
-              </select>
-            </div>
-            )
+            chosenRef.current.map((tree, i)=> <Treerow key={i} tree={tree} elRef={elementsRef} map={map} workoptions={workoptions}/>)
           }
       </div>
     </div>

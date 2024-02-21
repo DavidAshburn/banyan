@@ -6,9 +6,6 @@ export default function Filters({ trees, elRef, map }) {
   const [crownlist, setCrownList] = useState([]);
   const [specieslist, setSpeciesList] = useState([]);
 
-  const [startcolor, setStartColor] = useState('#07a7cb');
-  const [brightcolor, setBrightColor] = useState('#6ee7b7');
-
 
   useEffect(() => {
     let temp = trees.map((tree) => tree.id);
@@ -22,6 +19,8 @@ export default function Filters({ trees, elRef, map }) {
     updateMarkers(elRef, map);
   }, [maxdbhlist, mindbhlist, crownlist, specieslist]);
 
+  //if a tree passes on all filter Lists the marker remains on the map
+
   function updateMarkers(elRef, map) {
     if (crownlist.length == 0) return;
 
@@ -30,7 +29,6 @@ export default function Filters({ trees, elRef, map }) {
       crownlist,
       specieslist,
     ];
-    console.log(checkarrays);
     let base = maxdbhlist;
     let selected = [];
 
@@ -126,7 +124,6 @@ export default function Filters({ trees, elRef, map }) {
     return options;
   }
   function crownSize(trees) {
-    console.log('crown');
     let targetsize = document.getElementById('crownsize').value;
     let baselist = trees.map((tree) => tree.id);
     if (targetsize != 'Any') {
@@ -180,8 +177,8 @@ export default function Filters({ trees, elRef, map }) {
   }
 
   return (
-    <div>
-      <button className="text-center w-full underline bg-accent3 rounded-xl p-4 w-[5rem]" onClick={toggleFilters}>
+    <div className="flex flex-col items-end w-full gap-4">
+      <button className="text-center underline bg-accent3 rounded-md p-2 w-[5rem] mr-4" onClick={toggleFilters}>
         Filters
       </button>
       <div className="filterbox" id="filterbox">

@@ -37,9 +37,6 @@ class JobsController < ApplicationController
   # POST /jobs or /jobs.json
   def create
     @job = Job.new(job_params)
-    #@job.trees = params['job']['trees']
-    #@job.vehicles = params['job']['vehicles']
-    #@job.equipment = params['job']['equipment']
 
     respond_to do |format|
       if @job.save
