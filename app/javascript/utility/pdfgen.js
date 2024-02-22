@@ -76,8 +76,33 @@ export default function makeEstimate(job, property, trees, token) {
         console.log(bodyout);
         return output;
     }
-    function propertyMap(property,trees) {
-
+    function getURI(trees) {
+        let output = {
+            'type':'FeatureCollection',
+            'features': [],
+        }
+        let index = 1;
+        for(let tree of trees) {
+            output.features.push({
+                'geometry':{
+                    'type':'Point',
+                    'coordinates': [
+                        tree.longitude,
+                        tree.latitude,
+                    ]
+                },
+                'type':'Feature',
+                'properties':{
+                    'marker-size':'small',
+                    'marker-label':index,
+                },
+            });
+            index++;
+        }
+        console.log('geojson');
+        console.log(output);
+        let uri = encodeURI(JSON.stringify(output));
+        return uri;
     }
 
     let docDefinition = {
@@ -129,11 +154,10 @@ export default function makeEstimate(job, property, trees, token) {
             },
         },
         images: {
-            property: `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/pin-s-l+000(${property.longitude},${property.latitude})/${property.longitude},${property.latitude},17/500x300?access_token=${token}`,
+            property: `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/geojson(${getURI(trees)})/auto/500x400?access_token=${token}`,
         }
     };
     
-
     console.log(docDefinition);
     return docDefinition;
 }
