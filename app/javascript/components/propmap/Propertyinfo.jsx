@@ -13,7 +13,7 @@ export default function Propertyinfo({property, client}) {
     return(
         <div className="mainpane">
             <p className="panetitle">{property.address}</p>
-            <div className="grid gap-2 p-2 text-dark">
+            <div className="grid lg:grid-cols-2 gap-2 p-2 text-dark">
                 <p>Client: {client.name}</p>
                 {checkContact(property,client)}
                 <p>Phone: {property.phone}</p>

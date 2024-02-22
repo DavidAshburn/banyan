@@ -127,6 +127,17 @@ export default function ShowJob() {
     function capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
+    function formatDate(date) {
+        if(date === '') return '';
+        let fulldate = date.split('T')[0].split('-');
+        let fulltime = date.split('T')[1].split('.000');
+        let time = fulltime[0].split(':');
+
+        const options = {weekday:'long',year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'numeric'};
+
+        let thisdate = new Date(fulldate[0],fulldate[1],fulldate[2],time[0],time[1]);
+        return thisdate.toLocaleDateString('en-US',options);
+    }
 
     const destroyJob = async (id)=> {
 
@@ -205,11 +216,11 @@ export default function ShowJob() {
                 <div className="grid-cols-2 md:grid-cols-4 panecontent">
                     <div className="grid grid-cols-[1fr_4fr] items-center col-span-full md:col-span-2">
                     <p>Start:</p>
-                    <p>{job.start}</p>
+                    <p>{formatDate(job.start || '')}</p>
                     </div>
                     <div className="grid grid-cols-[1fr_4fr] items-center col-span-full md:col-span-2">
                     <p>End: </p>
-                    <p>{job.end}</p>
+                    <p>{formatDate(job.end || '')}</p>
                     </div>
                     <div className="flex gap-4">
                     <p>Foreman: </p>

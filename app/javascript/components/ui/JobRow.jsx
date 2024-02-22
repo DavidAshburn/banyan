@@ -53,12 +53,21 @@ export default function JobRow({ jobdata }) {
           </div>
           <a
             href={
+              '/properties/' +
+              property.id
+            }
+            className="bg-accent"
+          >
+            {property.address}
+          </a>
+          <a
+            href={
               '/jobs/' +
               job.id
             }
-            className="col-span-full bg-accent"
+            className="bg-accent"
           >
-            {property.address}
+            View Job
           </a>
           <p>Estimator: {job.estimator}</p>
           <p>Foreman: {job.foreman}</p>

@@ -11,6 +11,8 @@ export default function Propertymap() {
     const [property, setProperty] = useState({});
     const [client, setClient] = useState({});
     const [profile, setProfile] = useState({vehicles:[],equipment:[]});
+    const [jobs, setJobs] = useState([]);
+
 
     const mapContainer = useRef(null);
     const map = useRef(null);
@@ -125,7 +127,20 @@ export default function Propertymap() {
         map.fitBounds(bounds, { padding: 100 });
         map.setMaxZoom(20);
     }
+    function capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    function formatDate(date) {
+        if(date === '') return '';
+        let fulldate = date.split('T')[0].split('-');
+        let fulltime = date.split('T')[1].split('.000');
+        let time = fulltime[0].split(':');
 
+        const options = {weekday:'long',year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'numeric'};
+
+        let thisdate = new Date(fulldate[0],fulldate[1],fulldate[2],time[0],time[1]);
+        return thisdate.toLocaleDateString('en-US',options);
+    }
     
 
     useEffect(() => {
@@ -145,8 +160,8 @@ export default function Propertymap() {
             .then((response) => response.json())
             .then((data) => {
                 setProperty(data[0]);
-                setTrees(data[1])
-                
+                setTrees(data[1]);
+                setJobs(data[2]);
 
                 buildElements(data[1], map.current, elementsRef, chosenRef, treesRef);
                 setBounds(data[0], data[1], map.current);
@@ -168,23 +183,57 @@ export default function Propertymap() {
     }, []);
 
     return(
-        <div className="grid grid-rows-[200px_1fr] md:grid-cols-[1fr_4fr] md:grid-rows-1">
-            <div className="flex flex-col justify-between gap-2 p-2 bg-dark text-light">
-                <div className="grid gap-2">
+        
+
+        <div className="flex flex-col lg:grid min-h-screen grid-cols-1 grid-rows-[60dvh_1fr_1fr_1fr] lg:grid-cols-[1fr_3fr] lg:grid-rows-[3fr_1fr] gap-2">
+            <div ref={mapContainer} className="min-h-[60lvh] lg:col-start-2 lg:row-start-1"></div>
+            
+            <div className="mainpane lg:col-start-2 lg:row-start-2">
+                <p className="panetitle">Info</p>
+                <div className="grid-cols-2 panecontent">
+                    <div className="grid gap-2">
+                        <Propertyinfo property = {property} client={client}/>
+                        <a
+                            href={'/jobs/new?pid=' + property.id}
+                            className="p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit"
+                        >
+                            New Job
+                        </a>
+                    </div>
                     <Filters trees={trees} elRef={elementsRef} map={map.current} />
-                    <a
-                        href={'/jobs/new?pid=' + property.id}
-                        className="p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit"
-                    >
-                        New Job
-                    </a>
-                </div>
-                <div className="self-end">
-                    <Propertyinfo property = {property} client={client}/>
                 </div>
             </div>
-            <div className="h-[100svh] w-full" ref={mapContainer}></div>
-        </div>
+
+            <div className="mainpane lg:col-start-1 lg:row-start-1">
+                <p className="panetitle">Trees</p>
+                <div id="alltrees" className="panecontent max-lg:max-h-[40svh] lg:max-h-[75svh] overflow-scroll">
+                    <div className="grid grid-cols-3 px-2 text-center">
+                    <p>Species</p>
+                    <p>DBH</p>
+                    <p></p>
+                    </div>
+                    {trees.map((tree,i) => 
+                        <div className="grid grid-cols-3 bg-dull rounded-xl p-2 text-center" 
+                        key={i}
+                        onMouseEnter={()=>{elementsRef.current[tree.id].popup.addTo(map.current)}}
+                        onMouseLeave={()=>{elementsRef.current[tree.id].popup.remove()}}
+                        >
+                            <p>{ capitalize(tree.species) }</p>
+                            <p>{ tree.dbh }"</p>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            <div className="mainpane lg:col-start-1 lg:row-start-2">
+                <p className="panetitle"></p>
+                <div className="panecontent">
+                    {}
+                </div>
+            </div>
+
             
+        </div>
+
     )
 }

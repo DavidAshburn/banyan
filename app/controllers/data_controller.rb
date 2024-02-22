@@ -49,9 +49,10 @@ class DataController < ApplicationController
   def proptrees
     @property = Property.find(params[:pid])
     @proptrees = @property.trees
+    @jobs = @property.jobs
 
     respond_to do |format|
-      format.json { render json: [@property, @proptrees]}
+      format.json { render json: [@property, @proptrees, @jobs]}
     end
   end
 
