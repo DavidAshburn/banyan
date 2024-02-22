@@ -50,12 +50,10 @@ export default function makeEstimate(job, property, trees, token) {
     }
     function getEntries(list) {
         let these = list;
-        console.log('these');
-        console.log(these);
 
         let bodyout = [];
         if(these.length == 0) {
-            bodyout.push(['none','listed']);
+            bodyout.push(['none listed',{}]);
         }
         while(these.length > 2) {
             let a = these.shift();
@@ -73,7 +71,6 @@ export default function makeEstimate(job, property, trees, token) {
                 body: bodyout,
             }
         };
-        console.log(bodyout);
         return output;
     }
     function getURI(trees) {
@@ -99,25 +96,34 @@ export default function makeEstimate(job, property, trees, token) {
             });
             index++;
         }
-        console.log('geojson');
-        console.log(output);
         let uri = encodeURI(JSON.stringify(output));
         return uri;
+    }
+    function formatDate(date) {
+        let fulldate = date.split('T')[0].split('-');
+        let fulltime = date.split('T')[1].split('.000');
+        let time = fulltime[0].split(':');
+
+        const options = {weekday:'long',year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'numeric'};
+
+        let thisdate = new Date(fulldate[0],fulldate[1],fulldate[2],time[0],time[1]);
+        return thisdate.toLocaleDateString('en-US',options);
     }
 
     let docDefinition = {
         content: [
             {   
                 columns: [
-                    {
+                    {   
+                        width: 250,
                         layout: 'lightHorizontalLines',
                         table: {
                             widths:['auto','auto','auto'],
                             body: [
                                 [{text:'Client: '},{text:property.contact_name, colSpan: 2},{}],
                                 [{text:'Address: '},{text:property.address, colSpan: 2, style:'bolded'},{}],
-                                [{text:'Start: '},{text:job.start, colSpan: 2},{}],
-                                [{text:'Finish: '},{text:job.end, colSpan: 2},{}],
+                                [{text:'Start: '},{text:formatDate(job.start), colSpan: 2},{}],
+                                [{text:'Finish: '},{text:formatDate(job.end), colSpan: 2},{}],
                                 [{text:'Estimator: '},{text:job.estimator, colSpan: 2},{}],
                                 [{text:'Foreman: '},{text:job.foreman, colSpan: 2},{}],
                                 [{text:'Price: '},{text:"$"+job.price, colSpan: 2},{}],
@@ -125,9 +131,10 @@ export default function makeEstimate(job, property, trees, token) {
                         },
                     },
                     {
+                        width: 230,
                         layout: 'lightHorizontalLines',
                         table: {
-                            widths:[150],
+                            widths:[230],
                             body: [
                                 [{text:'Vehicles', style:'header'}],
                                 [getEntries(job.vehicles)],
@@ -137,15 +144,16 @@ export default function makeEstimate(job, property, trees, token) {
                         },
                     },
                 ],
+                columnGap: 20,
             },
             {
                 image: 'property',
+                margin: [5,20],
             },
             treeRows(trees),
         ],
         styles: {
             header: {
-                fontSize: 14,
                 bold: true,
                 alignment: 'center',
             },
@@ -158,6 +166,6 @@ export default function makeEstimate(job, property, trees, token) {
         }
     };
     
-    console.log(docDefinition);
+    formatDate(job.start);
     return docDefinition;
 }

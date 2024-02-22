@@ -13,27 +13,7 @@ export default function JobPDF() {
         pdfGenerator.getDataUrl((dataUrl) => {
             setPdfUrl(dataUrl);
         });
-        console.log('created');
-    }
-
-    /*
-    const docDefinition = {
-        content: [
-            {text: 'No doc provided', style: 'header'},
-        ],
-        styles: {
-            header: {
-                fontSize: 22,
-                bold: true,
-            },
-        },
-    }; 
-    */
-
-
-    
-    
-        
+    }        
 
     useEffect(()=> {
         let jid = document.getElementById('jid').innerText;
