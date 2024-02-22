@@ -9,13 +9,14 @@ Rails.application.routes.draw do
   get 'user/debug'
   get 'user/calendar'
 
+  get 'pdf/job'
+
   get 'maps/edit', to: 'maps#edit'
 
   root 'home#index'
   devise_for :users
 
   get 'data/clients', to: 'data#clients'
-
   get 'data/jobtrees', to: 'data#jobtrees'
   get 'data/jobs', to: 'data#jobs' #different from jobsdash?
   get 'data/jobsdash', to: 'data#jobsdash' #userjobs?

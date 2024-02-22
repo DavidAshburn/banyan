@@ -203,11 +203,11 @@ export default function ShowJob() {
             <div className="mainpane">
                 <p className="panetitle">Info</p>
                 <div className="grid-cols-2 md:grid-cols-4 panecontent">
-                    <div className="grid grid-cols-[1fr_4fr] items-center col-span-full">
+                    <div className="grid grid-cols-[1fr_4fr] items-center col-span-full md:col-span-2">
                     <p>Start:</p>
                     <p>{job.start}</p>
                     </div>
-                    <div className="grid grid-cols-[1fr_4fr] items-center col-span-full">
+                    <div className="grid grid-cols-[1fr_4fr] items-center col-span-full md:col-span-2">
                     <p>End: </p>
                     <p>{job.end}</p>
                     </div>
@@ -244,6 +244,9 @@ export default function ShowJob() {
                         )}
                     </div>
                     <button type="button" onClick={()=>{destroyJob(job.id)}}>Destroy this Job</button>
+                    <a href={"/pdf/job?jid=" + job.id} className="bg-dark text-light p-2 rounded-md">
+                        PDF
+                    </a>
                 </div>
             </div>
         </div>
