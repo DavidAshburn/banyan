@@ -21,7 +21,7 @@ export default function JobPDF() {
         fetch(`/data/jobtrees?jid=` + jid)
             .then((response) => response.json())
             .then((data) => {
-                const docDefinition = makeEstimate(data.job,data.property,data.trees, token);
+                const docDefinition = makeEstimate(data.job,data.property,data.trees, token, data.work);
                 createPDF(docDefinition);
             });
     },[])

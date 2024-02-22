@@ -1,8 +1,8 @@
 import mapboxgl from "mapbox-gl";
 
-export default function makeEstimate(job, property, trees, token) {
-    function treeRows(trees) {
-        function makeRow(tree) {
+export default function makeEstimate(job, property, trees, token, work) {
+    function treeRows(trees, work) {
+        function makeRow(tree, workdescrip) {
             return {
                 columns: [
                     {
@@ -16,6 +16,10 @@ export default function makeEstimate(job, property, trees, token) {
                     {
                         width: 100,
                         text: tree.crown,
+                    },
+                    {
+                        width: 100,
+                        text: workdescrip,
                     },
                 ],
                 columnGap: 10,
@@ -37,13 +41,17 @@ export default function makeEstimate(job, property, trees, token) {
                         width: 100,
                         text: 'Crown',
                     },
+                    {
+                        width: 100,
+                        text: 'Work',
+                    },
                 ],
                 columnGap: 10,
                 margin: [0,20,0,5],
             }
         ];
         trees.forEach((tree) => {
-            outlist.push(makeRow(tree));
+            outlist.push(makeRow(tree, work[tree.id]));
         });
 
         return outlist;
@@ -150,7 +158,7 @@ export default function makeEstimate(job, property, trees, token) {
                 image: 'property',
                 margin: [5,20],
             },
-            treeRows(trees),
+            treeRows(trees, work),
         ],
         styles: {
             header: {
