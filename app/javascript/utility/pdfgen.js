@@ -1,24 +1,6 @@
-/*
-    two even columns, 
-        1st is a picturemap
-        2nd is a table
-            name
-            address
-            start       end
-            estimator   foreman
-            price       ppl/hrs
-            parking     access
-            equipment
-                dyn*
-            vehicles
-                dyn*
-    
-    8 rows
-        picturemap  species dbh crown   work
-        ...
-*/
+import mapboxgl from "mapbox-gl";
 
-export default function makeEstimate(job, property, trees) {
+export default function makeEstimate(job, property, trees, token) {
     function treeRows(trees) {
         function makeRow(tree) {
             return {
@@ -66,7 +48,6 @@ export default function makeEstimate(job, property, trees) {
 
         return outlist;
     }
-
     function getEntries(list) {
         let these = list;
         console.log('these');
@@ -94,6 +75,9 @@ export default function makeEstimate(job, property, trees) {
         };
         console.log(bodyout);
         return output;
+    }
+    function propertyMap(property,trees) {
+
     }
 
     let docDefinition = {
@@ -129,6 +113,9 @@ export default function makeEstimate(job, property, trees) {
                     },
                 ],
             },
+            {
+                image: 'property',
+            },
             treeRows(trees),
         ],
         styles: {
@@ -140,6 +127,9 @@ export default function makeEstimate(job, property, trees) {
             bolded: {
                 bold: true,
             },
+        },
+        images: {
+            property: `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/pin-s-l+000(${property.longitude},${property.latitude})/${property.longitude},${property.latitude},17/500x300?access_token=${token}`,
         }
     };
     

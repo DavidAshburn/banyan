@@ -37,10 +37,11 @@ export default function JobPDF() {
 
     useEffect(()=> {
         let jid = document.getElementById('jid').innerText;
+        let token = document.getElementById('mapboxpub').innerText;
         fetch(`/data/jobtrees?jid=` + jid)
             .then((response) => response.json())
             .then((data) => {
-                const docDefinition = makeEstimate(data.job,data.property,data.trees);
+                const docDefinition = makeEstimate(data.job,data.property,data.trees, token);
                 createPDF(docDefinition);
             });
     },[])
