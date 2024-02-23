@@ -205,7 +205,7 @@ export default function makeEstimate(job, property, trees, token, work) {
         }
     };
     
-    //set images for sets of 9
+    //set images for sets <= 9 trees, can refactor this to a variable pretty easily
     let pagecount = Math.ceil(trees.length / 9);
     let thesetrees = [];
     for(let i = 0; i < pagecount; i++) {

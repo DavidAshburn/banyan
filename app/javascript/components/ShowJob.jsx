@@ -138,7 +138,14 @@ export default function ShowJob() {
         let thisdate = new Date(fulldate[0],fulldate[1],fulldate[2],time[0],time[1]);
         return thisdate.toLocaleDateString('en-US',options);
     }
-
+    function sendClientInvoice(event){
+        console.log('send invoice via SendGrid');
+        console.log('send POST to update job invoiced and invoicedate');
+    }
+    function sendClientReceipt(event){
+        console.log('send receipt via SendGrid');
+        console.log('send POST to update job paid and paiddate');
+    }
     const destroyJob = async (id)=> {
 
         let token = document.getElementsByName('csrf-token')[0].content;
@@ -209,6 +216,7 @@ export default function ShowJob() {
                 <p className="panetitle">Notes</p>
                 <div className="panecontent">
                     <p>{job.notes}</p>
+                    {job.invoiced ? <button onClick={sendClientReceipt}>Send Receipt</button> : <button onClick={sendClientInvoice}>Send Invoice</button> }
                 </div>
             </div>
             <div className="mainpane">

@@ -93,6 +93,8 @@ class JobsController < ApplicationController
         :price,
         :property_id,
         :user_id,
+        :invoicedate,
+        :paiddate,
         :trees => {},
         :equipment => [],
         :vehicles => [],
