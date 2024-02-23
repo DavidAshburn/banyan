@@ -10,6 +10,10 @@ export default class extends Controller {
     this.calendar = new Calendar(this.calendarEl, {
       plugins: [dayGridPlugin],
       initialView: 'dayGridMonth',
+      eventClick: function(info) {
+        let next = `../jobs/${info.event.id}`;
+        window.open(next, '_self');
+      }
     });
 
     this.calendar.render();

@@ -58,7 +58,7 @@ export default function Dashboard() {
         >
           <div id="jobsmap" className="min-h-80"></div>
           <Windowpane
-          title="Jobs"
+          title="Active Jobs"
           content={jobsdata.map((job, j) => (
             <JobRow jobdata={job} key={j} />
           ))}

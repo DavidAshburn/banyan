@@ -146,6 +146,7 @@ class DataController < ApplicationController
         title: Property.find(job.property_id).address,
         start: job.start,
         end: job.end,
+        id: job.id,
         fullDay: false,
       })
     end
