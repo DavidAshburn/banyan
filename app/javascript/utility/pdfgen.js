@@ -1,7 +1,7 @@
 import mapboxgl from "mapbox-gl";
 
 export default function makeEstimate(job, property, trees, token, work) {
-    function treeRows(trees, work) {
+    function treeRows(trees, work, pageindex) {
         function makeRow(tree, workdescrip, index) {
             return [
                     {
@@ -53,7 +53,7 @@ export default function makeEstimate(job, property, trees, token, work) {
                 
             };
         trees.forEach((tree, i) => {
-            outlist.table.body.push(makeRow(tree, work[tree.id], i+1));
+            outlist.table.body.push(makeRow(tree, work[tree.id], (i+1)+parseInt(pageindex)*9));
         });
 
         return outlist;
@@ -101,6 +101,7 @@ export default function makeEstimate(job, property, trees, token, work) {
                 'type':'Feature',
                 'properties':{
                     'marker-size':'small',
+                    'marker-symbol': index,
                 },
             });
             index++;
@@ -108,7 +109,7 @@ export default function makeEstimate(job, property, trees, token, work) {
         let uri = encodeURI(JSON.stringify(output));
         return uri;
     }
-    function getURIsection(trees) {
+    function getURIsection(trees, pageindex) {
         let output = {
             'type':'FeatureCollection',
             'features': [],
@@ -126,7 +127,7 @@ export default function makeEstimate(job, property, trees, token, work) {
                 'type':'Feature',
                 'properties':{
                     'marker-size':'small',
-                    'marker-symbol':index,
+                    'marker-symbol':index+(pageindex * 9),
                 },
             });
             index++;
@@ -214,14 +215,14 @@ export default function makeEstimate(job, property, trees, token, work) {
             thesetrees = trees.slice(i*9);
         }
         docDefinition.images[i] = 
-            `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/geojson(${getURIsection(thesetrees)})/auto/500x400?access_token=${token}`
+            `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/geojson(${getURIsection(thesetrees, i)})/auto/500x400?access_token=${token}`
         
         docDefinition.content.push({
             image: `${i}`,
             margin: [5,20],
             pageBreakBefore: function(currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {return true;}
         });
-        docDefinition.content.push(treeRows(thesetrees, work));
+        docDefinition.content.push(treeRows(thesetrees, work, i));
     }
 
     console.log(docDefinition);
