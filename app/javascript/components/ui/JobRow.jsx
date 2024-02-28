@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function JobRow({ jobdata }) {
+export default function JobRow({ jobdata, index }) {
   let [display, setDisplay] = useState('hidden');
 
   function toggleItem() {
@@ -29,26 +29,29 @@ export default function JobRow({ jobdata }) {
   const property = jobdata.property;
   const client = jobdata.client;
 
+  let color = "bg-lime-50";
+  if(index % 2 == 0) color = "bg-white";
+
   return (
     <div
-      className="grid items-center grid-cols-2 text-center min-h-[4rem] py-2 rounded-bl-lg rounded-tr-lg border border-dark rounded-md"
+      className={"grid items-center grid-cols-2 text-center min-h-[4rem] py-2 rounded-bl-lg rounded-tr-lg border border-dark rounded-md " + color}
       onClick={toggleItem}
     >
       <p>{client.name} </p>
       <p>{job.crew_size} Hands</p>
-      <p>Property: {property.name}</p>
+      <p className="text-sm text-stone-600">{property.name}</p>
       <p>{job.est_hours} Hours</p>
 
       <div className={'col-span-full ' + display}>
-        <div className="grid gap-2 grid-cols-2 border border-dark rounded-md mx-4 py-2">
-          <div className="grid grid-cols-2 p-2 gap-2 col-span-full border-dull rounded-md bg-accent">
+        <div className="grid gap-2 grid-cols-2 border border-dark rounded-md mx-4 p-2 bg-stone-100">
+          <div className="grid grid-cols-2 p-2 gap-2 col-span-full border-dull rounded-md bg-lime-50">
             <div className="grid">
-              <p className="col-span-full text-sm text-stone-500">start</p>
-              <p>{formatDate(job.start)}</p>
+              <p className="col-span-full text-sm text-stone-500">Start</p>
+              <p className="text-sm">{formatDate(job.start)}</p>
             </div>
             <div className="grid">
-              <p className="col-span-full text-sm text-stone-500">end</p>
-              <p>{formatDate(job.end)}</p>
+              <p className="col-span-full text-sm text-stone-500">End</p>
+              <p className="text-sm">{formatDate(job.end)}</p>
             </div>
           </div>
           <a
@@ -56,7 +59,7 @@ export default function JobRow({ jobdata }) {
               '/properties/' +
               property.id
             }
-            className="bg-accent"
+            className="bg-lime-100 flex items-center justify-center rounded-md text-sm border-2 border-dark mx-4 py-2"
           >
             {property.address}
           </a>
@@ -65,7 +68,7 @@ export default function JobRow({ jobdata }) {
               '/jobs/' +
               job.id
             }
-            className="bg-accent"
+            className="bg-lime-100 flex items-center justify-center rounded-md border-2 border-dark mx-4"
           >
             View Job
           </a>

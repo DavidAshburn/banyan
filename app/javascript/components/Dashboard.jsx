@@ -86,7 +86,6 @@ export default function Dashboard() {
           .setLngLat([job.longitude, job.latitude]);
       
       let jobid = job.job.id;
-      console.log(jobid);
 
       openmark.getElement().addEventListener('click', (e) => {
           e.stopPropagation();
@@ -108,7 +107,6 @@ export default function Dashboard() {
       }
     }
     setElements(telements);
-    console.log(telements);
   }
   function toggleMark(jobid, elRef, map, chosenRef, jobsRef) {
     let el = elRef.current[jobid];
@@ -139,9 +137,6 @@ export default function Dashboard() {
     }
     map.fitBounds(bounds, { padding: 100 });
     map.setMaxZoom(17);
-  }
-  function capitalize(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   useEffect(() => {
@@ -191,15 +186,15 @@ export default function Dashboard() {
       </div>
       <div className="flex flex-col gap-4 md:p-4 text-lg bg-light text-dark font-inter min-h-screen">
         <div
-          className="grid md:grid-cols-2 bg-dark"
+          className="grid md:grid-cols-2 bg-dark h-[40svh]"
         >
           <div id="jobsmap" ref={mapContainer} className="min-h-80"></div>
           <Windowpane
           title="Active Jobs"
           content={jobs.map((job, j) => (
-            <JobRow jobdata={job} key={j} />
+            <JobRow jobdata={job} key={j} index={j}/>
           ))}
-          light = '0'
+          mainclass="scrollpane"
         />
         </div>
         <Windowpane
@@ -212,12 +207,12 @@ export default function Dashboard() {
               key={i}
             />
           ))}
-          light = '0'
+          mainclass="mainpane"
         />
         <Windowpane
           title={user.email}
           content={<DashHead user={user} />}
-          light = '0'
+          mainclass="mainpane"
         />
       </div>
     </div>
