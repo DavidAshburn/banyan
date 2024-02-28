@@ -4,7 +4,7 @@
 
 @layer components {
   .navlink {
-    @apply py-4 bg-dark text-light border-r-4 border-r-lime-200 text-center text-sm;
+    @apply py-4 bg-dark text-light border-r-4 border-r-cyan-200 text-center text-sm;
   }
   .darkbutton {
     @apply p-2 px-4 rounded bg-dark text-light font-bold text-2xl text-center w-fit;
@@ -21,8 +21,9 @@
   .profilecatlist {
     @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 items-center gap-2 py-2;
   }
+  /* user/config existing/added items for vehicles equipment worktypes and species*/
   .profilecatpair {
-    @apply flex justify-between items-center px-2 gap-2 bg-light rounded-full;
+    @apply flex justify-between items-center px-2 gap-2 bg-light text-dark rounded-full;
   }
   .profilecatbutton {
     @apply w-4 h-4 rounded-full flex justify-center items-center bg-dark text-light;
@@ -37,7 +38,7 @@
     @apply border-2 border-stone-900 rounded-lg text-light max-w-[100%] overflow-y-scroll scroll-smooth;
   }
   .panetitle {
-    @apply bg-dark border-b-[6px] border-lime-200 h-8 text-white pl-2 text-lg leading-7 font-extrabold;
+    @apply bg-dark border-b-[6px] border-cyan-200 h-8 text-white pl-2 text-lg leading-7 font-extrabold;
   }
   .panecontent {
     @apply grid gap-2 p-2;
@@ -56,6 +57,15 @@
   grid-template-rows: 0fr 0fr 0fr 0fr;
   transition: grid-template-rows 500ms;
   width: 100%;
+}
+
+/*fullcalendar css variable customization*/
+:root{
+  --fc-today-bg-color: #083344;
+  --fc-event-bg-color: #0e7490;
+  --fc-event-border-color: #164e63;
+  --fc-button-bg-color: #164e63;
+  --fc-button-border-color: #083344;
 }
 
 

@@ -208,11 +208,11 @@ export default function Propertymap() {
 
             <div className="mainpane lg:col-start-1 lg:row-start-1">
                 <p className="panetitle">Trees</p>
-                <div id="alltrees" className="panecontent max-lg:max-h-[40svh] lg:max-h-[75svh] overflow-scroll text-dark">
+                <div id="alltrees" className="panecontent max-lg:max-h-[40svh] lg:max-h-[75svh] overflow-y-scroll text-dark">
                     <div className="grid grid-cols-3 px-2 text-center">
                         <p>Species</p>
                         <p>DBH</p>
-                        <p></p>
+                        <p>Crown</p>
                     </div>
                     {trees.map((tree,i) => 
                         <div className="grid grid-cols-3 bg-dull rounded-xl p-2 text-center" 
@@ -222,6 +222,7 @@ export default function Propertymap() {
                         >
                             <p>{ capitalize(tree.species) }</p>
                             <p>{ tree.dbh }"</p>
+                            <p>{ tree.crown }</p>
                         </div>
                     )}
                 </div>

@@ -1,11 +1,11 @@
 <div data-controller="userprofile" id="userprofile">
   <div class='hidden' data-userprofile-target='pidin'><%= @pid %></div>
-  <div class="grid lg:grid-cols-[1fr_6fr_1fr] min-h-screen bg-dark p-4 bg-light">
+  <div class="grid lg:grid-cols-[1fr_6fr_1fr] min-h-screen bg-dark p-4">
       <div class="lg:col-start-2 min-h-[30vh]">
         <div class="mainpane">
           <p class="panetitle">User Profile</p>
           <div class="panecontent">
-            <div class="grid">
+            <div class="grid gap-2">
               <p class="rounded border-b border-stone-200">
                 Name: <%= @profile.name %>
               </p>
@@ -26,12 +26,11 @@
                       <button data-action="userprofile#removeItem" class="profilecatbutton">x</button>
                     </div>
                   <% end %>
-                  <%# render @species? no its not a model%>
                 </div>
 
                 <div class="hidden col-start-2" data-userprofile-target='speciesform'>
                   <div class="grid gap-2 grid-cols-[3fr_2fr] max-w-80">
-                    <input type="text" data-userprofile-target="speciesin" class="border border-dark rounded p-2">
+                    <input type="text" data-userprofile-target="speciesin" class="border border-dark rounded p-2 text-dark">
                     <button class="darkbutton-s" data-action="userprofile#addSpecies">Add</button>
                   </div>
                 </div>
@@ -55,7 +54,7 @@
                 </div>
                 <div class="hidden col-start-2" data-userprofile-target='vehiclesform'>
                   <div class="grid gap-2 grid-cols-[3fr_2fr] max-w-80">
-                    <input type="text" data-userprofile-target="vehiclesin" class="border border-dark rounded p-2">
+                    <input type="text" data-userprofile-target="vehiclesin" class="border border-dark rounded p-2 text-dark">
                     <button class="darkbutton-s" data-action="userprofile#addVehicle">Add</button>
                   </div>
                 </div>
@@ -79,7 +78,7 @@
                 </div>
                 <div class="hidden col-start-2" data-userprofile-target='equipmentform'>
                   <div class="grid gap-2 grid-cols-[3fr_2fr] max-w-80">
-                    <input type="text" data-userprofile-target="equipmentin" class="border border-dark rounded p-2">
+                    <input type="text" data-userprofile-target="equipmentin" class="border border-dark rounded p-2 text-dark">
                     <button class="darkbutton-s" data-action="userprofile#addEquipment">Add</button>
                   </div>
                 </div>
@@ -103,15 +102,11 @@
                 </div>
                 <div class="hidden col-start-2" data-userprofile-target='worktypesform'>
                   <div class="grid gap-2 grid-cols-[3fr_2fr] max-w-80">
-                    <input type="text" data-userprofile-target="worktypesin" class="border border-dark rounded p-2">
+                    <input type="text" data-userprofile-target="worktypesin" class="border border-dark rounded p-2 text-dark">
                     <button class="darkbutton-s" data-action="userprofile#addWorktype">Add</button>
                   </div>
                 </div>
               </div>
-
-              <a href="/user/dashboard" class="darkbutton-s mt-12">
-                Dashboard
-              </a>
             </div>
           </div>
         </div>

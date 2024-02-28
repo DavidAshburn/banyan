@@ -193,7 +193,7 @@ export default function ShowJob() {
             <div ref={mapContainer} className="lg:col-start-2 lg:row-start-1"></div>
             <div className="mainpane lg:col-start-1 lg:row-start-1">
                 <p className="panetitle">Trees</p>
-                <div id="jobtrees" className="panecontent max-lg:h-[20dvh] lg:max-h-[75svh] overflow-scroll">
+                <div id="jobtrees" className="panecontent max-lg:h-[20dvh] lg:max-h-[75svh] overflow-y-scroll">
                     <div className="grid grid-cols-3 px-2 text-center">
                     <p>Species</p>
                     <p>DBH</p>
@@ -216,7 +216,13 @@ export default function ShowJob() {
                 <p className="panetitle">Notes</p>
                 <div className="panecontent">
                     <p>{job.notes}</p>
-                    {job.invoiced ? <button onClick={sendClientReceipt}>Send Receipt</button> : <button onClick={sendClientInvoice}>Send Invoice</button> }
+                    
+                    <a href={"/pdf/job?jid=" + job.id} className="bg-stone-400 text-dark rounded-lg text-center py-2 px-4" target="_blank">
+                        PDF
+                    </a>
+                    {job.invoiced ? <button onClick={sendClientReceipt} className="bg-stone-300 text-dark rounded-lg text-center py-2 px-4">Send Receipt</button> 
+                        : <button onClick={sendClientInvoice} className="bg-stone-300 text-dark rounded-lg text-center py-2 px-4">Send Invoice</button> 
+                        }
                 </div>
             </div>
             <div className="mainpane">
@@ -262,10 +268,7 @@ export default function ShowJob() {
                             <p key={i}>{equip}</p>
                         )}
                     </div>
-                    <button type="button" onClick={()=>{destroyJob(job.id)}}>Destroy this Job</button>
-                    <a href={"/pdf/job?jid=" + job.id} className="bg-dark text-light p-2 rounded-md">
-                        PDF
-                    </a>
+                    <button type="button" onClick={()=>{destroyJob(job.id)}} className="bg-coral text-dark rounded-lg text-center py-2 px-4">Destroy this Job</button>
                 </div>
             </div>
         </div>

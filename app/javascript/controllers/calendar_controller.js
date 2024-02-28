@@ -1,6 +1,8 @@
 import { Controller } from '@hotwired/stimulus';
 import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+
 // Connects to data-controller="debug"
 export default class extends Controller {
   static targets = ['output'];
@@ -8,8 +10,13 @@ export default class extends Controller {
     this.calendarEl = document.getElementById('calendar');
 
     this.calendar = new Calendar(this.calendarEl, {
-      plugins: [dayGridPlugin],
+      plugins: [dayGridPlugin, timeGridPlugin],
       initialView: 'dayGridMonth',
+      headerToolbar: {
+        left: 'prev,next',
+        center: 'title',
+        right: 'timeGridWeek, timeGridDay, dayGridMonth'
+      },
       eventClick: function(info) {
         let next = `../jobs/${info.event.id}`;
         window.open(next, '_self');

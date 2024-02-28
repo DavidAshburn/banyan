@@ -166,12 +166,16 @@ class DataController < ApplicationController
     @data = [];
 
     current_user.jobs.each do |job|
+      fullday = false;
+      if(job.est_hours >= 8)
+          fullday = true;
+      end
       @data.push({
         title: Property.find(job.property_id).address,
         start: job.start,
         end: job.end,
         id: job.id,
-        fullDay: false,
+        allDay: fullday,
       })
     end
 
