@@ -31,10 +31,10 @@
     @apply grid gap-2 p-2 sm:grid-cols-[1fr_640px_1fr] md:grid-cols-[1fr_768px_1fr]
   }
   .mainpane {
-    @apply border-2 border-stone-900 rounded-lg text-light h-fit w-full;
+    @apply border-2 border-stone-900 rounded-lg text-light h-fit max-w-[100%];
   }
   .scrollpane {
-    @apply border-2 border-stone-900 rounded-lg text-light w-full overflow-scroll scroll-smooth;
+    @apply border-2 border-stone-900 rounded-lg text-light max-w-[100%] overflow-y-scroll scroll-smooth;
   }
   .panetitle {
     @apply bg-dark border-b-[6px] border-lime-200 h-8 text-white pl-2 text-lg leading-7 font-extrabold;
