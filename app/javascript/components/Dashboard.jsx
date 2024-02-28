@@ -171,15 +171,15 @@ export default function Dashboard() {
       <div className="row-span-full bg-dark max-lg:min-h-12">
         <div className="lg:flex lg:flex-col grid grid-cols-4">
           <a href="/clients/new" className="navlink">
-            +Client
+            Add Client
           </a>
           <a href="/properties/new" className="navlink">
-            +Property
+            Add Property
           </a>
           <a href="/user/calendar" className="navlink">
             Calendar
           </a>
-          <a href="/user/profile" className="navlink">
+          <a href="/user/profile" className="navlink text-cyan-600">
             Config
           </a>
         </div>

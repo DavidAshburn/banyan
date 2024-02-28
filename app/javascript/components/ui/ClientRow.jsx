@@ -22,7 +22,7 @@ export default function ClientRow({ client, properties, index }) {
       onClick={toggleItem}
     >
       <p className="row-span-2">{client.name}</p>
-      <p>{client.email}</p>
+      <p className="text-sm">{client.email}</p>
       <p>{client.phone}</p>
       <div className={'grid gap-4 col-span-full ' + display}>
         {properties.map((location, i) => (

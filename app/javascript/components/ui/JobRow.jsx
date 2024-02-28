@@ -38,9 +38,9 @@ export default function JobRow({ jobdata, index }) {
       onClick={toggleItem}
     >
       <p>{client.name} </p>
-      <p>{job.crew_size} Hands</p>
+      <p className="text-sm">{job.crew_size} Hands</p>
       <p className="text-sm text-stone-600">{property.name}</p>
-      <p>{job.est_hours} Hours</p>
+      <p className="text-sm">{job.est_hours} Hours</p>
 
       <div className={'col-span-full ' + display}>
         <div className="grid gap-2 grid-cols-2 border border-dark rounded-md mx-4 p-2 bg-stone-700">

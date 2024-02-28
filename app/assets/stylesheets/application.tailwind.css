@@ -4,7 +4,7 @@
 
 @layer components {
   .navlink {
-    @apply py-4 bg-dark text-light border-r-4 border-r-cyan-200 text-center text-sm;
+    @apply py-2 px-4 bg-dark border-r-6 border-r-cyan-600 text-end text-lg font-black text-light;
   }
   .darkbutton {
     @apply p-2 px-4 rounded bg-dark text-light font-bold text-2xl text-center w-fit;
