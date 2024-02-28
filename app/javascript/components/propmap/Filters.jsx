@@ -178,16 +178,16 @@ export default function Filters({ trees, elRef, map }) {
 
   return (
     <div className="flex flex-col items-end w-full gap-4">
-      <button className="text-center underline bg-accent3 rounded-md p-2 w-[5rem] mr-4" onClick={toggleFilters}>
+      <button className="bg-light text-dark text-center font-bold p-2 w-fit rounded-md mr-4" onClick={toggleFilters}>
         Filters
       </button>
-      <div className="filterbox" id="filterbox">
+      <div className="filterbox gap-2 px-4" id="filterbox">
         <div className="flex justify-between items-center overflow-hidden">
           <p>DBH over</p>
           <select
             name="dbhmin"
             id="dbhmin"
-            className="text-dark"
+            className="text-dark px-2 py-[2px] rounded-sm"
             onChange={() => {
               dbhOver(trees);
             }}
@@ -200,7 +200,7 @@ export default function Filters({ trees, elRef, map }) {
           <select
             name="dbhmax"
             id="dbhmax"
-            className="text-dark"
+            className="text-dark px-2 py-[2px] rounded-sm"
             onChange={() => {
               dbhUnder(trees);
             }}
@@ -213,7 +213,7 @@ export default function Filters({ trees, elRef, map }) {
           <select
             name="crownsize"
             id="crownsize"
-            className="text-dark"
+            className="text-dark px-2 py-[2px] rounded-sm"
             onChange={() => {
               crownSize(trees);
             }}
@@ -226,7 +226,7 @@ export default function Filters({ trees, elRef, map }) {
           <select
             name="species"
             id="species"
-            className="text-dark"
+            className="text-dark px-2 py-[2px] rounded-sm"
             onChange={() => {
               filterSpecies(trees);
             }}

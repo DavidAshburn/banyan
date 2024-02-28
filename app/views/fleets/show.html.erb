@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @fleet %>
+
+<div>
+  <%= link_to "Edit this fleet", edit_fleet_path(@fleet) %> |
+  <%= link_to "Back to fleets", fleets_path %>
+
+  <%= button_to "Destroy this fleet", @fleet, method: :delete %>
+</div>

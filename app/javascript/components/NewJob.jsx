@@ -240,13 +240,14 @@ export default function Propertymap() {
   }
 
   return (
-    <div className="grid grid-cols-[3fr_7fr] grid-rows-[80svh_10svh_60svh_2rem] lg:grid-cols-[1fr_2fr] xl:grid-cols-[1fr_3fr] lg:grid-rows-[1fr_12rem] bg-light">
+    <div className="grid grid-cols-[3fr_7fr] grid-rows-[80svh_10svh_70svh_1fr_2rem] lg:grid-cols-[1fr_2fr] xl:grid-cols-[1fr_3fr] lg:grid-rows-[1fr_12rem] bg-stone-900">
       <div
         ref={mapContainer}
-        className="max-lg:col-span-2 max-lg:row-span-2 max-lg:col-start-1 max-lg:row-start-1 lg:col-start-2 bg-accent2"
+        className="max-lg:col-span-2 max-lg:row-span-2 max-lg:col-start-1 max-lg:row-start-1 lg:col-start-2 bg-stone-900"
       ></div>
+
       <div
-        className="mainpane row-span-2 row-start-2 col-start-2 lg:row-start-1 lg:col-start-1 lg:min-h-[100svh] z-20"
+        className="mainpane row-span-2 row-start-2 col-start-2 lg:row-start-1 lg:col-start-1 lg:min-h-[100svh] z-20 bg-stone-800"
         id="newjobform"
       >
         <p className="panetitle">New Job</p>
@@ -273,7 +274,7 @@ export default function Propertymap() {
             />
             <label htmlFor="estimatorin">Estimator</label>
             <input
-              className="text-dark rounded-lg h-[2rem]"
+              className="text-dark rounded-lg h-[2rem] px-4"
               type="text"
               value={estimator}
               id="estimatorin"
@@ -281,7 +282,7 @@ export default function Propertymap() {
             />
             <label htmlFor="foremanin">Foreman</label>
             <input
-              className="text-dark rounded-lg h-[2rem]"
+              className="text-dark rounded-lg h-[2rem] px-4"
               type="text"
               value={foreman}
               id="foremanin"
@@ -289,7 +290,7 @@ export default function Propertymap() {
             />
             <label htmlFor="notesin">Notes</label>
             <input
-              className="text-dark rounded-lg h-[2rem]"
+              className="text-dark rounded-lg h-[2rem] px-4"
               type="text"
               value={notes}
               id="notesin"
@@ -297,7 +298,7 @@ export default function Propertymap() {
             />
             <label htmlFor="crewin">Crew Size</label>
             <input
-              className="text-dark rounded-lg h-[2rem]"
+              className="text-dark rounded-lg h-[2rem] px-4"
               type="number"
               value={crew_size}
               id="crewin"
@@ -305,7 +306,7 @@ export default function Propertymap() {
             />
             <label htmlFor="hoursin">Est Hours</label>
             <input
-              className="text-dark rounded-lg h-[2rem]"
+              className="text-dark rounded-lg h-[2rem] px-4"
               type="number"
               value={est_hours}
               id="hoursin"
@@ -313,7 +314,7 @@ export default function Propertymap() {
             />
             <label htmlFor="pricein">Est Price</label>
             <input
-              className="text-dark rounded-lg h-[2rem]"
+              className="text-dark rounded-lg h-[2rem] px-4"
               type="number"
               value={price}
               id="pricein"
@@ -341,21 +342,22 @@ export default function Propertymap() {
                 )}
               </div>
             </div>
-            <button type="submit" className="col-start-2 bg-dark text-light font-bold p-2 rounded-md">
+            <button type="submit" className="col-start-2 bg-light text-dark text-center font-bold p-2 w-fit rounded-md justify-self-end">
               Make Job
             </button>
           </form>
         </div>
-        <div className="panecontent">
+        <div className="grid gap-2 p-2">
           <Filters trees={trees} elRef={elementsRef} map={map.current} />
         </div>
       </div>
+
       <div
-        className="hidden lg:flex lg:flex-col justify-start lg:col-start-2 lg:row-start-2 overflow-scroll p-2 gap-4 bg-emerald-200"
+        className="grid max-lg:col-span-full max-lg:col-start-1 lg:flex lg:flex-col justify-start lg:col-start-2 lg:row-start-2 overflow-scroll p-2 pt-4 gap-4 bg-stone-900"
         id="treelist"
       >
           {
-            chosenRef.current.map((tree, i)=> <Treerow key={i} tree={tree} elRef={elementsRef} map={map} workoptions={workoptions}/>)
+            chosenRef.current.map((tree, i)=> <Treerow key={i} index={i} tree={tree} elRef={elementsRef} map={map} workoptions={workoptions}/>)
           }
       </div>
     </div>

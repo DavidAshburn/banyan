@@ -190,27 +190,29 @@ export default function Propertymap() {
             
             <div className="mainpane lg:col-start-2 lg:row-start-2">
                 <p className="panetitle">Info</p>
-                <div className="grid-cols-2 panecontent">
+                <div className="grid-cols-2 panecontent ">
                     <div className="grid gap-2">
                         <Propertyinfo property = {property} client={client}/>
                         <a
                             href={'/jobs/new?pid=' + property.id}
-                            className="p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit"
+                            className="p-2 mr-2 rounded bg-light text-dark font-bold text-sm text-center w-fit justify-self-end"
                         >
                             New Job
                         </a>
                     </div>
-                    <Filters trees={trees} elRef={elementsRef} map={map.current} />
+                    <div className="pt-2">
+                        <Filters trees={trees} elRef={elementsRef} map={map.current} />
+                    </div>
                 </div>
             </div>
 
             <div className="mainpane lg:col-start-1 lg:row-start-1">
                 <p className="panetitle">Trees</p>
-                <div id="alltrees" className="panecontent max-lg:max-h-[40svh] lg:max-h-[75svh] overflow-scroll">
+                <div id="alltrees" className="panecontent max-lg:max-h-[40svh] lg:max-h-[75svh] overflow-scroll text-dark">
                     <div className="grid grid-cols-3 px-2 text-center">
-                    <p>Species</p>
-                    <p>DBH</p>
-                    <p></p>
+                        <p>Species</p>
+                        <p>DBH</p>
+                        <p></p>
                     </div>
                     {trees.map((tree,i) => 
                         <div className="grid grid-cols-3 bg-dull rounded-xl p-2 text-center" 

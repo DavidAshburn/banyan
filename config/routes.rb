@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :properties
   resources :clients
   resources :trees
+  resources :fleets
   get 'user/dashboard'
   get 'user/profile'
   get 'user/debug'

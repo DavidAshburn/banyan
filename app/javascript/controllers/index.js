@@ -7,9 +7,6 @@ import { application } from "./application"
 import CalendarController from "./calendar_controller"
 application.register("calendar", CalendarController)
 
-import DashjobsmapController from "./dashjobsmap_controller"
-application.register("dashjobsmap", DashjobsmapController)
-
 import DebugController from "./debug_controller"
 application.register("debug", DebugController)
 

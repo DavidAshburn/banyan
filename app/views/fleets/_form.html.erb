@@ -1,0 +1,52 @@
+<%= form_with(model: fleet) do |form| %>
+  <% if fleet.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(fleet.errors.count, "error") %> prohibited this fleet from being saved:</h2>
+
+      <ul>
+        <% fleet.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :plate, style: "display: block" %>
+    <%= form.text_field :plate %>
+  </div>
+
+  <div>
+    <%= form.label :serial, style: "display: block" %>
+    <%= form.text_field :serial %>
+  </div>
+
+  <div>
+    <%= form.label :renewables, style: "display: block" %>
+    <%= form.text_field :renewables %>
+  </div>
+
+  <div>
+    <%= form.label :docs, style: "display: block" %>
+    <%= form.text_field :docs %>
+  </div>
+
+  <div>
+    <%= form.label :milespergallon, style: "display: block" %>
+    <%= form.number_field :milespergallon %>
+  </div>
+
+  <div>
+    <%= form.label :fleettype, style: "display: block" %>
+    <%= form.text_field :fleettype %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

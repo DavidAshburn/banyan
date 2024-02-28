@@ -12,9 +12,12 @@ export default function ClientRow({ client, properties, index }) {
     }
   }
 
+  let color = "bg-stone-800";
+  if(index % 2 == 0) color = "bg-stone-900";
+
   return (
     <div
-      className="grid px-4 py-2 gap-2 items-center sm:grid-cols-[2fr_2fr_1fr] text-center min-h-[2rem] rounded-bl-lg rounded-tr-lg border border-dark rounded-md"
+      className={"grid px-4 py-2 gap-2 items-center sm:grid-cols-[2fr_2fr_1fr] text-center min-h-[2rem] rounded-bl-lg rounded-tr-lg border border-dark rounded-md " + color}
       data-ref={index}
       onClick={toggleItem}
     >

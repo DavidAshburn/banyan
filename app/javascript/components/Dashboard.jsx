@@ -184,9 +184,9 @@ export default function Dashboard() {
           </a>
         </div>
       </div>
-      <div className="flex flex-col gap-4 md:p-4 text-lg bg-light text-dark font-inter min-h-screen">
+      <div className="flex flex-col gap-4 md:p-4 text-lg text-dark font-inter min-h-screen">
         <div
-          className="grid md:grid-cols-2 bg-dark h-[40svh]"
+          className="grid md:grid-cols-2 bg-dark lg:h-[40svh]"
         >
           <div id="jobsmap" ref={mapContainer} className="min-h-80"></div>
           <Windowpane
@@ -194,7 +194,7 @@ export default function Dashboard() {
           content={jobs.map((job, j) => (
             <JobRow jobdata={job} key={j} index={j}/>
           ))}
-          mainclass="scrollpane"
+          mainclass="scrollpane max-h-[40svh]"
         />
         </div>
         <Windowpane
@@ -207,7 +207,7 @@ export default function Dashboard() {
               key={i}
             />
           ))}
-          mainclass="mainpane"
+          mainclass="scrollpane max-h-[80svh]"
         />
         <Windowpane
           title={user.email}

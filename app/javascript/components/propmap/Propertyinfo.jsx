@@ -11,9 +11,9 @@ export default function Propertyinfo({property, client}) {
     }
 
     return(
-        <div className="mainpane">
-            <p className="panetitle">{property.address}</p>
-            <div className="grid lg:grid-cols-2 gap-2 p-2 text-dark">
+        <div className="mainpane bg-stone-800">
+            <p className="bg-dark border-b-[6px] border-lime-200 min-h-8 text-white px-2 text-lg leading-7 font-extrabold">{property.address}</p>
+            <div className="grid lg:grid-cols-2 gap-2 p-2 text-light">
                 <p>Client: {client.name}</p>
                 {checkContact(property,client)}
                 <p>Phone: {property.phone}</p>
