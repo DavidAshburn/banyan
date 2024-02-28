@@ -31,13 +31,13 @@ export default function Dashboard() {
       _setChosen(list);
   }
   function addtoChosen(id, chosenRef, jobsRef) {
-      let job = jobsRef.current.find((job) => job.id == id);
+      let job = jobsRef.current.find((job) => job.job.id == id);
       let newchosen = [...chosenRef.current, job];
       setChosen(newchosen);
   }
   function removeChosen(id, chosenRef) {
       let newchosen = [...chosenRef.current];
-      let dex = newchosen.findIndex((job)=> job.id == id);
+      let dex = newchosen.findIndex((job)=> job.job.id == id);
       newchosen.splice(dex,1);
       setChosen(newchosen);
   }
@@ -65,47 +65,50 @@ export default function Dashboard() {
 
     let telements = {};
     for(let job of jobdata) {
-    let pop = new mapboxgl.Popup({
-        anchor: 'top-left',
-        closeButton: false,
-    })
-        .setHTML(
-        `<div className='grid p-2 gap-2 w-40 font-josefin'><p>${job.client.name}</p><p>${formatDate(job.job.start)}</p></div>`
-        )
-        .setLngLat([job.longitude, job.latitude]);
-    
-    let openmark = new mapboxgl.Marker({
-        color: startcolor,
-    })
-        .setLngLat([job.longitude, job.latitude])
-        .addTo(map);
+      let pop = new mapboxgl.Popup({
+          anchor: 'top-left',
+          closeButton: false,
+      })
+          .setHTML(
+          `<div className='grid p-2 gap-2 w-40 font-josefin'><p>${job.client.name}</p><p>${formatDate(job.job.start)}</p></div>`
+          )
+          .setLngLat([job.longitude, job.latitude]);
+      
+      let openmark = new mapboxgl.Marker({
+          color: startcolor,
+      })
+          .setLngLat([job.longitude, job.latitude])
+          .addTo(map);
 
-    let chosenmark = new mapboxgl.Marker({
-        color: brightcolor,
-    })
-        .setLngLat([job.longitude, job.latitude]);
+      let chosenmark = new mapboxgl.Marker({
+          color: brightcolor,
+      })
+          .setLngLat([job.longitude, job.latitude]);
+      
+      let jobid = job.job.id;
+      console.log(jobid);
 
+      openmark.getElement().addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleMark(jobid, elRef, map, chosenRef, jobsRef);
+          elRef.current[jobid].popup.addTo(map);
+      });
 
-    openmark.getElement().addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleMark(job.id, elRef, map, chosenRef, jobsRef);
-        elRef.current[job.id].popup.addTo(map);
-    });
+      chosenmark.getElement().addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleMark(jobid, elRef, map, chosenRef, jobsRef);
+          elRef.current[jobid].popup.remove();
+      });
 
-    chosenmark.getElement().addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleMark(job.id, elRef, map, chosenRef, jobsRef);
-        elRef.current[job.id].popup.remove();
-    });
-
-    telements[job.id] = {
-        open:openmark,
-        chosen:chosenmark,
-        popup:pop,
-        selected:false,
-    }
+      telements[jobid] = {
+          open:openmark,
+          chosen:chosenmark,
+          popup:pop,
+          selected:false,
+      }
     }
     setElements(telements);
+    console.log(telements);
   }
   function toggleMark(jobid, elRef, map, chosenRef, jobsRef) {
     let el = elRef.current[jobid];
