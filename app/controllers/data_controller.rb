@@ -29,7 +29,6 @@ class DataController < ApplicationController
   end
 
   def clients
-
     clients = current_user.clients
     @clientdata = clients.map {|client| [client, client.properties]}
 
@@ -97,12 +96,37 @@ class DataController < ApplicationController
     end
   end
 
-  def jobsdash
-    @data = current_user.jobs.map{|job| {latitude:job.property.latitude, longitude:job.property.longitude}}
+  def dashboard
+    jobs = current_user.jobs.order(:start)
+    job_data = jobs.map{|job| {
+      job:job,
+      latitude:job.property.latitude,
+      longitude:job.property.longitude,
+      client:job.property.client,
+      property:job.property
+      }}
+
+    trees = 0
+    current_user.clients.each {|client| client.properties.each{|prop| trees += prop.trees.count}}
+
+    user_data = {
+      email: current_user.email,
+      clients: current_user.clients.count,
+      jobs: current_user.jobs.count,
+      trees: trees
+    }
+
+    clients = current_user.clients
+    client_data = clients.map {|client| [client, client.properties]}
+
+    datapack = {
+      jobs:job_data, user:user_data, clients:client_data
+    };
 
     respond_to do |format|
-      format.json { render json: @data }
+      format.json { render json: datapack}
     end
+
   end
 
   #unused right now but may come in handy

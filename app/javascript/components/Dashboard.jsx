@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import ClientRow from './ui/ClientRow';
 import DashHead from './ui/DashHead';
@@ -9,28 +9,163 @@ import Windowpane from './ui/Windowpane';
 export default function Dashboard() {
 
   mapboxgl.accessToken = document.getElementById('mapboxpub').innerText;
-  let [clientdata, setClientData] = useState([]);
-  let [jobsdata, setJobsData] = useState([]);
-  let [user, setUser] = useState({});
+  const [clientdata, setClientData] = useState([]);
+  const [user, setUser] = useState({});
+
+  //dashmap
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const [startcolor, setStartColor] = useState('#07a7cb');
+  const [brightcolor, setBrightColor] = useState('#6ee7b7');
+  const [jobs, _setJobs] = useState([]);
+  const jobsRef = useRef(jobs);
+  function setJobs(list) {
+      jobsRef.current = list;
+      _setJobs(list);
+  }
+
+  const [chosen, _setChosen] = useState([]);
+  const chosenRef = useRef(chosen);
+  function setChosen(list) {
+      chosenRef.current = list;
+      _setChosen(list);
+  }
+  function addtoChosen(id, chosenRef, jobsRef) {
+      let job = jobsRef.current.find((job) => job.id == id);
+      let newchosen = [...chosenRef.current, job];
+      setChosen(newchosen);
+  }
+  function removeChosen(id, chosenRef) {
+      let newchosen = [...chosenRef.current];
+      let dex = newchosen.findIndex((job)=> job.id == id);
+      newchosen.splice(dex,1);
+      setChosen(newchosen);
+  }
+
+  //map elements
+  const [elements, _setElements] = useState({});
+  const elementsRef = useRef(elements);
+  function setElements(obj) {
+      elementsRef.current = obj;
+      _setElements(obj);
+  }
+
+  function buildElements(jobdata, map, elRef, chosenRef, jobsRef) {
+    function formatDate(date) {
+      if(date === '') return '';
+      let fulldate = date.split('T')[0].split('-');
+      let fulltime = date.split('T')[1].split('.000');
+      let time = fulltime[0].split(':');
+
+      const options = {weekday:'long',year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'numeric'};
+
+      let thisdate = new Date(fulldate[0],fulldate[1],fulldate[2],time[0],time[1]);
+      return thisdate.toLocaleDateString('en-US',options);
+    }
+
+    let telements = {};
+    for(let job of jobdata) {
+    let pop = new mapboxgl.Popup({
+        anchor: 'top-left',
+        closeButton: false,
+    })
+        .setHTML(
+        `<div className='grid p-2 gap-2 w-40 font-josefin'><p>${job.client.name}</p><p>${formatDate(job.job.start)}</p></div>`
+        )
+        .setLngLat([job.longitude, job.latitude]);
+    
+    let openmark = new mapboxgl.Marker({
+        color: startcolor,
+    })
+        .setLngLat([job.longitude, job.latitude])
+        .addTo(map);
+
+    let chosenmark = new mapboxgl.Marker({
+        color: brightcolor,
+    })
+        .setLngLat([job.longitude, job.latitude]);
+
+
+    openmark.getElement().addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMark(job.id, elRef, map, chosenRef, jobsRef);
+        elRef.current[job.id].popup.addTo(map);
+    });
+
+    chosenmark.getElement().addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMark(job.id, elRef, map, chosenRef, jobsRef);
+        elRef.current[job.id].popup.remove();
+    });
+
+    telements[job.id] = {
+        open:openmark,
+        chosen:chosenmark,
+        popup:pop,
+        selected:false,
+    }
+    }
+    setElements(telements);
+  }
+  function toggleMark(jobid, elRef, map, chosenRef, jobsRef) {
+    let el = elRef.current[jobid];
+    if(el.selected) {
+    el.chosen.remove();
+    el.selected = false;
+    el.open.addTo(map);
+    removeChosen(jobid, chosenRef);
+    } else {
+    el.open.remove();
+    el.chosen.addTo(map);
+    el.selected = true;
+    addtoChosen(jobid, chosenRef, jobsRef);
+    }
+    elRef.current[jobid] = el;
+    _setElements(elRef.current);
+  }
+  function setBounds(jobs, map) {
+    let baseLL = new mapboxgl.LngLat(jobs[0].longitude, jobs[0].latitude);
+    //mapbounds setting
+    const bounds = new mapboxgl.LngLatBounds(
+      baseLL,
+      baseLL
+    );
+    for (let item of jobs) {
+      let thisll = new mapboxgl.LngLat(item.longitude, item.latitude);
+      bounds.extend(thisll);
+    }
+    map.fitBounds(bounds, { padding: 100 });
+    map.setMaxZoom(17);
+  }
+  function capitalize(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
   useEffect(() => {
-    fetch(`/data/clients`)
+    const pid = window.location.href.split('/').slice(-1);
+
+    if (map.current) return;
+    map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        center: [-157.858,21.315],
+        zoom: 13,
+        //cooperativeGestures: true,
+        style: `mapbox://styles/mapbox/satellite-v9`,
+    });
+
+    fetch(`/data/dashboard`)
       .then((response) => response.json())
       .then((data) => {
-        setClientData(data);
+        setClientData(data.clients);
+        setJobs(data.jobs);
+        setUser(data.user);
+        
+        if(data.jobs.length > 0) {
+          buildElements(data.jobs, map.current, elementsRef, chosenRef, jobsRef);
+          setBounds(data.jobs, map.current);
+        }
       });
 
-    fetch('/data/jobs')
-      .then((response) => response.json())
-      .then((data) => {
-        setJobsData(data);
-      });
-
-    fetch('/data/user')
-      .then((response) => response.json())
-      .then((data) => {
-        setUser(data);
-      });
   }, []);
 
   return (
@@ -54,12 +189,11 @@ export default function Dashboard() {
       <div className="flex flex-col gap-4 md:p-4 text-lg bg-light text-dark font-inter min-h-screen">
         <div
           className="grid md:grid-cols-2 bg-dark"
-          data-controller="dashjobsmap"
         >
-          <div id="jobsmap" className="min-h-80"></div>
+          <div id="jobsmap" ref={mapContainer} className="min-h-80"></div>
           <Windowpane
           title="Active Jobs"
-          content={jobsdata.map((job, j) => (
+          content={jobs.map((job, j) => (
             <JobRow jobdata={job} key={j} />
           ))}
           light = '0'
