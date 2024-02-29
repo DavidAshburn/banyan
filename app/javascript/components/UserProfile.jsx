@@ -1,18 +1,25 @@
 import React, {useState, useEffect, useRef} from "react"
 import AddProfileTags from "./ui/AddProfileTags";
-
+import AddFleets from "./ui/AddFleets";
 
 
 
 export default function UserProfile() {
+    //listeners need the Ref to have a live reference at xxxRef.current
     const [profile, _setProfile] = useState({});
-    const profileRef = useRef();
+    const profileRef = useRef(profile);
     const setProfile = (profile) => {
         profileRef.current = profile;
         _setProfile(profile);
     }
 
-    const [fleets, setFleets] = useState({});
+    const [fleets, _setFleets] = useState({});
+    const fleetsRef = useRef(fleets);
+    const setFleets = (fleets) => {
+        fleetsRef.current = fleets;
+        _setFleets(fleets);
+    }
+
     let token = document.getElementsByName('csrf-token')[0].content;
 
     function addSpecies(e, name) {
@@ -57,7 +64,7 @@ export default function UserProfile() {
     
         input.value = "";
     }
-    function removeTree(name) {
+    function removeSpecies(name) {
         let newtrees = [...profileRef.current.species.filter((item)=> item != name)];
         let newprofile = {...profileRef.current};
         newprofile.species = newtrees;
@@ -89,6 +96,42 @@ export default function UserProfile() {
             if(!response.ok) console.log('error');
         });
     }
+    function addVehicle(e, name) {
+        e.preventDefault();
+        let input = document.getElementById(name);
+
+        if(input.value.length) {
+            fetch('/fleets', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-Token':token,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "fleet": {
+                        "name":`${input.value}`,
+                    },
+                }),
+            })
+                .then((response)=> {
+                    if(response.ok) {
+                        response.json().then((data)=> {
+                            console.log(data);
+                        })
+                    }else console.log('error');
+            });
+        }
+        input.value = "";
+    }
+    function removeVehicle() {
+        console.log('removeVehicle');
+    }
+    function addEquipment(e, name) {
+        console.log('addEquipment');
+    }
+    function removeEquipment() {
+        console.log('removeEquipment');
+    }
 
     useEffect(()=> {
         fetch('/data/userprofile')
@@ -104,9 +147,11 @@ export default function UserProfile() {
             <div className="lg:col-start-2 min-h-[30vh]">
                 <div className="mainpane">
                     <p className="panetitle">User Profile</p>
-                    <div className="panecontent grid gap-2">
-                        <AddProfileTags items={profile.species} removeTag={removeTree} addTag={addSpecies} name="Tree"/>
+                    <div className="panecontent grid-rows-4 min-h-[50vh]">
+                        <AddProfileTags items={profile.species} removeTag={removeSpecies} addTag={addSpecies} name="Tree"/>
                         <AddProfileTags items={profile.worktypes} removeTag={removeWorktype} addTag={addWorktype} name="Work Type"/>
+                        <AddFleets items={fleets} removeTag={removeVehicle} addTag={addVehicle} name="Vehicle"/>
+                        <AddFleets items={fleets}  removeTag={removeEquipment} addTag={addEquipment} name="Equipment"/>
                     </div>
                 </div>
             </div>

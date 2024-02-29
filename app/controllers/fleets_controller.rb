@@ -26,7 +26,7 @@ class FleetsController < ApplicationController
 
     respond_to do |format|
       if @fleet.save
-        format.html { render json: { status: :true, id:@fleet.id }, notice: "Fleet was successfully created." }
+        format.html { render json: current_user.fleets, notice: "Fleet was successfully created." }
         format.json { render :show, status: :created, location: @fleet }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -66,6 +66,6 @@ class FleetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def fleet_params
-      params.require(:fleet).permit(:name, :plate, :serial, :renewables, :docs, :milespergallon, :fleettype)
+      params.require(:fleet).permit(:name, :plate, :serial, :renewables, :docs, :diesel, :milespergallon, :fleettype, :user_id)
     end
 end
