@@ -16,6 +16,7 @@ export default function Propertymap() {
   const [client, setClient] = useState({});
   const [profile, setProfile] = useState({vehicles:[],equipment:[]});
   const [workoptions, setWorkOptions] = useState([]);
+  const [fleet, setFleet] = useState([]);
   
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -217,6 +218,7 @@ export default function Propertymap() {
         setClient(data.client);
         setProfile(data.profile);
         setWorkOptions(data.profile.worktypes);
+        setFleet(data.fleet);
 
         buildElements(data.trees, map.current, elementsRef, chosenRef);
         setBounds(data.property, data.trees, map.current);
@@ -322,10 +324,10 @@ export default function Propertymap() {
             <div className="col-span-full">
               <label htmlFor="vehicles">Vehicles</label>
               <div className="grid grid-cols-2" id="vehiclechecks">
-                {profile.vehicles.map((vehicle, i) => 
-                  <div className="flex justify-between items-center text-end p-2 bg-green-300 text-dark" key={i}>
-                    <input type="checkbox" value={vehicle}/>
-                    <p>{vehicle}</p>
+                {fleet.filter((item)=> item.fleettype === "Vehicle").map((vehicle, i) => 
+                  <div className="flex justify-between items-center text-end p-2 bg-green-300 text-dark" key={vehicle.id}>
+                    <input type="checkbox" value={vehicle.name}/>
+                    <p>{vehicle.name}</p>
                   </div>
                 )}
               </div>
@@ -333,10 +335,10 @@ export default function Propertymap() {
             <div className="col-span-full">
               <label htmlFor="equipment">Equipment</label>
               <div className="grid grid-cols-2" id="equipmentchecks">
-                {profile.equipment.map((equip, i) => 
-                  <div className="flex justify-between items-center text-end p-2 bg-green-300 text-dark" key={i}>
-                    <input type="checkbox" value={equip}/>
-                    <p>{equip}</p>
+                {fleet.filter((item)=> item.fleettype === "Equipment").map((equip, i) => 
+                  <div className="flex justify-between items-center text-end p-2 bg-green-300 text-dark" key={equip.id}>
+                    <input type="checkbox" value={equip.name}/>
+                    <p>{equip.name}</p>
                   </div>
                 )}
               </div>

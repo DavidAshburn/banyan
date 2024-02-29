@@ -60,12 +60,11 @@ export default function makeEstimate(job, property, trees, token, work) {
     }
     function getEntries(list) {
         let these = list;
-
         let bodyout = [];
         if(these.length == 0) {
             bodyout.push(['none listed',{}]);
         }
-        while(these.length > 2) {
+        while(these.length >= 2) {
             let a = these.shift();
             let b = these.shift();
             bodyout.push([a,b]);

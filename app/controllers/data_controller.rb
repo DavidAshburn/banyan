@@ -58,8 +58,9 @@ class DataController < ApplicationController
   def newjob
     property = Property.find(params[:pid])
     profile = current_user.profile
+    fleet = current_user.fleets
 
-    @newjobdata = {property: property, profile: profile, trees: property.trees, client:property.client}
+    @newjobdata = {property: property, profile: profile, trees: property.trees, client:property.client, fleet:fleet}
     respond_to do |format|
       format.json { render json: @newjobdata}
     end

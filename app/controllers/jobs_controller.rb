@@ -23,8 +23,8 @@ class JobsController < ApplicationController
     @pid = params[:pid]
     @uid = current_user.id
     @profile = current_user.profile
-    @vehicles = current_user.profile.vehicles || []
-    @equipment = current_user.profile.equipment || []
+    @vehicles = current_user.fleets.select{|fleet| fleet.fleettype == "Vehicle"} || []
+    @equipment = current_user.fleets.select{|fleet| fleet.fleettype == "Equipment"} || []
     @species = current_user.profile.species || []
     @worktypes = current_user.profile.worktypes || []
 
