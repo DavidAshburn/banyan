@@ -136,7 +136,6 @@ export default function UserProfile() {
         });
     }
 
-
     useEffect(()=> {
         fetch('/data/userprofile')
             .then((response)=> response.json())

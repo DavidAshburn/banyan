@@ -21,12 +21,6 @@
   .profilecatlist {
     @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 items-center gap-2 py-2;
   }
-  .profilecatpair {
-    @apply flex justify-between items-center px-2 gap-2 bg-light text-dark rounded-full;
-  }
-  .profilecatbutton {
-    @apply w-4 h-4 rounded-full flex justify-center items-center bg-dark text-light;
-  }
   .formcontainer {
     @apply grid gap-2 p-2 sm:grid-cols-[1fr_640px_1fr] md:grid-cols-[1fr_768px_1fr]
   }
@@ -65,6 +59,26 @@
   radial-gradient(at 85% 100%, hsla(168,64%,24%,1) 0px, transparent 50%),
   radial-gradient(at 37% 76%, hsla(168,64%,24%,1) 0px, transparent 50%),
   radial-gradient(at 80% 100%, hsla(12,6%,15%,1) 0px, transparent 50%);
+}
+
+.border-gradient {
+  background: linear-gradient(#292524,#292524) padding-box,
+    linear-gradient(200deg, #e8eef2, #3e3836, #166556) border-box;
+  border-radius: 8px;
+  border: 2px solid transparent;
+}
+
+.tagpair-gradient {
+  background: linear-gradient(#e8eef2, #e8eef2) padding-box,
+    linear-gradient(to right, #292524, #166556) border-box;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+}
+
+.bg-cross {
+  background-image: url('cross.svg');
+  background-size: cover;
+  background-position: center;
 }
 
 :root{
