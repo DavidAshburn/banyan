@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :clients
   has_one :profile
   has_many :jobs
+  has_many :fleets
 
   before_create :build_default_profile
 

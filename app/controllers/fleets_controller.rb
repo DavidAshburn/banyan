@@ -26,7 +26,7 @@ class FleetsController < ApplicationController
 
     respond_to do |format|
       if @fleet.save
-        format.html { redirect_to fleet_url(@fleet), notice: "Fleet was successfully created." }
+        format.html { render json: { status: :true, id:@fleet.id }, notice: "Fleet was successfully created." }
         format.json { render :show, status: :created, location: @fleet }
       else
         format.html { render :new, status: :unprocessable_entity }

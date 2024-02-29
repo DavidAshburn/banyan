@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get 'data/proptrees', to: 'data#proptrees'
   get 'data/client', to: 'data#client'
   get 'data/profile', to: 'data#profile'
+  get 'data/userprofile', to: 'data#userprofile'
   get 'data/propjobs', to: 'data#propjobs'
   get 'data/newjob', to: 'data#newjob'
   get 'data/geojson', to: 'data#geojson'

@@ -31,5 +31,8 @@ application.register("reactnewjob", ReactnewjobController)
 import ReactpropshowController from "./reactpropshow_controller"
 application.register("reactpropshow", ReactpropshowController)
 
+import RprofileController from "./rprofile_controller"
+application.register("rprofile", RprofileController)
+
 import UserprofileController from "./userprofile_controller"
 application.register("userprofile", UserprofileController)

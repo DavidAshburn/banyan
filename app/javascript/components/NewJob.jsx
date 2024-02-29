@@ -3,7 +3,6 @@ import Filters from './propmap/Filters';
 import Treerow from './ui/Treerow';
 import mapboxgl from 'mapbox-gl';
 
-//mapboxgl.accessToken = 'pk.eyJ1Ijoia3B0a251Y2tsZXMiLCJhIjoiY2xydG93aW95MDhzaTJxbzF2N2Y4ZTd5eSJ9.gmMbs4w6atuaUiqplL_74w';
 function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }

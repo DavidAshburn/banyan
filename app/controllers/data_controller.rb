@@ -202,5 +202,15 @@ class DataController < ApplicationController
     end
   end
 
+  def userprofile
+    profile = current_user.profile
+    fleets = current_user.fleets
+
+    profiledata = {profile:profile, fleets:fleets}
+    respond_to do |format|
+      format.json { render json: profiledata }
+    end
+  end
+
 
 end

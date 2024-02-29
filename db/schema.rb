@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_23_083606) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_28_084347) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_23_083606) do
     t.string "email", default: ""
     t.string "mail_address"
     t.text "notes", default: ""
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "fleets", force: :cascade do |t|
+    t.string "name"
+    t.string "plate", default: ""
+    t.string "serial", default: ""
+    t.string "fleettype", default: "Vehicle"
+    t.boolean "diesel", default: false
+    t.jsonb "renewables", default: {}
+    t.jsonb "docs", default: {}
+    t.integer "milespergallon", default: 25
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -52,8 +66,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_23_083606) do
     t.string "name", default: ""
     t.string "preferred_contact_email", default: ""
     t.string "species", default: [], array: true
-    t.string "vehicles", default: [], array: true
-    t.string "equipment", default: [], array: true
     t.string "worktypes", default: [], array: true
     t.boolean "prefers_dark", default: false
     t.integer "user_id"
