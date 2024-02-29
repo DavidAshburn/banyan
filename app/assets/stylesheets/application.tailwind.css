@@ -4,7 +4,7 @@
 
 @layer components {
   .navlink {
-    @apply py-2 px-4 bg-dark border-r-4 border-r-cyan-600 text-end text-lg font-black text-light;
+    @apply py-2 px-4 bg-dark border-r-4 border-r-accent text-end text-lg font-black text-light;
   }
   .darkbutton {
     @apply p-2 px-4 rounded bg-dark text-light font-bold text-2xl text-center w-fit;
@@ -37,7 +37,7 @@
     @apply border-2 border-stone-900 rounded-lg text-light max-w-[100%] overflow-y-scroll scroll-smooth;
   }
   .panetitle {
-    @apply bg-dark border-b-[6px] border-cyan-200 h-8 text-white pl-2 text-lg leading-7 font-extrabold;
+    @apply bg-dark border-b-[6px] border-accent h-8 text-white pl-2 text-lg leading-7 font-extrabold;
   }
   .panecontent {
     @apply grid gap-2 p-2;
@@ -58,6 +58,14 @@
   width: 100%;
 }
 
+.mesh1 {
+  background-color:hsla(12,6%,15%,1);
+  background-image:
+  radial-gradient(at 83% 37%, hsla(161,39%,13%,1) 0px, transparent 50%),
+  radial-gradient(at 85% 100%, hsla(168,64%,24%,1) 0px, transparent 50%),
+  radial-gradient(at 37% 76%, hsla(168,64%,24%,1) 0px, transparent 50%),
+  radial-gradient(at 80% 100%, hsla(12,6%,15%,1) 0px, transparent 50%);
+}
 
 :root{
   --fc-today-bg-color: #083344;

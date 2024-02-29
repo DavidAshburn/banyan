@@ -1,4 +1,4 @@
-<section class="grid min-h-[100lvh] gap-2 p-4 font-bold bg-dark font-inter text-slate-100 text-xl overflow-hidden">  
+<section class="grid min-h-[100lvh] gap-2 p-4 font-bold mesh1 font-inter text-slate-100 text-xl overflow-hidden">  
   
   <h2 class="text-8xl">Log in</h2>
 
@@ -22,9 +22,8 @@
       <% end %>
 
       <div class="actions">
-        <%= f.submit "Log in" %>
+        <%= f.submit "Log in", class:"bg-accent text-light px-4 py-2 rounded-md"  %>
       </div>
-      <%= render "devise/shared/links" %>
     </div>
   <% end %>
 </section>

@@ -179,7 +179,7 @@ export default function Dashboard() {
           <a href="/user/calendar" className="navlink">
             Calendar
           </a>
-          <a href="/user/profile" className="navlink text-cyan-600">
+          <a href="/user/profile" className="navlink text-accent">
             Config
           </a>
         </div>

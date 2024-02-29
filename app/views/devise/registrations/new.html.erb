@@ -1,4 +1,4 @@
-<section class="grid min-h-[100lvh] gap-2 p-4 font-bold bg-dark font-inter text-slate-100 text-xl">  
+<section class="grid min-h-[100lvh] gap-2 p-4 font-bold mesh1 font-inter text-slate-100 text-xl">  
   
   <h2 class="text-8xl">Sign Up</h2>
 
@@ -23,16 +23,14 @@
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "text-dark px-2" %>
       </div>
 
-      <div class="field">
-        <%= f.label :time_zone %><br />
-        <%= f.time_zone_select :time_zone, class: "test-dark px-2" %>
+      <div class="field text-dark">
+        <%= f.label :time_zone, class:"text-light" %><br />
+        <%= f.time_zone_select :time_zone%>
       </div>
 
       <div class="actions">
-        <%= f.submit "Sign up" %>
+        <%= f.submit "Sign up", class:"bg-accent text-light px-4 py-2 rounded-md" %>
       </div>
     </div>
   <% end %>
-
-  <%= render "devise/shared/links" %>
 </section>
