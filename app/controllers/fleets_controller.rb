@@ -53,7 +53,7 @@ class FleetsController < ApplicationController
     @fleet.destroy
 
     respond_to do |format|
-      format.html { redirect_to fleets_url, notice: "Fleet was successfully destroyed." }
+      format.html { render json: current_user.fleets, notice: "Fleet was successfully destroyed." }
       format.json { head :no_content }
     end
   end

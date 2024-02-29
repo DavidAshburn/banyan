@@ -13,12 +13,8 @@ export default function UserProfile() {
         _setProfile(profile);
     }
 
-    const [fleets, _setFleets] = useState({});
-    const fleetsRef = useRef(fleets);
-    const setFleets = (fleets) => {
-        fleetsRef.current = fleets;
-        _setFleets(fleets);
-    }
+    const [fleets, setFleets] = useState([]);
+
 
     let token = document.getElementsByName('csrf-token')[0].content;
 
@@ -96,11 +92,11 @@ export default function UserProfile() {
             if(!response.ok) console.log('error');
         });
     }
-    function addVehicle(e, name) {
+    function addFleet(e, ftype) {
         e.preventDefault();
-        let input = document.getElementById(name);
+        let name = document.getElementById(ftype).value;
 
-        if(input.value.length) {
+        if(name.length) {
             fetch('/fleets', {
                 method: 'POST',
                 headers: {
@@ -109,29 +105,37 @@ export default function UserProfile() {
                 },
                 body: JSON.stringify({
                     "fleet": {
-                        "name":`${input.value}`,
+                        "name": name,
+                        "fleettype": ftype
                     },
                 }),
             })
                 .then((response)=> {
                     if(response.ok) {
                         response.json().then((data)=> {
-                            console.log(data);
+                            setFleets(data);
                         })
                     }else console.log('error');
             });
         }
-        input.value = "";
+        document.getElementById(ftype).value = "";
     }
-    function removeVehicle() {
-        console.log('removeVehicle');
+    function removeFleet(item) {
+        fetch('/fleets/' + item.id, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-Token':token,
+            },
+        })
+            .then((response)=> {
+                if(response.ok) {
+                    response.json().then((data)=> {
+                        setFleets(data);
+                    })
+                }else console.log('error');
+        });
     }
-    function addEquipment(e, name) {
-        console.log('addEquipment');
-    }
-    function removeEquipment() {
-        console.log('removeEquipment');
-    }
+
 
     useEffect(()=> {
         fetch('/data/userprofile')
@@ -150,8 +154,8 @@ export default function UserProfile() {
                     <div className="panecontent grid-rows-4 min-h-[50vh]">
                         <AddProfileTags items={profile.species} removeTag={removeSpecies} addTag={addSpecies} name="Tree"/>
                         <AddProfileTags items={profile.worktypes} removeTag={removeWorktype} addTag={addWorktype} name="Work Type"/>
-                        <AddFleets items={fleets} removeTag={removeVehicle} addTag={addVehicle} name="Vehicle"/>
-                        <AddFleets items={fleets}  removeTag={removeEquipment} addTag={addEquipment} name="Equipment"/>
+                        <AddFleets items={fleets} removeTag={removeFleet} addTag={addFleet} ftype="Vehicle"/>
+                        <AddFleets items={fleets}  removeTag={removeFleet} addTag={addFleet} ftype="Equipment"/>
                     </div>
                 </div>
             </div>

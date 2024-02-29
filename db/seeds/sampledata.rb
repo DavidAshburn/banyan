@@ -32,6 +32,7 @@ Property.destroy_all
 Tree.destroy_all
 Job.destroy_all
 Proptype.destroy_all
+Fleet.destroy_all
 
 Proptype.create(
   label: 'House',
