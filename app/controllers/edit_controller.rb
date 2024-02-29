@@ -40,13 +40,11 @@ class EditController < ApplicationController
   end
 
   def profileremovespecies
-    removeindex = Integer(params[:index])
     @profile = current_user.profile
-    @targetarray = current_user.profile.species
-    @targetarray.delete_at(removeindex)
+    updatedspecies = @profile.species.select{|species| species != params[:name]};
 
     respond_to do |format|
-      if @profile.update(species:@targetarray)
+      if @profile.update(species:updatedspecies)
         format.json { render @profile, status: :ok, location: user_profile_path }
       else
         format.json { render json: @profile.errors, status: :unprocessable_entity }
@@ -55,13 +53,11 @@ class EditController < ApplicationController
   end
 
   def profileremoveworktypes
-    removeindex = Integer(params[:index])
     @profile = current_user.profile
-    @targetarray = current_user.profile.worktypes
-    @targetarray.delete_at(removeindex)
+    updatedwork = @profile.worktypes.select{|work| work != params[:name]};
 
     respond_to do |format|
-      if @profile.update(worktypes:@targetarray)
+      if @profile.update(worktypes:updatedwork)
         format.json { render @profile, status: :ok, location: user_profile_path }
       else
         format.json { render json: @profile.errors, status: :unprocessable_entity }

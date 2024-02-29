@@ -1,16 +1,10 @@
 import React, {useState, useEffect, useRef} from "react"
-import ProfileTag from "./ui/ProfileTag";
+import AddProfileTags from "./ui/AddProfileTags";
 
 
-function removeTree() {
-    console.log('remove species');
-}
-function removeWorktype() {
-    console.log('remove work');
-}
+
 
 export default function UserProfile() {
-    //addSpecies/Worktype listeners get a stale reference through closure to profile state, need the ref.current
     const [profile, _setProfile] = useState({});
     const profileRef = useRef();
     const setProfile = (profile) => {
@@ -21,9 +15,9 @@ export default function UserProfile() {
     const [fleets, setFleets] = useState({});
     let token = document.getElementsByName('csrf-token')[0].content;
 
-    function addSpecies(e) {
+    function addSpecies(e, name) {
         e.preventDefault();
-        let input = document.getElementById('treein');
+        let input = document.getElementById(name);
         
         if(input.value.length) {
             fetch('/edit/profilespecies?name=' + input.value, {
@@ -42,9 +36,9 @@ export default function UserProfile() {
         setProfile(newprof);
         input.value = "";
     }
-    function addWorktype(e) {
+    function addWorktype(e, name) {
         e.preventDefault();
-        let input = document.getElementById('workin');
+        let input = document.getElementById(name);
         
         if(input.value.length) {
             fetch('/edit/profileworktypes?name=' + input.value, {
@@ -63,17 +57,46 @@ export default function UserProfile() {
     
         input.value = "";
     }
+    function removeTree(name) {
+        let newtrees = [...profileRef.current.species.filter((item)=> item != name)];
+        let newprofile = {...profileRef.current};
+        newprofile.species = newtrees;
+        setProfile(newprofile);
+
+        fetch('/edit/profileremovespecies?name=' + name, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-Token':token,
+            }
+        })
+        .then((response)=> {
+            if(!response.ok) console.log('error');
+        });
+    }
+    function removeWorktype(name) {
+        let newtypes = [...profileRef.current.worktypes.filter((item)=> item != name)];
+        let newprofile = {...profileRef.current};
+        newprofile.worktypes = newtypes;
+        setProfile(newprofile);
+
+        fetch('/edit/profileremoveworktypes?name=' + name, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-Token':token,
+            }
+        })
+        .then((response)=> {
+            if(!response.ok) console.log('error');
+        });
+    }
 
     useEffect(()=> {
-
         fetch('/data/userprofile')
             .then((response)=> response.json())
             .then((data) => {
-
                 setProfile(data.profile);
                 setFleets(data.fleets);
         });
-
     }, []);
 
     return(
@@ -82,30 +105,8 @@ export default function UserProfile() {
                 <div className="mainpane">
                     <p className="panetitle">User Profile</p>
                     <div className="panecontent grid gap-2">
-                        <div className="grid lg:grid-cols-[1fr_5fr]">
-                            <div className="lg:col-start-2 grid grid-cols-4 gap-2">
-                                {profile.species && profile.species.map((tree, i)=> (
-                                    <ProfileTag key={`${tree}${i}`} tag={tree} removeTag={removeTree}/>
-                                ))}
-                            </div>
-                            <form action="" className="lg:col-start-1">
-                                <label htmlFor="treein">Add Species</label>
-                                <input type="text" id="treein" className="text-dark"/>
-                                <button onClick={addSpecies} className="bg-light text-dark text-sm text-center p-2">Add Tree</button>
-                            </form>
-                        </div>
-                        <div className="grid lg:grid-cols-[1fr_5fr]">
-                            <div className="lg:col-start-2 grid grid-cols-4 gap-2">
-                                {profile.worktypes && profile.worktypes.map((work, i)=> (
-                                    <ProfileTag key={`${work}${i}`} tag={work} removeTag={removeWorktype} />
-                                ))}
-                            </div>
-                            <form action="" className="lg:col-start-1">
-                                <label htmlFor="workin">Add Worktype</label>
-                                <input type="text" id="workin" className="text-dark"/>
-                                <button onClick={addWorktype} className="bg-light text-dark text-sm text-center p-2">Add Tree</button>
-                            </form>
-                        </div>
+                        <AddProfileTags items={profile.species} removeTag={removeTree} addTag={addSpecies} name="Tree"/>
+                        <AddProfileTags items={profile.worktypes} removeTag={removeWorktype} addTag={addWorktype} name="Work Type"/>
                     </div>
                 </div>
             </div>
