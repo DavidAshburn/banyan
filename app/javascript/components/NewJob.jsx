@@ -36,7 +36,7 @@ export default function Propertymap() {
   const property_id = document.getElementById('pid').innerText;
   const user_id = document.getElementById('uid').innerText;
 
-  //chosenRef and elementsRef are needed as pointers to markerstate that dont get stale on DOM listeners that dont re-render
+  //chosenRef and elementsRef are needed as pointers to markerstate that dont get stale
   //treedata for current selection
   // [Tree,Tree,...]
   const [chosen, _setChosen] = useState([]);
@@ -179,8 +179,6 @@ export default function Propertymap() {
       vehicles,
       equipment,
     };
-
-    //console.log(postData);
     
     const response = await fetch('/jobs.json', {
       method: 'POST',
@@ -241,7 +239,7 @@ export default function Propertymap() {
   }
 
   return (
-    <div className="grid grid-cols-[3fr_7fr] grid-rows-[80svh_10svh_70svh_1fr_2rem] lg:grid-cols-[1fr_2fr] xl:grid-cols-[1fr_3fr] lg:grid-rows-[1fr_12rem] bg-stone-900">
+    <div className="grid grid-cols-[3fr_7fr] grid-rows-[80svh_10svh_70svh_1fr_2rem] lg:grid-cols-[1fr_2fr] xl:grid-cols-[1fr_3fr] lg:grid-rows-[1fr_18rem] bg-stone-900">
       <div
         ref={mapContainer}
         className="max-lg:col-span-2 max-lg:row-span-2 max-lg:col-start-1 max-lg:row-start-1 lg:col-start-2 bg-stone-900"
@@ -354,7 +352,7 @@ export default function Propertymap() {
       </div>
 
       <div
-        className="grid max-lg:col-span-full max-lg:col-start-1 lg:flex lg:flex-col justify-start lg:col-start-2 lg:row-start-2 overflow-scroll p-2 pt-4 gap-4 bg-stone-900"
+        className="grid max-lg:col-span-full max-lg:col-start-1 lg:flex lg:flex-col justify-start lg:col-start-2 lg:row-start-2 overflow-y-scroll p-2 pt-4 gap-4 bg-stone-900"
         id="treelist"
       >
           {

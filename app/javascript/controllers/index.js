@@ -7,6 +7,9 @@ import { application } from "./application"
 import CalendarController from "./calendar_controller"
 application.register("calendar", CalendarController)
 
+import DebugController from "./debug_controller"
+application.register("debug", DebugController)
+
 import MapseditController from "./mapsedit_controller"
 application.register("mapsedit", MapseditController)
 
@@ -27,6 +30,9 @@ application.register("reactnewjob", ReactnewjobController)
 
 import ReactpropshowController from "./reactpropshow_controller"
 application.register("reactpropshow", ReactpropshowController)
+
+import RfleetController from "./rfleet_controller"
+application.register("rfleet", RfleetController)
 
 import RprofileController from "./rprofile_controller"
 application.register("rprofile", RprofileController)

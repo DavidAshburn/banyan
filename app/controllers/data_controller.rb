@@ -185,24 +185,6 @@ class DataController < ApplicationController
     end
   end
 
-  def getdebug
-
-    @debug = [];
-
-    current_user.jobs.each do |job|
-      @debug.push({
-        title: Property.find(job.property_id).address,
-        start: job.start,
-        end: job.end,
-        fullDay: false,
-      })
-    end
-
-    respond_to do |format|
-      format.json { render json: @debug }
-    end
-  end
-
   def userprofile
     profile = current_user.profile
     fleets = current_user.fleets
@@ -213,5 +195,14 @@ class DataController < ApplicationController
     end
   end
 
+  def fleet
+    fleet = current_user.fleets
+    vehicles = fleet.select{|item| item.fleettype == "Vehicle"}
+    equipment = fleet.select{|item| item.fleettype == "Equipment"}
 
+    fleetdata = {vehicles:vehicles, equipment:equipment}
+    respond_to do |format|
+      format.json { render json: fleetdata}
+    end
+  end
 end

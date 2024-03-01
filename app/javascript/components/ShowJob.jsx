@@ -121,7 +121,7 @@ export default function ShowJob() {
           bounds.extend(thisll);
         }
         map.fitBounds(bounds, { padding: 100 });
-        map.setMaxZoom(20);
+        map.setMaxZoom(19);
       }
 
     function capitalize(string) {
@@ -167,7 +167,7 @@ export default function ShowJob() {
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             center: [-157.858,21.315],
-            zoom: 14,
+            zoom: 12,
             //cooperativeGestures: true,
             style: `mapbox://styles/mapbox/satellite-v9`,
         });
