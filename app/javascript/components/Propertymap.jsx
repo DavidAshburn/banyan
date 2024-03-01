@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect} from 'react';
 import mapboxgl from 'mapbox-gl';
 import Propertyinfo from './propmap/Propertyinfo';
-import Filters from './propmap/Filters';
+import Filters from './ui/Filters';
 
 export default function Propertymap() {
 
