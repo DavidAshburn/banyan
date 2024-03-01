@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from "react"
-import AddProfileTags from "./ui/AddProfileTags";
-import AddFleets from "./ui/AddFleets";
+import AddProfileTags from "./userprofile/AddProfileTags";
+import AddFleets from "./userprofile/AddFleets";
 
 
 

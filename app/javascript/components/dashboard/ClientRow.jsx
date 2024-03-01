@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropertyRow from './PropertyRow';
+import PropertyRow from '../ui/PropertyRow';
 
 export default function ClientRow({ client, properties, index }) {
   let [display, setDisplay] = useState('hidden');

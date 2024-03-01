@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
-import ClientRow from './ui/ClientRow';
-import DashHead from './ui/DashHead';
+import ClientRow from './dashboard/ClientRow';
+import DashHead from './dashboard/DashHead';
 import JobRow from './ui/JobRow';
 import Windowpane from './ui/Windowpane';
 
