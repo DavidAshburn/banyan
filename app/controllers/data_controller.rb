@@ -200,9 +200,9 @@ class DataController < ApplicationController
     vehicles = fleet.select{|item| item.fleettype == "Vehicle"}
     equipment = fleet.select{|item| item.fleettype == "Equipment"}
 
-    fleetdata = {vehicles:vehicles, equipment:equipment}
+    @fleetdata = {vehicles:vehicles, equipment:equipment}
     respond_to do |format|
-      format.json { render json: fleetdata}
+      format.json { render json: @fleetdata}
     end
   end
 end

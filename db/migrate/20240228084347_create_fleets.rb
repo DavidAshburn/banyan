@@ -5,10 +5,10 @@ class CreateFleets < ActiveRecord::Migration[7.0]
       t.string :plate, default: ""
       t.string :serial, default: ""
       t.string :fleettype, default: "Vehicle"
-      t.boolean :diesel, default: false
+      t.string :fuel, default: ""
       t.jsonb :renewables, default: {}
       t.jsonb :docs, default: {}
-      t.integer :milespergallon, default: 25
+      t.integer :milespergallon, default: 0
       t.integer :user_id
 
       t.timestamps

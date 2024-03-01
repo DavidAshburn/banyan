@@ -1,11 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Filters from './propmap/Filters';
 import Treerow from './ui/Treerow';
+import FleetChecks from './newjob/FleetChecks';
 import mapboxgl from 'mapbox-gl';
-
-function capitalize(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
 
 export default function Propertymap() {
   //map essentials
@@ -36,14 +33,17 @@ export default function Propertymap() {
   const property_id = document.getElementById('pid').innerText;
   const user_id = document.getElementById('uid').innerText;
 
-  //chosenRef and elementsRef are needed as pointers to markerstate that dont get stale
-  //treedata for current selection
-  // [Tree,Tree,...]
   const [chosen, _setChosen] = useState([]);
   const chosenRef = useRef(chosen);
   function setChosen(list) {
     chosenRef.current = list;
     _setChosen(list);
+  }
+  const [elements, _setElements] = useState({});
+  const elementsRef = useRef(elements);
+  function setElements(obj) {
+    elementsRef.current = obj;
+    _setElements(obj);
   }
   function addtoChosen(chosenRef, tree) {
     let newchosen = [...chosenRef.current, tree];
@@ -55,21 +55,6 @@ export default function Propertymap() {
     newchosen.splice(dex,1);
     setChosen(newchosen);
   }
-
-  //marker and popup collection for all trees
-  /* 
-    { id: {open: mapboxgl.Marker, chosen: mapboxgl.Marker, popup: mapboxgl.Popup, selected: bool},
-      id: {open: mapboxgl.Marker, chosen: mapboxgl.Marker, popup: mapboxgl.Popup, selected: bool},
-      ...,    
-    } 
-  */
-  const [elements, _setElements] = useState({});
-  const elementsRef = useRef(elements);
-  function setElements(obj) {
-    elementsRef.current = obj;
-    _setElements(obj);
-  }
-
   function buildElements(treedata, map, elRef, chosenRef) {
     let telements = {};
     for(let tree of treedata) {
@@ -123,7 +108,20 @@ export default function Propertymap() {
     }
     setElements(telements);
   }
-
+  function setBounds(property, trees, map) {
+    let baseLL = new mapboxgl.LngLat(property.longitude, property.latitude);
+    //mapbounds setting
+    const bounds = new mapboxgl.LngLatBounds(
+      baseLL,
+      baseLL
+    );
+    for (let item of trees) {
+      let thisll = new mapboxgl.LngLat(item.longitude, item.latitude);
+      bounds.extend(thisll);
+    }
+    map.fitBounds(bounds, { padding: 100 });
+    map.setMaxZoom(19);
+  }
   function toggleMark(treeid, elRef, map, chosenRef, tree) {
     let el = elRef.current[treeid];
     if(el.selected) {
@@ -141,7 +139,6 @@ export default function Propertymap() {
     elRef.current[treeid] = el;
     _setElements(elRef.current);
   }
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     let token = document.getElementsByName('csrf-token')[0].content;
@@ -223,21 +220,6 @@ export default function Propertymap() {
     });
   }, []);
 
-  function setBounds(property, trees, map) {
-    let baseLL = new mapboxgl.LngLat(property.longitude, property.latitude);
-    //mapbounds setting
-    const bounds = new mapboxgl.LngLatBounds(
-      baseLL,
-      baseLL
-    );
-    for (let item of trees) {
-      let thisll = new mapboxgl.LngLat(item.longitude, item.latitude);
-      bounds.extend(thisll);
-    }
-    map.fitBounds(bounds, { padding: 100 });
-    map.setMaxZoom(19);
-  }
-
   return (
     <div className="grid grid-cols-[3fr_7fr] grid-rows-[80svh_10svh_70svh_1fr_2rem] lg:grid-cols-[1fr_2fr] xl:grid-cols-[1fr_3fr] lg:grid-rows-[1fr_18rem] bg-stone-900">
       <div
@@ -253,7 +235,7 @@ export default function Propertymap() {
         <div className="panecontent">
           <form
             onSubmit={handleSubmit}
-            className="grid gap-2 p-4 grid-cols-2"
+            className="grid gap-2 px-4 pt-4 grid-cols-2"
           >
             <label htmlFor="startin">Start Time</label>
             <input
@@ -319,45 +301,22 @@ export default function Propertymap() {
               id="pricein"
               onChange={(e) => setPrice(e.target.value)}
             />
-            <div className="col-span-full">
-              <label htmlFor="vehicles">Vehicles</label>
-              <div className="grid grid-cols-2" id="vehiclechecks">
-                {fleet.filter((item)=> item.fleettype === "Vehicle").map((vehicle, i) => 
-                  <div className="flex justify-between items-center text-end p-2 bg-green-300 text-dark" key={vehicle.id}>
-                    <input type="checkbox" value={vehicle.name}/>
-                    <p>{vehicle.name}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="col-span-full">
-              <label htmlFor="equipment">Equipment</label>
-              <div className="grid grid-cols-2" id="equipmentchecks">
-                {fleet.filter((item)=> item.fleettype === "Equipment").map((equip, i) => 
-                  <div className="flex justify-between items-center text-end p-2 bg-green-300 text-dark" key={equip.id}>
-                    <input type="checkbox" value={equip.name}/>
-                    <p>{equip.name}</p>
-                  </div>
-                )}
-              </div>
-            </div>
+            <FleetChecks fleet={fleet} fleettype="Vehicle" />
+            <FleetChecks fleet={fleet} fleettype="Equipment" />
             <button type="submit" className="col-start-2 bg-light text-dark text-center font-bold p-2 w-fit rounded-md justify-self-end">
               Make Job
             </button>
           </form>
         </div>
-        <div className="grid gap-2 p-2">
+        <div className="grid gap-2 px-2">
           <Filters trees={trees} elRef={elementsRef} map={map.current} />
         </div>
       </div>
-
       <div
-        className="grid max-lg:col-span-full max-lg:col-start-1 lg:flex lg:flex-col justify-start lg:col-start-2 lg:row-start-2 overflow-y-scroll p-2 pt-4 gap-4 bg-stone-900"
+        className="grid max-lg:col-span-full max-lg:col-start-1 lg:flex lg:flex-col justify-start lg:col-start-2 lg:row-start-2 overflow-y-scroll scroll-theme p-2 pt-4 gap-4 bg-stone-900"
         id="treelist"
       >
-          {
-            chosenRef.current.map((tree, i)=> <Treerow key={i} index={i} tree={tree} elRef={elementsRef} map={map} workoptions={workoptions}/>)
-          }
+          {chosenRef.current.map((tree, i)=> <Treerow key={i} index={i} tree={tree} elRef={elementsRef} map={map} workoptions={workoptions}/>)}
       </div>
     </div>
   );

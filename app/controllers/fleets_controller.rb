@@ -39,7 +39,7 @@ class FleetsController < ApplicationController
   def update
     respond_to do |format|
       if @fleet.update(fleet_params)
-        format.html { redirect_to fleet_url(@fleet), notice: "Fleet was successfully updated." }
+        format.html { render json: @fleet, notice: "Fleet was successfully updated." }
         format.json { render :show, status: :ok, location: @fleet }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -66,6 +66,6 @@ class FleetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def fleet_params
-      params.require(:fleet).permit(:name, :plate, :serial, :renewables, :docs, :diesel, :milespergallon, :fleettype, :user_id)
+      params.require(:fleet).permit(:name, :plate, :serial, :renewables, :docs, :fuel, :milespergallon, :fleettype, :user_id)
     end
 end

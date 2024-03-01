@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'user/profile'
   get 'user/debug'
   get 'user/calendar'
+  get 'user/fleet'
 
   get 'pdf/job'
 
@@ -30,7 +31,7 @@ Rails.application.routes.draw do
   get 'data/newjob', to: 'data#newjob'
   get 'data/geojson', to: 'data#geojson'
   get 'data/getcalendar', to: 'data#getcalendar'
-  get 'data/getdebug', to: 'data#getdebug'
+  get 'data/fleet', to: 'data#fleet'
   post 'edit/locupdate', to: 'edit#locupdate'
   post 'edit/profilespecies', to: 'edit#profilespecies'
   post 'edit/profilevehicles', to: 'edit#profilevehicles'

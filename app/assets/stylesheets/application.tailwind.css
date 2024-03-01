@@ -28,7 +28,7 @@
     @apply border-2 border-stone-900 rounded-lg text-light h-fit max-w-[100%];
   }
   .scrollpane {
-    @apply border-2 border-stone-900 rounded-lg text-light max-w-[100%] overflow-y-scroll scroll-smooth;
+    @apply border-2 border-stone-900 rounded-lg text-light max-w-[100%] overflow-y-scroll scroll-theme;
   }
   .panetitle {
     @apply bg-dark border-b-[6px] border-accent h-8 text-white pl-2 text-lg leading-7 font-extrabold;
@@ -79,6 +79,11 @@
   background-image: url('cross.svg');
   background-size: cover;
   background-position: center;
+}
+
+.scroll-theme {
+  scrollbar-color: #166556 #292524;
+  scrollbar-width: thin;
 }
 
 :root{

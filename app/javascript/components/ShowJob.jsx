@@ -193,7 +193,7 @@ export default function ShowJob() {
             <div ref={mapContainer} className="lg:col-start-2 lg:row-start-1"></div>
             <div className="mainpane lg:col-start-1 lg:row-start-1">
                 <p className="panetitle">Trees</p>
-                <div id="jobtrees" className="panecontent max-lg:h-[20dvh] lg:max-h-[75svh] overflow-y-scroll">
+                <div id="jobtrees" className="panecontent max-lg:h-[20dvh] lg:max-h-[75svh] overflow-y-scroll scroll-theme">
                     <div className="grid grid-cols-3 px-2 text-center">
                     <p>Species</p>
                     <p>DBH</p>

@@ -208,7 +208,7 @@ export default function Propertymap() {
 
             <div className="mainpane lg:col-start-1 lg:row-start-1">
                 <p className="panetitle">Trees</p>
-                <div id="alltrees" className="panecontent max-lg:max-h-[40svh] lg:max-h-[75svh] overflow-y-scroll text-dark">
+                <div id="alltrees" className="panecontent max-lg:max-h-[40svh] lg:max-h-[75svh] overflow-y-scroll scroll-theme text-dark">
                     <div className="grid grid-cols-3 px-2 text-center">
                         <p>Species</p>
                         <p>DBH</p>

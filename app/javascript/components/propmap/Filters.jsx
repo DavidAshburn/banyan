@@ -178,7 +178,7 @@ export default function Filters({ trees, elRef, map }) {
 
   return (
     <div className="flex flex-col items-end w-full gap-4">
-      <button className="bg-light text-dark text-center font-bold p-2 w-fit rounded-md mr-4" onClick={toggleFilters}>
+      <button className="bg-accent2 text-dark text-center font-bold p-2 w-fit rounded-md mr-4" onClick={toggleFilters}>
         Filters
       </button>
       <div className="filterbox gap-2 px-4" id="filterbox">

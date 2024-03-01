@@ -12,6 +12,6 @@ class UserController < ApplicationController
   def calendar
   end
 
-  def debug
+  def fleet
   end
 end
