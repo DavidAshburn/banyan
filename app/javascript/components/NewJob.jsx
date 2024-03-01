@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import Filters from './propmap/Filters';
+import Filters from './ui/Filters';
 import Treerow from './ui/Treerow';
 import FleetChecks from './newjob/FleetChecks';
 import mapboxgl from 'mapbox-gl';

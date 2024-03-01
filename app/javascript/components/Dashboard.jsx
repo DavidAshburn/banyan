@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import ClientRow from './dashboard/ClientRow';
 import DashHead from './dashboard/DashHead';
-import JobRow from './ui/JobRow';
+import JobRow from './dashboard/JobRow';
 import Windowpane from './ui/Windowpane';
 
 
