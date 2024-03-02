@@ -38,9 +38,8 @@ class FleetsController < ApplicationController
   # PATCH/PUT /fleets/1 or /fleets/1.json
   def update
     respond_to do |format|
-      if @fleet.update(fleet_params)
-        format.html { render json: @fleet, notice: "Fleet was successfully updated." }
-        format.json { render :show, status: :ok, location: @fleet }
+      if @fleet.update(weak_params)
+        format.json { render @fleet, status: :ok }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @fleet.errors, status: :unprocessable_entity }
@@ -66,6 +65,9 @@ class FleetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def fleet_params
-      params.require(:fleet).permit(:name, :plate, :serial, :renewables, :docs, :fuel, :milespergallon, :fleettype, :user_id)
+      params.require(:fleet).permit(:name, :plate, :serial,  :fuel, :milespergallon, :renewables, :docs, :fleettype, :user_id)
+    end
+    def weak_params
+      params.require(:fleet).permit!
     end
 end

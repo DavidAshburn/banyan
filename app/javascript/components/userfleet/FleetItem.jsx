@@ -1,6 +1,17 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
+import Renewables from "./Renewables";
 
 export default function FleetItem({item}) {
+    const [renewables, setRenewables] = useState([])
+    useEffect(()=> {
+        let theseRenewables = [];
+        for(let [key,value] of Object.entries(item.renewables)) {
+            theseRenewables.push([key,value]);
+        }
+        setRenewables(theseRenewables);
+    }, [item]);
+        
+
     function updateFleet(e) {
         let form = document.getElementById(item.id);
         e.preventDefault();
@@ -9,11 +20,59 @@ export default function FleetItem({item}) {
         let fleetbody = {
             "fleet": {}
         };
-        for(const pair of formData.entries()) {
-            fleetbody.fleet[pair[0]] = pair[1];
-        }
-        console.log(fleetbody);
 
+        let newrenewabletitle, newrenewablevalue = "";
+        for(const pair of formData.entries()) {
+            let ignore = false
+            if(pair[0] == "renewabletitlenew" || 
+                pair[0] == "renewablevaluenew" ||
+                pair[0].slice(0,pair[0].length-1) == "existingdate" ||
+                pair[0].slice(0,pair[0].length-1) == "existingrenewable") {
+                    ignore = true;
+                }
+            //set basic parameter
+            if(!ignore){
+                fleetbody.fleet[pair[0]] = pair[1];
+            }
+            //set new renewable values
+            if(pair[0] == "renewabletitlenew") {
+                newrenewabletitle = pair[1];
+            }
+            if(pair[0] == 'renewablevaluenew') {
+                newrenewablevalue = pair[1];
+            }
+        }
+
+        let newobj = {};
+
+        if(newrenewabletitle.length) {
+            newobj[newrenewabletitle] = newrenewablevalue;
+        };
+
+        let existingrenewables = {};
+
+        //collect current input values of existing item.renewables
+        for(const pair of formData.entries()) {
+            let pattern = pair[0].slice(0,-1);
+            if(pattern === "existingrenewable") {
+                let index = pair[0].slice(-1);
+                for(const subpair of formData.entries()) {
+                    if(subpair[0] === `existingdate${index}`) {
+                        newobj[pair[1]] = subpair[1];
+                    }
+                };
+            }
+        };
+        
+        const cleanData = Object.entries(newobj)
+        .filter(([key,value]) => value !== undefined)
+        .reduce((obj, [key, value]) => {
+            obj[key] = value;
+            return obj;
+        }, {});
+
+        fleetbody.fleet['renewables'] = cleanData;
+        
         fetch('/fleets/' + item.id, {
             method: 'PUT',
             headers: {
@@ -23,10 +82,16 @@ export default function FleetItem({item}) {
               body: JSON.stringify(fleetbody),
         }).then((response) => {
             if(response.ok) {
-                console.log('updated')
+                console.log('updated');
+                if(newrenewabletitle !== "") {
+                    const frame = document.getElementById(`tempitems${item.id}`);
+                    const line = document.createElement('p');
+                    line.innerText = `${newrenewabletitle} : ${newrenewablevalue}`;
+                    frame.appendChild(line);
+                }
+                    
             } else console.log('error updating');
         });
-
     }
     return(
         <form id={item.id} className="grid gap-2 p-2 grid-cols-2">
@@ -40,7 +105,7 @@ export default function FleetItem({item}) {
             <label htmlFor={`fuel${item.id}`}>Fuel</label>
             <input id={`mpg${item.id}`} type="number" className="text-dark rounded px-2" name="milespergallon" defaultValue={item.milespergallon}></input>
             <label htmlFor={`mpg${item.id}`}>MPG</label>
-            <button type="submit" onClick={updateFleet} className="w-fit px-4 py-2 border border-stone-400 bg-gradient-to-tr from-accent to-accent2 rounded text-light font-bold">Update</button>
-        </form>
+            <Renewables fleetitem={item} renewables={renewables}/>
+            <button type="submit" onClick={updateFleet} className="w-fit col-span-full mt-2 px-4 py-2 border border-stone-400 bg-gradient-to-tr from-accent to-accent2 rounded text-light font-bold">Update</button>        </form>
     )
 }
