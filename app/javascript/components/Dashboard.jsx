@@ -4,6 +4,7 @@ import ClientRow from './dashboard/ClientRow';
 import DashHead from './dashboard/DashHead';
 import JobRow from './dashboard/JobRow';
 import Windowpane from './ui/Windowpane';
+import EdenSmall from './img/EdenSmall.jsx';
 
 
 export default function Dashboard() {
@@ -169,22 +170,27 @@ export default function Dashboard() {
   return (
     <div className="grid lg:grid-cols-[1fr_5fr]">
       <div className="row-span-full bg-dark max-lg:min-h-12">
-        <div className="lg:flex lg:flex-col grid grid-cols-4">
-          <a href="/clients/new" className="navlink">
-            Add Client
-          </a>
-          <a href="/properties/new" className="navlink">
-            Add Property
-          </a>
-          <a href="/user/calendar" className="navlink">
-            Calendar
-          </a>
-          <a href="/user/fleet" className="navlink">
-            Fleet Manager
-          </a>
-          <a href="/user/profile" className="navlink text-accent">
-            Config
-          </a>
+        <div className="lg:flex lg:flex-col lg:justify-between h-full">
+          <div className="lg:flex lg:flex-col grid grid-cols-4">
+            <a href="/clients/new" className="navlink">
+              Add Client
+            </a>
+            <a href="/properties/new" className="navlink">
+              Add Property
+            </a>
+            <a href="/user/calendar" className="navlink">
+              Calendar
+            </a>
+            <a href="/user/fleet" className="navlink">
+              Fleet Manager
+            </a>
+            <a href="/user/profile" className="navlink text-accent">
+              Config
+            </a>
+          </div>
+          <div className="max-lg:hidden lg:w-full lg:h-1/4 lg:z-10">
+            <EdenSmall />
+          </div>
         </div>
       </div>
       <div className="flex flex-col gap-4 md:p-4 text-lg text-dark font-inter min-h-screen">

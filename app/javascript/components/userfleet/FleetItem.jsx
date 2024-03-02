@@ -93,6 +93,38 @@ export default function FleetItem({item}) {
             } else console.log('error updating');
         });
     }
+    function removeRenewable(name) {
+        let token = document.getElementsByName('csrf-token')[0].content;
+        let updated = {};
+        let newrenewables = [];
+        renewables.forEach((item) => {
+            if(item[0] !== name) {
+                updated[item[0]] = item[1];
+                newrenewables.push(item);
+            }
+        })
+
+        const fleetbody = {
+            "fleet": {
+                "renewables" : updated,
+            } 
+        };
+
+        fetch('/fleets/' + item.id, {
+            method: 'PUT',
+            headers: {
+                'X-CSRF-Token': token,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(fleetbody),
+        }).then((response) => {
+            if(response.ok) {
+                console.log('updated');                    
+            } else console.log('error updating');
+        });
+
+        setRenewables(newrenewables);
+    }
     return(
         <form id={item.id} className="grid gap-2 p-2 grid-cols-2">
             <input id={`name${item.id}`} type="text" className="text-dark rounded px-2" name="name" defaultValue={item.name}></input>
@@ -105,7 +137,7 @@ export default function FleetItem({item}) {
             <label htmlFor={`fuel${item.id}`}>Fuel</label>
             <input id={`mpg${item.id}`} type="number" className="text-dark rounded px-2" name="milespergallon" defaultValue={item.milespergallon}></input>
             <label htmlFor={`mpg${item.id}`}>MPG</label>
-            <Renewables fleetitem={item} renewables={renewables}/>
+            <Renewables fleetitem={item} renewables={renewables} removeRenewable={removeRenewable}/>
             <button type="submit" onClick={updateFleet} className="w-fit col-span-full mt-2 px-4 py-2 border border-stone-400 bg-gradient-to-tr from-accent to-accent2 rounded text-light font-bold">Update</button>        </form>
     )
 }
