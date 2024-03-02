@@ -9,7 +9,7 @@ export default function Renewables({fleetitem, renewables, removeRenewable}){
                 <div className="grid col-span-full grid-cols-[1fr_1fr_3rem] gap-2" key={`${fleetitem.id}${i}`}>
                     <input type="text" className="text-dark" name={"existingrenewable" + i} defaultValue={renewable[0]}/>
                     <input type="date" className="text-dark" name={"existingdate" + i} defaultValue={renewable[1]}/>
-                    <button className="bg-cross w-4 h-4" onClick={()=>removeRenewable(renewable[0])}></button>
+                    <button className="bg-cross-alert w-4 h-4" onClick={()=>removeRenewable(renewable[0])}></button>
                 </div>
             ))}
             <div id={"tempitems" + fleetitem.id} className="-my-2"></div>

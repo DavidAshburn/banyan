@@ -68,7 +68,7 @@ export default function JobRow({ jobdata, index }) {
               '/jobs/' +
               job.id
             }
-            className="flex items-center justify-center rounded-md border-2 border-dark mx-20"
+            className="flex items-center justify-center rounded-md border-2 border-dark w-fit px-4 mx-auto"
           >
             View Job
           </a>

@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from "react"
+import InfoPanel from "./showjob/InfoPanel";
 import mapboxgl from "mapbox-gl";
 
 export default function ShowJob() {
@@ -7,14 +8,12 @@ export default function ShowJob() {
     const [property, setProperty] = useState({});
     const mapContainer = useRef(null);
     const map = useRef(null);
-
+    const startcolor = '#219781';
+    const brightcolor = '#6ee7b7';
     const [job, setJob] = useState({})
     const [work, setWork] = useState([]);
     const [vehicles, setVehicles] = useState([]);
     const [equipment, setEquipment] = useState([]);
-
-    const [startcolor, setStartColor] = useState('#07a7cb');
-    const [brightcolor, setBrightColor] = useState('#6ee7b7');
     const [trees, _setTrees] = useState([]);
     const treesRef = useRef(trees);
     function setTrees(list) {
@@ -122,21 +121,9 @@ export default function ShowJob() {
         }
         map.fitBounds(bounds, { padding: 100 });
         map.setMaxZoom(19);
-      }
-
+    }
     function capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-    function formatDate(date) {
-        if(date === '') return '';
-        let fulldate = date.split('T')[0].split('-');
-        let fulltime = date.split('T')[1].split('.000');
-        let time = fulltime[0].split(':');
-
-        const options = {weekday:'long',year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'numeric'};
-
-        let thisdate = new Date(fulldate[0],fulldate[1],fulldate[2],time[0],time[1]);
-        return thisdate.toLocaleDateString('en-US',options);
     }
     function sendClientInvoice(event){
         console.log('send invoice via SendGrid');
@@ -180,6 +167,8 @@ export default function ShowJob() {
                 setProperty(data.property);
                 setWork(data.work);
                 setJob(data.job);
+                setVehicles(data.job.vehicles);
+                setEquipment(data.job.equipment);
 
                 buildElements(data.trees, map.current, elementsRef, chosenRef, treesRef, data.work);
                 setBounds(data.property, data.trees, map.current);
@@ -223,53 +212,12 @@ export default function ShowJob() {
                     {job.invoiced ? <button onClick={sendClientReceipt} className="bg-stone-300 text-dark rounded-lg text-center py-2 px-4">Send Receipt</button> 
                         : <button onClick={sendClientInvoice} className="bg-stone-300 text-dark rounded-lg text-center py-2 px-4">Send Invoice</button> 
                         }
+                    <button type="button" onClick={()=>{destroyJob(job.id)}} className="bg-alert text-dark rounded-lg text-center py-2 px-4">Destroy this Job</button>
                 </div>
             </div>
             <div className="mainpane">
                 <p className="panetitle">Info</p>
-                <div className="grid-cols-2 md:grid-cols-4 panecontent">
-                    <div className="grid grid-cols-[1fr_4fr] items-center col-span-full md:col-span-2">
-                    <p>Start:</p>
-                    <p>{formatDate(job.start || '')}</p>
-                    </div>
-                    <div className="grid grid-cols-[1fr_4fr] items-center col-span-full md:col-span-2">
-                    <p>End: </p>
-                    <p>{formatDate(job.end || '')}</p>
-                    </div>
-                    <div className="flex gap-4">
-                    <p>Foreman: </p>
-                    <p>{ job.foreman }</p>
-                    </div>
-                    <div className="flex gap-4">
-                    <p>Estimator: </p>
-                    <p>{ job.estimator }</p>
-                    </div>
-                    <div className="flex gap-4">
-                    <p>Crew Size: </p>
-                    <p>{ job.crew_size }</p>
-                    </div>
-                    <div className="flex gap-4">
-                    <p>Est Hours: </p>
-                    <p>{ job.est_hours }</p>
-                    </div>
-                    <div className="flex gap-4">
-                    <p>Price: </p>
-                    <p>${ job.price }</p>
-                    </div>
-                    <div className="grid grid-cols-2 items-center">
-                        <p className="col-span-full text-center">Vehicles</p>
-                        {vehicles.map((vehicle,i) => 
-                            <p key={i}>{vehicle}</p>
-                        )}
-                    </div>
-                    <div className="grid grid-cols-2 items-center">
-                        <p className="col-span-full text-center">Equipment</p>
-                        {equipment.map((equip,i) => 
-                            <p key={i}>{equip}</p>
-                        )}
-                    </div>
-                    <button type="button" onClick={()=>{destroyJob(job.id)}} className="bg-coral text-dark rounded-lg text-center py-2 px-4">Destroy this Job</button>
-                </div>
+                <InfoPanel job={job} vehicles={vehicles} equipment={equipment}/>
             </div>
         </div>
     )

@@ -80,6 +80,11 @@
   background-size: cover;
   background-position: center;
 }
+.bg-cross-alert {
+  background-image: url('alertcross.svg');
+  background-size: cover;
+  background-position: center;
+}
 
 .scroll-theme {
   scrollbar-color: #166556 #292524;

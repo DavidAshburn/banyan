@@ -16,8 +16,8 @@ export default function Dashboard() {
   //dashmap
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [startcolor, setStartColor] = useState('#07a7cb');
-  const [brightcolor, setBrightColor] = useState('#6ee7b7');
+  const startcolor = '#219781';
+  const brightcolor = '#6ee7b7';
   const [jobs, _setJobs] = useState([]);
   const jobsRef = useRef(jobs);
   function setJobs(list) {

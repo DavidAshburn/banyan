@@ -126,7 +126,7 @@ export default function FleetItem({item}) {
         setRenewables(newrenewables);
     }
     return(
-        <form id={item.id} className="grid gap-2 p-2 grid-cols-2">
+        <form id={item.id} className="grid gap-2 p-2 grid-cols-2 rounded border border-accent">
             <input id={`name${item.id}`} type="text" className="text-dark rounded px-2" name="name" defaultValue={item.name}></input>
             <label htmlFor={`name${item.id}`}>Name</label>
             <input id={`plate${item.id}`} type="text" className="text-dark rounded px-2" name="plate" defaultValue={item.plate}></input>
@@ -135,8 +135,10 @@ export default function FleetItem({item}) {
             <label htmlFor={`serial${item.id}`}>Serial #</label>
             <input id={`fuel${item.id}`} type="text" className="text-dark rounded px-2" name="fuel" defaultValue={item.fuel}></input>
             <label htmlFor={`fuel${item.id}`}>Fuel</label>
-            <input id={`mpg${item.id}`} type="number" className="text-dark rounded px-2" name="milespergallon" defaultValue={item.milespergallon}></input>
-            <label htmlFor={`mpg${item.id}`}>MPG</label>
+
+            <input id={`mpg${item.id}`} type="number" className={item.fleettype == "Vehicle" ? "text-dark rounded px-2" : "hidden"} name="milespergallon" defaultValue={item.milespergallon}></input>
+            <label htmlFor={`mpg${item.id}`} className={item.fleettype == "Vehicle" ? "" : "hidden"}>MPG</label>
+
             <Renewables fleetitem={item} renewables={renewables} removeRenewable={removeRenewable}/>
             <button type="submit" onClick={updateFleet} className="w-fit col-span-full mt-2 px-4 py-2 border border-stone-400 bg-gradient-to-tr from-accent to-accent2 rounded text-light font-bold">Update</button>        </form>
     )

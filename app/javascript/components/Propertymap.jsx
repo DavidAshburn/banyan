@@ -17,8 +17,8 @@ export default function Propertymap() {
     const mapContainer = useRef(null);
     const map = useRef(null);
 
-    const [startcolor, setStartColor] = useState('#07a7cb');
-    const [brightcolor, setBrightColor] = useState('#6ee7b7');
+    const startcolor = '#219781';
+    const brightcolor = '#6ee7b7';
     const [trees, _setTrees] = useState([]);
     const treesRef = useRef(trees);
     function setTrees(list) {
