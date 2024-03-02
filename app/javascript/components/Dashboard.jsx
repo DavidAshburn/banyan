@@ -188,9 +188,7 @@ export default function Dashboard() {
               Config
             </a>
           </div>
-          <div className="max-lg:hidden lg:w-full lg:h-1/4 lg:z-10">
-            <EdenSmall />
-          </div>
+          <EdenSmall />
         </div>
       </div>
       <div className="flex flex-col gap-4 md:p-4 text-lg text-dark font-inter min-h-screen">

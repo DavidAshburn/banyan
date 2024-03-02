@@ -1,5 +1,6 @@
 import * as React from "react"
 const EdenSmall = (props) => (
+<div className="max-lg:hidden lg:object-cover lg:w-full">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     id="Layer_2"
@@ -1344,5 +1345,6 @@ const EdenSmall = (props) => (
       />
     </g>
   </svg>
+</div>
 )
 export default EdenSmall
