@@ -125,7 +125,6 @@ export default function Propertymap() {
           bounds.extend(thisll);
         }
         map.fitBounds(bounds, { padding: 100 });
-        map.setMaxZoom(20);
     }
     function capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -152,6 +151,7 @@ export default function Propertymap() {
             container: mapContainer.current,
             center: [-157.858,21.315],
             zoom: 13,
+            maxZoom: 20,
             //cooperativeGestures: true,
             style: `mapbox://styles/mapbox/satellite-v9`,
         });

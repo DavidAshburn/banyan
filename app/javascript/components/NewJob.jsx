@@ -120,7 +120,6 @@ export default function Propertymap() {
       bounds.extend(thisll);
     }
     map.fitBounds(bounds, { padding: 100 });
-    map.setMaxZoom(19);
   }
   function toggleMark(treeid, elRef, map, chosenRef, tree) {
     let el = elRef.current[treeid];
@@ -201,6 +200,7 @@ export default function Propertymap() {
       container: mapContainer.current,
       center: [-157.858, 21.315],
       zoom: 12,
+      maxZoom: 20,
       //cooperativeGestures: true,
       style: `mapbox://styles/mapbox/satellite-v9`,
     });

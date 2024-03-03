@@ -137,7 +137,6 @@ export default function Dashboard() {
       bounds.extend(thisll);
     }
     map.fitBounds(bounds, { padding: 100 });
-    map.setMaxZoom(17);
   }
 
   useEffect(() => {
@@ -148,6 +147,7 @@ export default function Dashboard() {
         container: mapContainer.current,
         center: [-157.858,21.315],
         zoom: 13,
+        maxZoom: 16,
         //cooperativeGestures: true,
         style: `mapbox://styles/mapbox/satellite-v9`,
     });
