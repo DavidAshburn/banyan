@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Filters from './ui/Filters';
-import Treerow from './ui/Treerow';
+import Treerow from './newjob/Treerow';
 import FleetChecks from './newjob/FleetChecks';
 import mapboxgl from 'mapbox-gl';
 
@@ -138,6 +138,28 @@ export default function Propertymap() {
     elRef.current[treeid] = el;
     _setElements(elRef.current);
   }
+  function updatePrice(e) {
+    e.preventDefault();
+    let total = 0;
+    console.log(document.getElementById('treelist').children);
+    for(let child of document.getElementById('treelist').children) {
+      if(child.children[2].id.includes('treeprice')) { //we do this to exclude the child that just has labels
+        total += parseInt(child.children[2].value);
+      }
+    }
+    document.getElementById('pricein').value = total;
+  }
+  function updateHours(e) {
+    e.preventDefault();
+    let start = document.getElementById('starttime').value;
+    let end = document.getElementById('endtime').value;
+
+    let diff = Date.parse(end) - Date.parse(start);
+    let hours = diff/3600000;
+    let days = Math.floor(hours / 24);
+    //assume 8 hour work days
+    document.getElementById('hoursin').value = hours - (16 * days);
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     let token = document.getElementsByName('csrf-token')[0].content;
@@ -146,7 +168,8 @@ export default function Propertymap() {
     for(let child of document.getElementById('treelist').children) {
       let id = child.dataset.treeid;
       let work = document.getElementById(`treework${id}`).value;
-      trees[id] = work;
+      let price = document.getElementById(`trreeprice${id}`).value;
+      trees[id] = {'work' : work, 'price' : price };
     }
     const vehicles = [];
     for(let child of document.getElementById('vehiclechecks').children) {
@@ -285,7 +308,10 @@ export default function Propertymap() {
               id="crewin"
               onChange={(e) => setCrewSize(e.target.value)}
             />
-            <label htmlFor="hoursin">Est Hours</label>
+            <div className="flex justify-between items-center">
+              <label htmlFor="pricein">Est Hours</label>
+              <button onClick={updateHours} className="bg-accent2 text-white font-bold px-2">Auto</button>
+            </div>
             <input
               className="text-dark rounded-lg h-[2rem] px-4"
               type="number"
@@ -293,7 +319,10 @@ export default function Propertymap() {
               id="hoursin"
               onChange={(e) => setEstHours(e.target.value)}
             />
-            <label htmlFor="pricein">Est Price</label>
+            <div className="flex justify-between items-center">
+              <label htmlFor="pricein">Est Price</label>
+              <button onClick={updatePrice} className="bg-accent2 text-white font-bold px-2">Auto</button>
+            </div>
             <input
               className="text-dark rounded-lg h-[2rem] px-4"
               type="number"
@@ -316,7 +345,15 @@ export default function Propertymap() {
         className="grid max-lg:col-span-full max-lg:col-start-1 lg:flex lg:flex-col justify-start lg:col-start-2 lg:row-start-2 overflow-y-scroll scroll-theme p-2 pt-4 gap-4 bg-stone-900"
         id="treelist"
       >
-          {chosenRef.current.map((tree, i)=> <Treerow key={i} index={i} tree={tree} elRef={elementsRef} map={map} workoptions={workoptions}/>)}
+          <div className="grid grid-cols-4 gap-2 p-2 bg-stone-900 text-light font-bold min-h-8 items-center -my-2 pl-4">
+            <p>Species</p>
+            <p>DBH</p>
+            <p>Price</p>
+            <p>Work</p>
+          </div>
+          {chosenRef.current.map((tree, i)=> 
+          <Treerow key={i} index={i} tree={tree} elRef={elementsRef} map={map} workoptions={workoptions} updatePrice={updatePrice}/>
+          )}
       </div>
     </div>
   );

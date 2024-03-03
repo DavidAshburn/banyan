@@ -55,7 +55,7 @@ export default function ShowJob() {
             closeButton: false,
         })
             .setHTML(
-            `<div className='grid p-2 gap-2 w-40 font-josefin'><p>${tree.species}</p><p>${tree.dbh} DBH</p><p>${work[tree.id]}</p></div>`
+            `<div className='grid p-2 gap-2 w-40 font-josefin'><p>${tree.species}</p><p>${tree.dbh} DBH</p><p>${work[tree.id].work}</p><p>$${work[tree.id].price}</p></div>`
             )
             .setLngLat([tree.longitude, tree.latitude]);
         
@@ -189,14 +189,15 @@ export default function ShowJob() {
                     <p>Work</p>
                     </div>
                     {trees.map((tree,i) => 
-                        <div className="grid grid-cols-3 rounded-xl p-2 text-center text-dark bg-light" 
+                        <div className="grid grid-cols-4 rounded-xl p-2 text-center text-dark bg-light" 
                         key={i}
                         onMouseEnter={()=>{elementsRef.current[tree.id].popup.addTo(map.current)}}
                         onMouseLeave={()=>{elementsRef.current[tree.id].popup.remove()}}
                         >
                             <p>{ capitalize(tree.species) }</p>
                             <p>{ tree.dbh }"</p>
-                            <p>{ capitalize(work[tree.id]) }</p>
+                            <p>${ work[tree.id].price }</p>
+                            <p>{ capitalize(work[tree.id].work) }</p>
                         </div>
                     )}
                 </div>
