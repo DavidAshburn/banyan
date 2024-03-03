@@ -8,7 +8,6 @@ class CreateFleets < ActiveRecord::Migration[7.0]
       t.string :fuel, default: ""
       t.jsonb :renewables, default: {}
       t.jsonb :docs, default: {}
-      t.integer :milespergallon, default: 0
       t.integer :user_id
 
       t.timestamps

@@ -35,7 +35,7 @@ export default class extends Controller {
 
     let center = this.map.getCenter(); //{lng: x, lat: y}
     let marker = new mapboxgl.Marker({
-      color: '#fbbf24',
+      color: '#219781',
     })
       .setLngLat([center.lng, center.lat])
       .setPopup(
@@ -79,7 +79,7 @@ export default class extends Controller {
 
     for (let item of treedata) {
       let marker = new mapboxgl.Marker({
-        color: '#fbbf24',
+        color: '#219781',
       })
         .setLngLat([item.longitude, item.latitude])
         .setPopup(

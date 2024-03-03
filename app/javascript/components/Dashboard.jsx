@@ -184,7 +184,7 @@ export default function Dashboard() {
             <a href="/user/fleet" className="navlink">
               Fleet Manager
             </a>
-            <a href="/user/profile" className="navlink text-accent">
+            <a href="/user/profile" className="navlink">
               Config
             </a>
           </div>

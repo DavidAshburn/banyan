@@ -215,7 +215,7 @@ export default function Propertymap() {
                         <p>Crown</p>
                     </div>
                     {trees.map((tree,i) => 
-                        <div className="grid grid-cols-3 bg-dull rounded-xl p-2 text-center" 
+                        <div className="grid grid-cols-3 bg-light rounded-xl p-2 text-center" 
                         key={i}
                         onMouseEnter={()=>{elementsRef.current[tree.id].popup.addTo(map.current)}}
                         onMouseLeave={()=>{elementsRef.current[tree.id].popup.remove()}}

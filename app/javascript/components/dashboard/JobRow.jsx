@@ -44,7 +44,7 @@ export default function JobRow({ jobdata, index }) {
 
       <div className={'col-span-full ' + display}>
         <div className="grid gap-2 grid-cols-2 border border-dark rounded-md mx-4 p-2 bg-stone-700">
-          <div className="grid grid-cols-2 p-2 gap-2 col-span-full border-dull rounded-md">
+          <div className="grid grid-cols-2 p-2 gap-2 col-span-full border-light rounded-md">
             <div className="grid">
               <p className="col-span-full text-sm text-stone-400">Start</p>
               <p className="text-sm">{formatDate(job.start)}</p>

@@ -136,9 +136,6 @@ export default function FleetItem({item}) {
             <input id={`fuel${item.id}`} type="text" className="text-dark rounded px-2" name="fuel" defaultValue={item.fuel}></input>
             <label htmlFor={`fuel${item.id}`}>Fuel</label>
 
-            <input id={`mpg${item.id}`} type="number" className={item.fleettype == "Vehicle" ? "text-dark rounded px-2" : "hidden"} name="milespergallon" defaultValue={item.milespergallon}></input>
-            <label htmlFor={`mpg${item.id}`} className={item.fleettype == "Vehicle" ? "" : "hidden"}>MPG</label>
-
             <Renewables fleetitem={item} renewables={renewables} removeRenewable={removeRenewable}/>
             <button type="submit" onClick={updateFleet} className="w-fit col-span-full mt-2 px-4 py-2 border border-stone-400 bg-gradient-to-tr from-accent to-accent2 rounded text-light font-bold">Update</button>        </form>
     )
