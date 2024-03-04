@@ -141,13 +141,13 @@ export default function Propertymap() {
   function updatePrice(e) {
     e.preventDefault();
     let total = 0;
-    console.log(document.getElementById('treelist').children);
     for(let child of document.getElementById('treelist').children) {
       if(child.children[2].id.includes('treeprice')) { //we do this to exclude the child that just has labels
         total += parseInt(child.children[2].value);
       }
     }
     document.getElementById('pricein').value = total;
+    setPrice(total);
   }
   function updateHours(e) {
     e.preventDefault();
@@ -158,19 +158,25 @@ export default function Propertymap() {
     let hours = diff/3600000;
     let days = Math.floor(hours / 24);
     //assume 8 hour work days
-    document.getElementById('hoursin').value = hours - (16 * days);
+    let calchours = hours - (16 * days);
+    document.getElementById('hoursin').value = calchours;
+    setEstHours(calchours);
   }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     let token = document.getElementsByName('csrf-token')[0].content;
 
     const trees = {};
     for(let child of document.getElementById('treelist').children) {
-      let id = child.dataset.treeid;
-      let work = document.getElementById(`treework${id}`).value;
-      let price = document.getElementById(`trreeprice${id}`).value;
-      trees[id] = {'work' : work, 'price' : price };
+      if(child.children[2].id.includes('treeprice')) { //we do this to exclude the child that just has labels
+        let id = child.dataset.treeid;
+        let work = document.getElementById(`treework${id}`).value;
+        let treeprice = document.getElementById(`treeprice${id}`).value;
+        trees[id] = {'work' : work, 'price' : treeprice };
+      }
     }
+
     const vehicles = [];
     for(let child of document.getElementById('vehiclechecks').children) {
       let check = child.firstElementChild;
@@ -318,6 +324,7 @@ export default function Propertymap() {
               value={est_hours}
               id="hoursin"
               onChange={(e) => setEstHours(e.target.value)}
+              onFocus={updateHours}
             />
             <div className="flex justify-between items-center">
               <label htmlFor="pricein">Est Price</label>

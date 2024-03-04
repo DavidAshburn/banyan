@@ -38,7 +38,7 @@ export default function JobRow({ jobdata, index }) {
       onClick={toggleItem}
     >
       <p>{client.name} </p>
-      <p className="text-sm">{job.crew_size} Hands</p>
+      <p className="text-sm">${job.price}</p>
       <p className="text-sm text-stone-600">{property.name}</p>
       <p className="text-sm">{job.est_hours} Hours</p>
 

@@ -183,20 +183,15 @@ export default function ShowJob() {
             <div className="mainpane lg:col-start-1 lg:row-start-1">
                 <p className="panetitle">Trees</p>
                 <div id="jobtrees" className="panecontent max-lg:h-[20dvh] lg:max-h-[75svh] overflow-y-scroll scroll-theme">
-                    <div className="grid grid-cols-3 px-2 text-center">
-                    <p>Species</p>
-                    <p>DBH</p>
-                    <p>Work</p>
-                    </div>
                     {trees.map((tree,i) => 
-                        <div className="grid grid-cols-4 rounded-xl p-2 text-center text-dark bg-light" 
+                        <div className="grid grid-cols-2 rounded-xl p-2 text-center text-dark bg-light" 
                         key={i}
                         onMouseEnter={()=>{elementsRef.current[tree.id].popup.addTo(map.current)}}
                         onMouseLeave={()=>{elementsRef.current[tree.id].popup.remove()}}
                         >
                             <p>{ capitalize(tree.species) }</p>
-                            <p>{ tree.dbh }"</p>
                             <p>${ work[tree.id].price }</p>
+                            <p>{ tree.dbh }"</p>
                             <p>{ capitalize(work[tree.id].work) }</p>
                         </div>
                     )}
