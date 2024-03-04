@@ -9,7 +9,7 @@ export default function ShowJob() {
     const mapContainer = useRef(null);
     const map = useRef(null);
     const startcolor = '#219781';
-    const brightcolor = '#6ee7b7';
+    const brightcolor = '#f87954';
     const [job, setJob] = useState({})
     const [work, setWork] = useState([]);
     const [vehicles, setVehicles] = useState([]);

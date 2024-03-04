@@ -19,7 +19,7 @@ export default function Propertymap() {
   const map = useRef(null);
 
   const startcolor = '#219781';
-  const brightcolor = '#6ee7b7';
+  const brightcolor = '#f87954';
 
   //form state
   const [start, setStart] = useState('');
