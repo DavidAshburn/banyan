@@ -5,8 +5,8 @@ class CreateTrees < ActiveRecord::Migration[7.0]
       t.float :longitude
       t.integer :dbh
       t.string :crown, default: ''
-      t.string :history, array: true, default: []
-      t.string :hazards, array: true, default: []
+      t.jsonb :history, default: {}
+      t.jsonb :hazards, default: {}
       t.string :pictures, array: true, default: []
       t.string :species
       t.boolean :removed, default: false

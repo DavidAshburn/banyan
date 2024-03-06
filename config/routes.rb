@@ -41,6 +41,9 @@ Rails.application.routes.draw do
   post 'edit/profileremovevehicles', to: 'edit#profileremovevehicles'
   post 'edit/profileremoveequipment', to: 'edit#profileremoveequipment'
   post 'edit/profileremoveworktypes', to: 'edit#profileremoveworktypes'
+  post 'edit/completejob', to: 'edit#completejob'
+  post 'edit/invoicejob', to: 'edit#invoicejob'
+  post 'edit/paidjob', to: 'edit#paidjob'
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -53,8 +53,7 @@ class JobsController < ApplicationController
   def update
     respond_to do |format|
       if @job.update(job_params)
-        format.html { redirect_to user_dashboard_path, notice: "Job was successfully updated." }
-        format.json { render :show, status: :ok, location: @job }
+        format.json { render @job, status: :ok, location: @job }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @job.errors, status: :unprocessable_entity }
@@ -83,6 +82,7 @@ class JobsController < ApplicationController
       params.require(:job).permit(
         :start,
         :end,
+        :completed,
         :invoiced,
         :paid,
         :estimator,
@@ -93,6 +93,7 @@ class JobsController < ApplicationController
         :price,
         :property_id,
         :user_id,
+        :createiondate,
         :invoicedate,
         :paiddate,
         :trees => {},

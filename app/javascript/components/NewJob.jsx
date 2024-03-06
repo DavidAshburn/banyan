@@ -324,7 +324,6 @@ export default function Propertymap() {
               value={est_hours}
               id="hoursin"
               onChange={(e) => setEstHours(e.target.value)}
-              onFocus={updateHours}
             />
             <div className="flex justify-between items-center">
               <label htmlFor="pricein">Est Price</label>

@@ -65,5 +65,42 @@ class EditController < ApplicationController
     end
   end
 
+  def completejob
+    @job = Job.find(params[:jobid])
 
+    respond_to do |format|
+      if @job.update(completed:true)
+        format.html { redirect_back_or_to user_dashboard_path }
+        format.json { render @job, status: :ok }
+      else
+        format.json { render json: @profile.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def invoicejob
+    @job = Job.find(params[:jobid])
+
+    respond_to do |format|
+      if @job.update(invoiced:true)
+        format.html { redirect_back_or_to user_dashboard_path }
+        format.json { render @job, status: :ok }
+      else
+        format.json { render json: @profile.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def paidjob
+    @job = Job.find(params[:jobid])
+
+    respond_to do |format|
+      if @job.update(paid:true)
+        format.html { redirect_back_or_to user_dashboard_path }
+        format.json { render @job, status: :ok }
+      else
+        format.json { render json: @profile.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end

@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_28_084347) do
   create_table "jobs", force: :cascade do |t|
     t.datetime "start"
     t.datetime "end"
+    t.boolean "completed", default: false
     t.boolean "invoiced", default: false
     t.boolean "paid", default: false
     t.string "estimator"
@@ -57,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_28_084347) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "completiondate"
     t.datetime "invoicedate"
     t.datetime "paiddate"
   end
@@ -99,8 +101,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_28_084347) do
     t.float "longitude"
     t.integer "dbh"
     t.string "crown", default: ""
-    t.string "history", default: [], array: true
-    t.string "hazards", default: [], array: true
+    t.jsonb "history", default: {}
+    t.jsonb "hazards", default: {}
     t.string "pictures", default: [], array: true
     t.string "species"
     t.boolean "removed", default: false

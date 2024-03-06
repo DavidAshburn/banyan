@@ -3,6 +3,7 @@ class CreateJobs < ActiveRecord::Migration[7.0]
     create_table :jobs do |t|
       t.datetime :start
       t.datetime :end
+      t.boolean :completed, default: false
       t.boolean :invoiced, default: false
       t.boolean :paid, default: false
       t.string :estimator

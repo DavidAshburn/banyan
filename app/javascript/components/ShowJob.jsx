@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from "react"
 import InfoPanel from "./showjob/InfoPanel";
+import JobNextStep from "./showjob/JobNextStep";
 import mapboxgl from "mapbox-gl";
 
 export default function ShowJob() {
@@ -124,13 +125,51 @@ export default function ShowJob() {
     function capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-    function sendClientInvoice(event){
-        console.log('send invoice via SendGrid');
-        console.log('send POST to update job invoiced and invoicedate');
-    }
-    function sendClientReceipt(event){
-        console.log('send receipt via SendGrid');
-        console.log('send POST to update job paid and paiddate');
+    function handleNextStep(job) {
+        let token = document.getElementsByName('csrf-token')[0].content;
+        if(!job.completed) {
+            fetch('/edit/completejob?jobid=' + job.id, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-Token':token,
+                    'Content-Type': 'application/json',
+                },
+                body: "",
+            }).then((response)=> {
+                if(!response.ok) {
+                    console.log('error');
+                }
+            });
+            return;
+        } 
+        if(!job.invoiced) {
+            fetch('/edit/invoicejob?jobid=' + job.id, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-Token':token,
+                    'Content-Type': 'application/json',
+                },
+                body: "",
+            })  .then((response)=> {
+                if(!response.ok) {
+                    console.log('error');
+                }
+            });
+            return;
+        }
+        fetch('/edit/paidjob?jobid=' + job.id, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-Token':token,
+                'Content-Type': 'application/json',
+            },
+            body: "",
+        })  .then((response)=> {
+            if(!response.ok) {
+                console.log('error');
+            }
+        });
+        return
     }
     const destroyJob = async (id)=> {
 
@@ -201,13 +240,10 @@ export default function ShowJob() {
                 <p className="panetitle">Notes</p>
                 <div className="panecontent">
                     <p>{job.notes}</p>
-                    
                     <a href={"/pdf/job?jid=" + job.id} className="bg-stone-400 text-dark rounded-lg text-center py-2 px-4" target="_blank">
                         PDF
                     </a>
-                    {job.invoiced ? <button onClick={sendClientReceipt} className="bg-stone-300 text-dark rounded-lg text-center py-2 px-4">Send Receipt</button> 
-                        : <button onClick={sendClientInvoice} className="bg-stone-300 text-dark rounded-lg text-center py-2 px-4">Send Invoice</button> 
-                        }
+                    <JobNextStep job={job} handleNextStep={()=>{handleNextStep(job)}} />
                     <button type="button" onClick={()=>{destroyJob(job.id)}} className="bg-alert text-dark rounded-lg text-center py-2 px-4">Destroy this Job</button>
                 </div>
             </div>
@@ -217,4 +253,4 @@ export default function ShowJob() {
             </div>
         </div>
     )
-}
+                    }
