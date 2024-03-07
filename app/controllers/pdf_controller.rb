@@ -1,5 +1,5 @@
 class PdfController < ApplicationController
-  def job
+  def downloadjob
     @job = Job.find(params[:jid])
   end
 end

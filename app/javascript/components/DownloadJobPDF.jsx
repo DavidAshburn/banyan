@@ -9,10 +9,7 @@ export default function JobPDF() {
     const [pdfurl, setPdfUrl] = useState('');
 
     function createPDF(docdef) {
-        const pdfGenerator = pdfMake.createPdf(docdef);
-        pdfGenerator.getDataUrl((dataUrl) => {
-            setPdfUrl(dataUrl);
-        });
+        pdfMake.createPdf(docdef).download();
     }        
 
     useEffect(()=> {
@@ -27,8 +24,7 @@ export default function JobPDF() {
     },[])
     
     return(
-        <div className="">
-            <iframe src={pdfurl} title="Work Estimate" className="w-full min-h-screen"></iframe>
+        <div>
         </div>
     )
 }

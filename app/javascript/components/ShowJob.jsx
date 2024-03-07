@@ -2,6 +2,11 @@ import React, {useState, useEffect, useRef} from "react"
 import InfoPanel from "./showjob/InfoPanel";
 import JobNextStep from "./showjob/JobNextStep";
 import mapboxgl from "mapbox-gl";
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from "pdfmake/build/vfs_fonts.js";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import makeEstimate from "../utility/pdfgen";
+
 
 export default function ShowJob() {
 
@@ -185,6 +190,15 @@ export default function ShowJob() {
         window.open(next, '_self');
 
     }
+    const downloadPDF = async (id)=> {
+        let token = document.getElementById('mapboxpub').innerText;
+        const response = await fetch(`/data/jobtrees?jid=` + id)
+            .then((response) => response.json())
+            .then((data) => {
+                const docDefinition = makeEstimate(data.job,data.property,data.trees, token, data.work);
+                pdfMake.createPdf(docDefinition).download();
+            });
+    }
 
     useEffect(()=> {
 
@@ -240,9 +254,9 @@ export default function ShowJob() {
                 <p className="panetitle">Notes</p>
                 <div className="panecontent">
                     <p>{job.notes}</p>
-                    <a href={"/pdf/job?jid=" + job.id} className="bg-stone-400 text-dark rounded-lg text-center py-2 px-4" target="_blank">
-                        PDF
-                    </a>
+                    <button onClick={()=>downloadPDF(job.id)} className="bg-stone-400 text-dark rounded-lg text-center py-2 px-4">
+                        Estimate PDF
+                    </button>
                     <JobNextStep job={job} handleNextStep={()=>{handleNextStep(job)}} />
                     <button type="button" onClick={()=>{destroyJob(job.id)}} className="bg-alert text-dark rounded-lg text-center py-2 px-4">Destroy this Job</button>
                 </div>

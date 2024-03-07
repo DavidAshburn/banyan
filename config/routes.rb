@@ -11,8 +11,6 @@ Rails.application.routes.draw do
   get 'user/calendar'
   get 'user/fleet'
 
-  get 'pdf/job'
-
   get 'maps/edit', to: 'maps#edit'
 
   root 'home#index'

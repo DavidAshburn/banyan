@@ -224,6 +224,5 @@ export default function makeEstimate(job, property, trees, token, work) {
         docDefinition.content.push(treeRows(thesetrees, work, i));
     }
 
-    console.log(docDefinition);
     return docDefinition;
 }
