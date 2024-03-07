@@ -5,7 +5,9 @@ import mapboxgl from "mapbox-gl";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from "pdfmake/build/vfs_fonts.js";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import makeEstimate from "../utility/pdfgen";
+import makeEstimate from "../utility/pdfestimate";
+import makeInvoice from "../utility/pdfinvoice";
+import makeReceipt from "../utility/pdfreceipt";
 
 
 export default function ShowJob() {
@@ -177,7 +179,6 @@ export default function ShowJob() {
         return
     }
     const destroyJob = async (id)=> {
-
         let token = document.getElementsByName('csrf-token')[0].content;
         const response = await fetch('../jobs/'+id, {
             method: 'DELETE',
@@ -188,14 +189,22 @@ export default function ShowJob() {
 
         let next = '../user/dashboard';
         window.open(next, '_self');
-
     }
-    const downloadPDF = async (id)=> {
+    const downloadPDFEstimate = async (id)=> {
         let token = document.getElementById('mapboxpub').innerText;
         const response = await fetch(`/data/jobtrees?jid=` + id)
             .then((response) => response.json())
             .then((data) => {
                 const docDefinition = makeEstimate(data.job,data.property,data.trees, token, data.work);
+                pdfMake.createPdf(docDefinition).download();
+            });
+    }
+    const downloadPDFInvoice = async (id)=> {
+        let token = document.getElementById('mapboxpub').innerText;
+        const response = await fetch(`/data/jobtrees?jid=` + id)
+            .then((response) => response.json())
+            .then((data) => {
+                const docDefinition = makeInvoice(data.job,data.property,data.trees, token, data.work);
                 pdfMake.createPdf(docDefinition).download();
             });
     }
@@ -254,9 +263,12 @@ export default function ShowJob() {
                 <p className="panetitle">Notes</p>
                 <div className="panecontent">
                     <p>{job.notes}</p>
-                    <button onClick={()=>downloadPDF(job.id)} className="bg-stone-400 text-dark rounded-lg text-center py-2 px-4">
+                    <button onClick={()=>downloadPDFEstimate(job.id)} className="bg-stone-400 text-dark rounded-lg text-center py-2 px-4">
                         Estimate PDF
                     </button>
+                    <button onClick={()=>downloadPDFInvoice(job.id)} className="bg-stone-400 text-dark rounded-lg text-center py-2 px-4">
+                        Invoice PDF
+                    </button>                    
                     <JobNextStep job={job} handleNextStep={()=>{handleNextStep(job)}} />
                     <button type="button" onClick={()=>{destroyJob(job.id)}} className="bg-alert text-dark rounded-lg text-center py-2 px-4">Destroy this Job</button>
                 </div>
