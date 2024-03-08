@@ -37,6 +37,14 @@ class DataController < ApplicationController
     end
   end
 
+  def jobs
+    @jobs = current_user.jobs
+
+    respond_to do |format|
+      format.json { render json: @jobs}
+    end
+  end
+
   def profile
     @profile = current_user.profile
 
@@ -67,7 +75,6 @@ class DataController < ApplicationController
   end
 
   def jobtrees
-
     thisjob = Job.find(params[:jid])
     property = thisjob.property
 

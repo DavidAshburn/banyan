@@ -1,14 +1,2 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Jobs</h1>
-
-<div id="jobs">
-  <% @jobs.each do |job| %>
-    <%= render job %>
-    <p>
-      <%= link_to "Show this job", job %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New job", new_job_path %>
+<div class="hidden" id="mapboxpub"><%= ENV["MAPBOX_PUB"] %></div>
+<div data-controller="reactjobindex" id="showjobs"></div>

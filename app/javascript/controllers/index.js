@@ -19,6 +19,9 @@ application.register("propertyform", PropertyformController)
 import RdashboardController from "./rdashboard_controller"
 application.register("rdashboard", RdashboardController)
 
+import ReactjobindexController from "./reactjobindex_controller"
+application.register("reactjobindex", ReactjobindexController)
+
 import ReactjobshowController from "./reactjobshow_controller"
 application.register("reactjobshow", ReactjobshowController)
 

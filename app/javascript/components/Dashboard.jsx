@@ -178,6 +178,9 @@ export default function Dashboard() {
             <a href="/properties/new" className="navlink">
               Add Property
             </a>
+            <a href="/jobs" className="navlink">
+              Jobs
+            </a>
             <a href="/user/calendar" className="navlink">
               Calendar
             </a>
@@ -198,11 +201,12 @@ export default function Dashboard() {
           <div id="jobsmap" ref={mapContainer} className="min-h-80"></div>
           <Windowpane
           title="Active Jobs"
-          content={jobs.map((job, j) => (
+          content={jobs.filter((job) => job.completed == false)
+                       .map((job, j) => (
             <JobRow jobdata={job} key={j} index={j}/>
           ))}
           mainclass="scrollpane max-h-[40svh]"
-        />
+          />
         </div>
         <Windowpane
           title="Clients"

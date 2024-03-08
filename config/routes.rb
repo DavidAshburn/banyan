@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   get 'data/clients', to: 'data#clients'
   get 'data/jobtrees', to: 'data#jobtrees'
-  get 'data/jobs', to: 'data#jobs' #different from jobsdash?
+  get 'data/jobs', to: 'data#jobs'
   get 'data/dashboard', to: 'data#dashboard'
   get 'data/user', to: 'data#user'
   get 'data/proptrees', to: 'data#proptrees'
