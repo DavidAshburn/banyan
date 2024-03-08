@@ -37,14 +37,6 @@ class DataController < ApplicationController
     end
   end
 
-  def jobs
-    @jobs = current_user.jobs
-
-    respond_to do |format|
-      format.json { render json: @jobs}
-    end
-  end
-
   def profile
     @profile = current_user.profile
 
@@ -81,7 +73,7 @@ class DataController < ApplicationController
     #we use keys to get the treeids
     jobtrees = thisjob.trees.keys.map{|item| Tree.find(item.to_i)}
 
-    @jobdata = {trees:jobtrees,property:property,work:thisjob.trees,job:thisjob}
+    @jobdata = {job:thisjob, property:property, trees:jobtrees }
     respond_to do |format|
       format.json { render json: @jobdata}
     end
@@ -106,7 +98,9 @@ class DataController < ApplicationController
 
   def dashboard
     jobs = current_user.jobs.order(:start)
-    job_data = jobs.map{|job| {
+    job_data = jobs.filter{ |job|
+      job.completed == false
+    }.map{|job| {
       job:job,
       latitude:job.property.latitude,
       longitude:job.property.longitude,

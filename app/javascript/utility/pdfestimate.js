@@ -1,5 +1,6 @@
 import mapboxgl from "mapbox-gl";
-
+// passed in (data.job, data.property, data.trees, token, data.work) from: data/jobtrees by: ShowJob.jsx
+// makeEstimate(Job object, Property object, Array of Tree objects, Mapbox API Token, work?)
 export default function makeEstimate(job, property, trees, token, work) {
     function treeRows(trees, work, pageindex) {
         function makeRow(tree, workdescrip, index) {

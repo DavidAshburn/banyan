@@ -19,7 +19,6 @@ export default function ShowJob() {
     const startcolor = '#219781';
     const brightcolor = '#f87954';
     const [job, setJob] = useState({})
-    const [work, setWork] = useState([]);
     const [vehicles, setVehicles] = useState([]);
     const [equipment, setEquipment] = useState([]);
     const [trees, _setTrees] = useState([]);
@@ -82,12 +81,15 @@ export default function ShowJob() {
         openmark.getElement().addEventListener('click', (e) => {
             e.stopPropagation();
             toggleMark(tree.id, elRef, map, chosenRef, treesRef);
-            elRef.current[tree.id].popup.addTo(map);
         });
-
         chosenmark.getElement().addEventListener('click', (e) => {
             e.stopPropagation();
             toggleMark(tree.id, elRef, map, chosenRef, treesRef);
+        });
+        openmark.getElement().addEventListener('mouseenter', () => {
+            elRef.current[tree.id].popup.addTo(map);
+        });
+        openmark.getElement().addEventListener('mouseleave', () => {
             elRef.current[tree.id].popup.remove();
         });
 
@@ -195,7 +197,7 @@ export default function ShowJob() {
         const response = await fetch(`/data/jobtrees?jid=` + id)
             .then((response) => response.json())
             .then((data) => {
-                const docDefinition = makeEstimate(data.job,data.property,data.trees, token, data.work);
+                const docDefinition = makeEstimate(data.job,data.property,data.trees, token );
                 pdfMake.createPdf(docDefinition).download();
             });
     }
@@ -204,7 +206,7 @@ export default function ShowJob() {
         const response = await fetch(`/data/jobtrees?jid=` + id)
             .then((response) => response.json())
             .then((data) => {
-                const docDefinition = makeInvoice(data.job,data.property,data.trees, token, data.work);
+                const docDefinition = makeInvoice(data.job,data.property,data.trees, token );
                 pdfMake.createPdf(docDefinition).download();
             });
     }
@@ -227,12 +229,11 @@ export default function ShowJob() {
             .then((data) => {
                 setTrees(data.trees);
                 setProperty(data.property);
-                setWork(data.work);
                 setJob(data.job);
                 setVehicles(data.job.vehicles);
                 setEquipment(data.job.equipment);
 
-                buildElements(data.trees, map.current, elementsRef, chosenRef, treesRef, data.work);
+                buildElements(data.trees, map.current, elementsRef, chosenRef, treesRef, data.job.trees);
                 setBounds(data.property, data.trees, map.current);
 
             });
@@ -252,9 +253,9 @@ export default function ShowJob() {
                         onMouseLeave={()=>{elementsRef.current[tree.id].popup.remove()}}
                         >
                             <p>{ capitalize(tree.species) }</p>
-                            <p>${ work[tree.id].price }</p>
+                            <p>${ job.trees[tree.id].price }</p>
                             <p>{ tree.dbh }"</p>
-                            <p>{ capitalize(work[tree.id].work) }</p>
+                            <p>{ capitalize(job.trees[tree.id].work) }</p>
                         </div>
                     )}
                 </div>

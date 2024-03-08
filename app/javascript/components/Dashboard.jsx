@@ -58,7 +58,7 @@ export default function Dashboard() {
       let fulltime = date.split('T')[1].split('.000');
       let time = fulltime[0].split(':');
 
-      const options = {weekday:'long',year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'numeric'};
+      const options = {weekday:'long',month:'short',day:'numeric',hour:'numeric',minute:'numeric'};
 
       let thisdate = new Date(fulldate[0],fulldate[1],fulldate[2],time[0],time[1]);
       return thisdate.toLocaleDateString('en-US',options);
@@ -71,7 +71,7 @@ export default function Dashboard() {
           closeButton: false,
       })
           .setHTML(
-          `<div className='grid p-2 gap-2 w-40 font-josefin'><p>${job.client.name}</p><p>${formatDate(job.job.start)}</p></div>`
+          `<div class='grid gap-[2px] font-josefin font-bold text-lg'><p>${job.client.name}</p><p>${formatDate(job.job.start)}</p></div>`
           )
           .setLngLat([job.longitude, job.latitude]);
       
@@ -97,6 +97,13 @@ export default function Dashboard() {
       chosenmark.getElement().addEventListener('click', (e) => {
           e.stopPropagation();
           toggleMark(jobid, elRef, map, chosenRef, jobsRef);
+          elRef.current[jobid].popup.remove();
+      });
+
+      openmark.getElement().addEventListener('mouseenter', () => {
+          elRef.current[jobid].popup.addTo(map);
+      });
+      openmark.getElement().addEventListener('mouseleave', () => {
           elRef.current[jobid].popup.remove();
       });
 

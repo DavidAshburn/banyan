@@ -6,19 +6,17 @@ export default function JobIndex() {
     const [jobs, setJobs] = useState([]);
 
     useEffect(() => {
-    
         fetch(`/data/jobs`, {
-
         })
           .then((response) => response.json())
           .then((data) => {
             setJobs(data);
           });
-    
       }, []);
+
     return(
         <div className="flex flex-col gap-4 md:p-4 text-lg text-dark font-inter min-h-screen">
-            <div className="grid gap-2 bg-dark lg:min-h-[40svh]">
+            <div className="grid gap-2 lg:min-h-[40svh]">
                 <Windowpane
                     title="Active Jobs"
                     content={jobs.filter((job) => job.job.completed == false)
