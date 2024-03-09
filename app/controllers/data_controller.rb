@@ -30,10 +30,41 @@ class DataController < ApplicationController
 
   def clients
     clients = current_user.clients
-    @clientdata = clients.map {|client| [client, client.properties]}
+    allclients = clients.map {|client| [client, client.properties]}
+    activeclients = []
+    clients.each do |client|
+      active = false
+      client.properties.each do |property|
+        property.jobs.each do |job|
+          if(job.completed == false)
+              active = true
+          end
+        end
+      end
+      if(active)
+        activeclients.push([client, client.properties])
+      end
+    end
 
     respond_to do |format|
-      format.json { render json: @clientdata}
+      format.json { render json: { allclients:allclients, activeclients:activeclients}}
+    end
+  end
+
+  def searchclients
+    if(params[:search] == "")
+      respond_to do |format|
+        format.json { render json: []}
+      end
+      return
+    end
+    key = "%#{params[:search]}%";
+    results = Client.where("name LIKE ?", key)
+
+    searchresults = results.map{|result| [result, result.properties]}
+
+    respond_to do |format|
+      format.json { render json: searchresults}
     end
   end
 
@@ -118,11 +149,24 @@ class DataController < ApplicationController
       trees: trees
     }
 
-    clients = current_user.clients
-    client_data = clients.map {|client| [client, client.properties]}
+    allclients = current_user.clients
+    activeclients = []
+    allclients.each do |client|
+      active = false
+      client.properties.each do |property|
+        property.jobs.each do |job|
+          if(job.completed == false)
+              active = true
+          end
+        end
+      end
+      if(active)
+        activeclients.push([client, client.properties])
+      end
+    end
 
     datapack = {
-      jobs:job_data, user:user_data, clients:client_data
+      jobs:job_data, user:user_data, clients:activeclients
     };
 
     respond_to do |format|

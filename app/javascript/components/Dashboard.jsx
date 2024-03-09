@@ -160,6 +160,7 @@ export default function Dashboard() {
     fetch(`/data/dashboard`)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setClientData(data.clients);
         setJobs(data.jobs);
         setUser(data.user);
@@ -186,6 +187,9 @@ export default function Dashboard() {
             <a href="/jobs" className="navlink">
               Jobs
             </a>
+            <a href="/clients" className="navlink">
+              Clients
+            </a>
             <a href="/user/calendar" className="navlink">
               Calendar
             </a>
@@ -206,15 +210,14 @@ export default function Dashboard() {
           <div id="jobsmap" ref={mapContainer} className="min-h-80"></div>
           <Windowpane
           title="Active Jobs"
-          content={jobs.filter((job) => job.completed == false)
-                       .map((job, j) => (
+          content={jobs.map((job, j) => (
             <JobRow jobdata={job} key={j} index={j}/>
           ))}
           mainclass="scrollpane max-h-[40svh]"
           />
         </div>
         <Windowpane
-          title="Clients"
+          title="Active Clients"
           content={clientdata.map((client, i) => (
             <ClientRow
               client={client[0]}
