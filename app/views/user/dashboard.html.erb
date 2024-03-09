@@ -3,22 +3,38 @@
   <div data-controller="rdashboard" id="dashboardroot">
     <div class="grid lg:grid-cols-[1fr_5fr]">
       <div class="row-span-full bg-dark max-lg:min-h-12">
-        <div class="lg:flex lg:flex-col grid grid-cols-4">
-          <p class="navlink">
-            Add Client
-          </p>
-          <p class="navlink">
-            Add Property
-          </p>
-          <p class="navlink">
+        <div class="lg:flex lg:flex-col lg:justify-between h-full">
+          <div class="lg:flex lg:flex-col grid grid-cols-4">
+            <a href="/clients/new" class="navlink">
+              Add Client
+            </a>
+            <a href="/properties/new" class="navlink">
+              Add Property
+            </a>
+            <a href="/jobs" class="navlink">
+              Jobs
+          </a>
+          <a href="/user/calendar" class="navlink">
             Calendar
-          </p>
-          <p class="navlink text-accent">
+          </a>
+          <a href="/user/fleet" class="navlink">
+            Fleet Manager
+          </a>
+          <a href="/user/profile" class="navlink">
             Config
-          </p>
+          </a>
+        </div>
+        <!-- smalleden needed here -->
         </div>
       </div>
-      <div class="flex flex-col gap-4 p-4 text-lg bg-light text-dark font-inter min-h-screen">
+      <div class="flex flex-col gap-4 md:p-4 text-lg text-dark font-inter min-h-screen">
+        <div
+          class="grid md:grid-cols-2 bg-dark lg:h-[40svh]"
+        >
+          <div id="jobsmap" class="min-h-80"></div>
+          
+        </div>
+        
       </div>
     </div>
   </div>

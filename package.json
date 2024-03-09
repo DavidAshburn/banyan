@@ -13,6 +13,7 @@
     "autoprefixer": "^10.4.17",
     "esbuild": "^0.20.0",
     "flatpickr": "^4.6.13",
+    "framer-motion": "^11.0.8",
     "mapbox-gl": "^3.1.2",
     "pdfmake": "^0.2.9",
     "postcss": "^8.4.33",

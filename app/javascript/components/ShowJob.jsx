@@ -62,7 +62,7 @@ export default function ShowJob() {
             closeButton: false,
         })
             .setHTML(
-            `<div className='grid p-2 gap-2 w-40 font-josefin'><p>${tree.species}</p><p>${tree.dbh} DBH</p><p>${work[tree.id].work}</p><p>$${work[tree.id].price}</p></div>`
+            `<div class='grid gap-[2px] font-inter font-bold'><p>${tree.species}</p><p>${tree.dbh} DBH</p><p>${work[tree.id].work}</p><p>$${work[tree.id].price}</p></div>`
             )
             .setLngLat([tree.longitude, tree.latitude]);
         

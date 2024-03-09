@@ -1,5 +1,7 @@
 import * as React from "react"
-const EdenSmall = (props) => (
+import { motion } from "framer-motion"
+
+const EdenSmallSVG = (props) => (
 <div className="max-lg:hidden lg:object-cover lg:w-full">
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -15,7 +17,16 @@ const EdenSmall = (props) => (
         }
       </style>
     </defs>
-    <g id="Layer_1-2" data-name="Layer 1">
+    <motion.g id="Layer_1-2" 
+      data-name="Layer 1"
+      animate={{opacity: [0, 1]}}
+      transition={{
+        times: 1,
+        duration: 2,
+        type: "keyframes",
+        ease:"easeIn",
+      }}
+      >
       <path
         d="m112.28 387.48-6.93 20.16v21.26l6.93-20.16v-21.26z"
         className="cls-7"
@@ -1343,8 +1354,8 @@ const EdenSmall = (props) => (
         d="m175.9 281.18-6.93-20.15-13.07-16.69 6.93 20 13.07 16.84zM37.48 109.54l-6.93-20.16-13.07-16.69 6.93 20 13.07 16.85z"
         className="cls-7"
       />
-    </g>
+    </motion.g>
   </svg>
 </div>
 )
-export default EdenSmall
+export default EdenSmallSVG

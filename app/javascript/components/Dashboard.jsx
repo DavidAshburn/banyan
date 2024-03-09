@@ -4,7 +4,7 @@ import ClientRow from './dashboard/ClientRow';
 import DashHead from './dashboard/DashHead';
 import JobRow from './dashboard/JobRow';
 import Windowpane from './ui/Windowpane';
-import EdenSmall from './img/EdenSmall.jsx';
+import EdenSmallSVG from './img/EdenSmallSVG.jsx';
 
 
 export default function Dashboard() {
@@ -71,7 +71,7 @@ export default function Dashboard() {
           closeButton: false,
       })
           .setHTML(
-          `<div class='grid gap-[2px] font-josefin font-bold text-lg'><p>${job.client.name}</p><p>${formatDate(job.job.start)}</p></div>`
+          `<div class='grid gap-[2px] font-inter font-bold'><p>${job.client.name}</p><p>${formatDate(job.job.start)}</p></div>`
           )
           .setLngLat([job.longitude, job.latitude]);
       
@@ -91,13 +91,11 @@ export default function Dashboard() {
       openmark.getElement().addEventListener('click', (e) => {
           e.stopPropagation();
           toggleMark(jobid, elRef, map, chosenRef, jobsRef);
-          elRef.current[jobid].popup.addTo(map);
       });
 
       chosenmark.getElement().addEventListener('click', (e) => {
           e.stopPropagation();
           toggleMark(jobid, elRef, map, chosenRef, jobsRef);
-          elRef.current[jobid].popup.remove();
       });
 
       openmark.getElement().addEventListener('mouseenter', () => {
@@ -198,7 +196,7 @@ export default function Dashboard() {
               Config
             </a>
           </div>
-          <EdenSmall />
+          <EdenSmallSVG />
         </div>
       </div>
       <div className="flex flex-col gap-4 md:p-4 text-lg text-dark font-inter min-h-screen">
