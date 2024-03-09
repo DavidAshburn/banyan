@@ -77,3 +77,5 @@ end
 gem "devise", "~> 4.9"
 
 gem "dotenv-rails", "~> 3.0"
+
+gem "faker", "~> 3.2"
