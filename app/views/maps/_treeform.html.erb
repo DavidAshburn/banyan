@@ -18,7 +18,7 @@
       <%= form.text_field :species, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-light", id:'speciesfield'%>
     </div>
     <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
-      <%= form.label :dbh %>
+      <%= form.label :dbh, 'Diameter at Breast Height' %>
       <%= form.number_field :dbh, class: "px-2 bg-slate-100 font-bold focus:bg-light", id:"dbhfield" %>
     </div>
 
@@ -26,24 +26,22 @@
       <%= form.label :crown %>
       <%= form.text_field :crown, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-light", id:"crownfield" %>
     </div>
-    <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-white">
-      <%= form.label :notes %>
-      <%= form.text_area :notes, class: "rounded-lg font-righteous text-lg px-2 bg-slate-100 font-bold focus:bg-light", id:"crownfield" %>
-    </div>
 
-    <div class="flex w-full justify-between text-lg">
+    <div class="flex flex w-full justify-between text-lg">
       <%= form.text_field :latitude, class: "hidden", id:"latitudeform" %>
     </div>
-    <div class="flex w-full justify-between text-lg">
+    <div class="flex flex w-full justify-between text-lg">
       <%= form.text_field :longitude, class: "hidden", id:"longitudeform" %>
     </div>
-    <div class="flex w-full justify-between text-lg">
+    <div class="flex flex w-full justify-between text-lg">
       <%= form.number_field :property_id, class: "hidden", id:"property_id", value: params[:property] %>
     </div>
-    <div class="flex items-center justify-center gap-2 ">
+    <div>
       <%= form.submit 'Save Tree', class: "p-2 px-4 text-center bg-dark font-bold text-light font-inter text-3xl", data: { action:'mapsedit#saveTree'} %>
-      <%= link_to 'Property', @property, class: "darkbutton-s"%>
-      <%= link_to 'Dashboard', user_dashboard_path, class: "darkbutton-s"%>
+      <div>
+        <%= link_to 'Dashboard', user_dashboard_path, class: "lightbutton-s hover:bg-dark hover:text-light justify-self-center"%>
+        <%= link_to 'New Job', "/jobs/new?pid=#{@pid}", class: "lightbutton-s hover:bg-dark hover:text-light justify-self-center"%>
+      </div>
     </div>
   </div>
 <% end %>

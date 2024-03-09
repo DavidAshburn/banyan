@@ -22,6 +22,9 @@ application.register("rdashboard", RdashboardController)
 import ReactclientindexController from "./reactclientindex_controller"
 application.register("reactclientindex", ReactclientindexController)
 
+import ReacteditmapController from "./reacteditmap_controller"
+application.register("reacteditmap", ReacteditmapController)
+
 import ReactjobindexController from "./reactjobindex_controller"
 application.register("reactjobindex", ReactjobindexController)
 

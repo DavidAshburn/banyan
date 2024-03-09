@@ -1,5 +1,9 @@
 <div class="hidden" id="mapboxpub"><%= ENV["MAPBOX_PUB"] %></div>
-<div data-controller="mapsedit" id="mapsedit" class="min-h-screen mesh1">
+<div class="hidden" id="pid"><%= @pid %></div>
+<div data-controller="reacteditmap" id="editmap"></div>
+
+
+<!--div data-controller="mapsedit" id="mapsedit" class="min-h-screen mesh1">
   <div class="hidden">
     <div data-mapsedit-target="targetaddress"><%= @target %></div>
     <input type="number" data-mapsedit-target="pid" value=<%=@pid%>></input>
@@ -10,11 +14,15 @@
     <div class="w-8 h-8 border-2 rounded-full abs-center border-light"></div>
   </div>
 
-  <div class="grid justify-center grid-cols-3 gap-4 p-2 bg-stone-500" id="treecontrols">
-    <%= link_to 'Dashboard', user_dashboard_path, class: "lightbutton-s hover:bg-dark hover:text-light justify-self-center"%>
+  <div class="grid justify-center grid-cols-3 gap-4 p-2" id="treecontrols">
+      <div>
+        <%= link_to 'Dashboard', user_dashboard_path, class: "lightbutton-s hover:bg-dark hover:text-light justify-self-center"%>
+        <%= link_to 'New Job', "/jobs/new?pid=#{@pid}", class: "lightbutton-s hover:bg-dark hover:text-light justify-self-center"%>
+      </div>
+        
     <button type="button" data-action="mapsedit#addTree" class="darkbutton justify-self-center">Add Tree</button>
   </div>
   <div id="treeinputs" class="grid grid-cols-6 gap-2 p-2 min-h-[10lvh] windowpane hidden">
     <%= render "treeform", tree: Tree.new %>
   </div>
-</div>
+</div-->

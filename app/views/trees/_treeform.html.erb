@@ -38,7 +38,10 @@
     </div>
     <div>
       <%= form.submit 'Save Tree', class: "p-2 px-4 text-center bg-dark font-bold text-light font-inter text-3xl", data: { action:'mapsedit#saveTree'} %>
-      <%= link_to 'Dashboard', user_dashboard_path, class: "darkbutton-s"%>
+      <div>
+        <%= link_to 'Dashboard', user_dashboard_path, class: "lightbutton-s hover:bg-dark hover:text-light justify-self-center"%>
+        <%= link_to 'New Job', "/jobs/new?pid=#{@pid}", class: "lightbutton-s hover:bg-dark hover:text-light justify-self-center"%>
+      </div>
     </div>
   </div>
 <% end %>
