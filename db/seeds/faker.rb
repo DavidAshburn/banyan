@@ -13,15 +13,29 @@ end
 
 def makeClient(address)
   cname = Faker::Name.name
-  Client.create(
+  phone = Faker::PhoneNumber.cell_phone
+
+  thisguy = Client.create(
     name: cname,
     contact_name: cname,
-    phone: Faker::PhoneNumber.cell_phone,
+    phone: phone,
     email: "#{Faker::JapaneseMedia::StudioGhibli.character}@gmail.com".gsub(/\s+/,""),
-    mail_address: address,
+    mail_address: address[0],
     notes: Faker::Quotes::Shakespeare,
     user_id: TestUser.id,
   )
+  Property.create(
+  address: address[0],
+  client_id: thisguy.id,
+  email: thisguy.email,
+  latitude: address[2],
+  longitude: address[1],
+  name: "Home",
+  parking: "street",
+  phone: phone,
+  property_type: "House",
+  tree_access: "good",
+)
 end
 
 User.destroy_all
@@ -61,31 +75,31 @@ TestUser = User.create(
 	)
 
 proplist = [
-  "8 Arcadia St. Oceanside, CA 92054",
-  "8996 North Market Lane Hesperia, CA 92345",
-  "646 S. Carpenter St. Wilmington, CA 90744",
-  "30 Peninsula Drive La Puente, CA 91744",
-  "57 Brookside Ave. Los Angeles, CA 90066",
-  "280 West Nut Swamp St. Santee, CA 92071",
-  "9509 Second Dr. San Diego, CA 92115",
-  "355 North State Drive Sacramento, CA 95828",
-  "667 Rock Maple Dr. San Jose, CA 95112",
-  "8 Washington Ave. Los Angeles, CA 90063",
-  "975 Green Circle Fountain Valley, CA 92708",
-  "9 Proctor Avenue Santa Ana, CA 92701",
-  "7403 West Gainsway St. Chula Vista, CA 91910",
-  "3 West Cross St. Santa Ana, CA 92704",
-  "8268 Pierce Street Chino Hills, CA 91709",
-  "641 Water Rd. San Pedro, CA 90731",
-  "7183 Old Corona Drive Moreno Valley, CA 92553",
-  "350 Longfellow Circle Carson, CA 90745",
-  "9 E. Mayfield Drive Palmdale, CA 93550",
-  "79 Arcadia Street Huntington Beach, CA 92646",
-  "7 Gulf Street San Pablo, CA 94806",
-  "7816 8th Street Canyon Country, CA 91351",
-  "8117 Wakehurst St. Hayward, CA 94544",
-  "143 West Oak Court San Francisco, CA 94112",
-  "9113 Manor Rd. Rancho Cucamonga, CA 91730"
+  ["64 Hanapule St Waialua, HI 96791", -158.12663, 21.57150],
+  ["259 Kupahu St Waialua, HI 96791",-158.12215,21.57176],
+  ["89A Kilea Pl Wahiawa, HI 96786",-158.00140,21.50870],
+  ["2143 California Ave Wahiawa, HI 96786",-157.99714,21.50774],
+  ["248 Karsten Dr Wahiawa, HI 96786",-157.99272,21.50764],
+  ["3634 Kumuone St Honolulu, HI 96822",-157.80274,21.32714],
+  ["751 Kalaau Pl Honolulu, HI 96821",-157.72404,21.30263],
+  ["696 Kalaau Pl Honolulu, HI 96821",-157.72436,21.30098],
+  ["886 Nana Honua St Honolulu, HI 96825",-157.70951,21.30761],
+  ["105 Kalapaki Pl Honolulu, HI 96825",-157.68340,21.30517],
+  ["1099 Kalapaki St Honolulu, HI 96825",-157.68441,21.30550],
+  ["614 Kealahou St Honolulu, HI 96825",-157.67268,21.30174],
+  ["41-578 Kalaniana'ole Hwy Waimanalo, HI 96795",-157.68399,21.32557],
+  ["41-242 Nakini St Waimanalo, HI 96795",-157.69588,21.32539],
+  ["314 Manawaiola St Waimanalo, HI 96795",-157.69894,21.32580],
+  ["41201 Lupe St Waimanalo, HI 96795",-157.69987,21.33058],
+  ["41-012 Aloiloi St Waimanalo, HI 96795",-157.70084,21.31432],
+  ["1436 Kupau St Kailua, HI 96734",-157.72084,21.37300],
+  ["1496 Aupupu St Kaulua, HI 96734",-157.72876,21.37021],
+  ["1535 Ponopono Pl Kailua, HI 96734",-157.73348,21.36982],
+  ["1740 Akaakoa St Kailua, HI 96734",-157.73755,21.36700],
+  ["1250 Manu Mele St Kailua, HI 96734",-157.75569,21.38480],
+  ["1362 Lopaka Pl Kailua, HI 96734",-157.77086,21.35937],
+  ["46-178 Hinalani St Kaneohe, HI 96744",-157.81020,21.42512],
+  ["46-136 Nahewai Pl Kaneohe, HI 96744",-157.81463,]
 ]
 
 proplist.each {|prop|
