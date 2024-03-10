@@ -3,7 +3,7 @@ class FleetsController < ApplicationController
 
   # GET /fleets or /fleets.json
   def index
-    @fleets = Fleet.all
+    @fleets = current_user.fleets
   end
 
   # GET /fleets/1 or /fleets/1.json

@@ -4,7 +4,13 @@ class TreesController < ApplicationController
 
   # GET /trees or /trees.json
   def index
-    @trees = Tree.all
+    properties = current_user.properties
+    @trees = []
+    properties.each{|property|
+      property.trees.each{|tree|
+        @trees.push(tree)
+      }
+    }
   end
 
   # GET /trees/1 or /trees/1.json

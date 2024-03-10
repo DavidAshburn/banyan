@@ -3,7 +3,7 @@ class JobsController < ApplicationController
 
   # GET /jobs or /jobs.json
   def index
-    @jobs = Job.all
+    @jobs = current_user.jobs
   end
 
   # GET /jobs/1 or /jobs/1.json
