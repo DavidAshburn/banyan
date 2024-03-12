@@ -93,7 +93,7 @@ class JobsController < ApplicationController
         :price,
         :property_id,
         :user_id,
-        :createiondate,
+        :completiondate,
         :invoicedate,
         :paiddate,
         :trees => {},
