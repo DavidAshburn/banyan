@@ -88,6 +88,8 @@ export default function FleetItem({item}) {
                     const line = document.createElement('p');
                     line.innerText = `${newrenewabletitle} : ${newrenewablevalue}`;
                     frame.appendChild(line);
+                    document.getElementById('newvalue' + item.id).value = "";
+                    document.getElementById('newtitle' + item.id).value = "";
                 }
                     
             } else console.log('error updating');

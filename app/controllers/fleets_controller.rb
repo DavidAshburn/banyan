@@ -65,7 +65,7 @@ class FleetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def fleet_params
-      params.require(:fleet).permit(:name, :plate, :serial,  :fuel, :milespergallon, :renewables, :docs, :fleettype, :user_id)
+      params.require(:fleet).permit(:name, :plate, :serial,  :fuel, :renewables, :docs, :fleettype, :user_id)
     end
     def weak_params
       params.require(:fleet).permit!

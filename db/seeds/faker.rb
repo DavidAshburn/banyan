@@ -67,9 +67,9 @@ Proptype.create(
 )
 
 TestUser = User.create(
-	email:"test@user.com",
-	password: "password",
-	password_confirmation: "password",
+	email:"alex@hfahawaii.com",
+	password: "waiwaitho",
+	password_confirmation: "waiwaitho",
   id: 999,
   time_zone: 'Hawaii',
 	)
