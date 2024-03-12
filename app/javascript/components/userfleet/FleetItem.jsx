@@ -23,13 +23,16 @@ export default function FleetItem({item}) {
 
         let newrenewabletitle, newrenewablevalue = "";
         for(const pair of formData.entries()) {
+            
             let ignore = false
+            console.log(pair);
             if(pair[0] == "renewabletitlenew" || 
                 pair[0] == "renewablevaluenew" ||
                 pair[0].slice(0,pair[0].length-1) == "existingdate" ||
                 pair[0].slice(0,pair[0].length-1) == "existingrenewable") {
                     ignore = true;
                 }
+                
             //set basic parameter
             if(!ignore){
                 fleetbody.fleet[pair[0]] = pair[1];
@@ -127,8 +130,11 @@ export default function FleetItem({item}) {
 
         setRenewables(newrenewables);
     }
+    function preventEnter(event) {
+        event.key === 'Enter' && event.preventDefault();
+    }
     return(
-        <form id={item.id} className="grid gap-2 p-2 grid-cols-2 rounded border border-accent">
+        <form id={item.id} className="grid gap-2 p-2 grid-cols-2 rounded border border-accent" onKeyDown={preventEnter}>
             <input id={`name${item.id}`} type="text" className="text-dark rounded px-2" name="name" defaultValue={item.name}></input>
             <label htmlFor={`name${item.id}`}>Name</label>
             <input id={`plate${item.id}`} type="text" className="text-dark rounded px-2" name="plate" defaultValue={item.plate}></input>
@@ -139,6 +145,7 @@ export default function FleetItem({item}) {
             <label htmlFor={`fuel${item.id}`}>Fuel</label>
 
             <Renewables fleetitem={item} renewables={renewables} removeRenewable={removeRenewable}/>
-            <button type="submit" onClick={updateFleet} className="w-fit col-span-full mt-2 px-4 py-2 border border-stone-400 bg-gradient-to-tr from-accent to-accent2 rounded text-light font-bold">Update</button>        </form>
+            <button type="submit" onClick={updateFleet} className="w-fit col-span-full mt-2 px-4 py-2 border border-stone-400 bg-gradient-to-tr from-accent to-accent2 rounded text-light font-bold">Update</button>        
+        </form>
     )
 }
