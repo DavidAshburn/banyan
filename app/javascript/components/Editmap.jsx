@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import mapboxgl from 'mapbox-gl';
+import React, {useState, useEffect, useRef} from "react";
+import mapboxgl, { Map } from 'mapbox-gl';
 
 export default function Editmap() {
     mapboxgl.accessToken =
@@ -8,15 +8,11 @@ export default function Editmap() {
     const [profile, setProfile] = useState({vehicles:[],equipment:[]});
 
     const startcolor = '#219781';
-    const brightcolor = '#f87954';
-    const [trees, _setTrees] = useState([]);
-    const treesRef = useRef(trees);
-    function setTrees(list) {
-        treesRef.current = list;
-        _setTrees(list);
-    }
+    const [trees, setTrees] = useState([]);
 
-    const [propertyMarker, setPropertyMarker] = useState(null);
+    const mapContainer = useRef(null);
+    const map = useRef(null);
+    const formmodal = useRef(null)
 
     //elements
     const [elements, _setElements] = useState({});
@@ -26,7 +22,7 @@ export default function Editmap() {
         _setElements(obj);
     }
 
-    function buildElements(treedata, map, elRef, chosenRef, treesRef) {
+    function buildElements(treedata, map, elRef) {
         let telements = {};
         for(let tree of treedata) {
         let pop = new mapboxgl.Popup({
@@ -38,41 +34,27 @@ export default function Editmap() {
             )
             .setLngLat([tree.longitude, tree.latitude]);
         
-        let openmark = new mapboxgl.Marker({
+        let treemarker = new mapboxgl.Marker({
             color: startcolor,
         })
             .setLngLat([tree.longitude, tree.latitude])
             .addTo(map);
 
-        let chosenmark = new mapboxgl.Marker({
-            color: brightcolor,
-        })
-            .setLngLat([tree.longitude, tree.latitude]);
-
-
-        openmark.getElement().addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMark(tree.id, elRef, map, chosenRef, treesRef);
+        treemarker.getElement().addEventListener('mouseenter', () => {
             elRef.current[tree.id].popup.addTo(map);
         });
-
-        chosenmark.getElement().addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMark(tree.id, elRef, map, chosenRef, treesRef);
+        treemarker.getElement().addEventListener('mouseleave', () => {
             elRef.current[tree.id].popup.remove();
         });
 
         telements[tree.id] = {
-            open:openmark,
-            chosen:chosenmark,
+            tree:treemarker,
             popup:pop,
-            selected:false,
         }
         }
         setElements(telements);
     }
-
-    function addElement(tree, map, elRef, chosenRef, treesRef) {
+    function addElement(tree, map, elRef) {
         let telements = elRef.current;
 
         let pop = new mapboxgl.Popup({
@@ -84,39 +66,70 @@ export default function Editmap() {
             )
             .setLngLat([tree.longitude, tree.latitude]);
         
-        let openmark = new mapboxgl.Marker({
+        let treemarker = new mapboxgl.Marker({
             color: startcolor,
         })
             .setLngLat([tree.longitude, tree.latitude])
             .addTo(map);
 
-        let chosenmark = new mapboxgl.Marker({
-            color: brightcolor,
-        })
-            .setLngLat([tree.longitude, tree.latitude]);
-
-
-        openmark.getElement().addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMark(tree.id, elRef, map, chosenRef, treesRef);
+        treemarker.getElement().addEventListener('mouseenter', () => {
             elRef.current[tree.id].popup.addTo(map);
         });
-
-        chosenmark.getElement().addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMark(tree.id, elRef, map, chosenRef, treesRef);
+        treemarker.getElement().addEventListener('mouseleave', () => {
             elRef.current[tree.id].popup.remove();
         });
 
+
         telements[tree.id] = {
-            open:openmark,
-            chosen:chosenmark,
+            tree:treemarker,
             popup:pop,
-            selected:false,
         }
         
         setElements(telements);
     }
+    function setBounds(property, trees, map) {
+        let baseLL = new mapboxgl.LngLat(property.longitude, property.latitude);
+        //mapbounds setting
+        const bounds = new mapboxgl.LngLatBounds(
+          baseLL,
+          baseLL
+        );
+        for (let item of trees) {
+          let thisll = new mapboxgl.LngLat(item.longitude, item.latitude);
+          bounds.extend(thisll);
+        }
+        map.fitBounds(bounds, { padding: 100 });
+    }
+    function openTreeModal(e){
+        document.getElementById('treeform').showModal();
+    }
+    const addTree = async (event) => {
+        const token = document.getElementsByName('csrf-token')[0].content;
+        const center = map.current.getCenter();
+        const newtree = {
+            "tree": {
+                "longitude": center.lng,
+                "latitude": center.lat,
+                "species": document.getElementById("speciesin").value,
+                "dbh": document.getElementById("dbhin").value,
+                "crown": document.getElementById("crownin").value,
+                "notes": document.getElementById("notesin").value,
+                "property_id": property.id
+            }
+        }
+        fetch('/trees.json', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-Token': token,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newtree),
+        });
+
+        addElement(newtree.tree, map.current, elementsRef);
+        document.getElementById('treeform').close();
+    }
+
 
     useEffect(() => {
 
@@ -126,7 +139,7 @@ export default function Editmap() {
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             center: [-157.858,21.315],
-            zoom: 13,
+            zoom: 15,
             maxZoom: 20,
             //cooperativeGestures: true,
             style: `mapbox://styles/mapbox/satellite-v9`,
@@ -137,9 +150,8 @@ export default function Editmap() {
             .then((data) => {
                 setProperty(data[0]);
                 setTrees(data[1]);
-                setJobs(data[2]);
 
-                buildElements(data[1], map.current, elementsRef, chosenRef, treesRef);
+                buildElements(data[1], map.current, elementsRef);
                 setBounds(data[0], data[1], map.current);
 
                 if(data[1].length == 0) {
@@ -152,6 +164,29 @@ export default function Editmap() {
             });
     }, []);
     return(
-        <div></div>
+        <div className="grid min-h-[100lvh] mesh1">
+            <div className="grid h-[90svh] border border-red-500 relative">
+                <div ref={mapContainer} className="min-h-[60lvh]"></div>
+                <div className="w-8 h-8 border-2 rounded-full abs-center border-light" id="crosshair"></div>
+                <button className="w-12 h-12 border-2 rounded-full abs-br-corner border-accent bg-light text-xl font-bold" onClick={openTreeModal}>+</button>
+            </div>
+            <div className="grid h-[10svh] text-light px-8 py-4">
+                <p>{property.address}</p>
+            </div>
+            <dialog id="treeform" ref={formmodal}>
+                <div className="grid gap-2 p-4 w-fit h-fit bg-dark">
+                    <label htmlFor="speciesin" className="text-center p-2 text-light">Species</label>
+                    <input type="text" name="species" id="speciesin"/>
+                    <label htmlFor="dbhin" className="text-center p-2 text-light">Trunk Diameter</label>
+                    <input type="text" name="dbh" id="dbhin"/>
+                    <label htmlFor="crownin" className="text-center p-2 text-light">Crown</label>
+                    <input type="text" name="crown" id="crownin"/>
+                    <label htmlFor="notesin" className="text-center p-2 text-light">Notes</label>
+                    <input type="text" name="notes" id="notesin"/>
+                    <button onClick={addTree} className="lightbutton">Save Tree</button>
+                    <button onClick={()=>formmodal.current.close()} className="lightbutton">Close</button>
+                </div>
+            </dialog>
+        </div>
     )
 }

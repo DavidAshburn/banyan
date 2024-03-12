@@ -129,17 +129,6 @@ export default function Propertymap() {
     function capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-    function formatDate(date) {
-        if(date === '') return '';
-        let fulldate = date.split('T')[0].split('-');
-        let fulltime = date.split('T')[1].split('.000');
-        let time = fulltime[0].split(':');
-
-        const options = {weekday:'long',year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'numeric'};
-
-        let thisdate = new Date(fulldate[0],fulldate[1],fulldate[2],time[0],time[1]);
-        return thisdate.toLocaleDateString('en-US',options);
-    }
     
 
     useEffect(() => {

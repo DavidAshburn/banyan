@@ -7,12 +7,6 @@ import { application } from "./application"
 import CalendarController from "./calendar_controller"
 application.register("calendar", CalendarController)
 
-import DebugController from "./debug_controller"
-application.register("debug", DebugController)
-
-import MapseditController from "./mapsedit_controller"
-application.register("mapsedit", MapseditController)
-
 import PropertyformController from "./propertyform_controller"
 application.register("propertyform", PropertyformController)
 
