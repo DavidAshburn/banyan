@@ -180,17 +180,17 @@ export default function Propertymap() {
             <div className="mainpane lg:col-start-2 lg:row-start-2">
                 <p className="panetitle">Info</p>
                 <div className="grid-cols-2 panecontent ">
-                    <div className="grid gap-2">
+                    <div className="flex gap-2 justify-ende p-2">
                         <Propertyinfo property = {property} client={client}/>
                         <a
                             href={'/jobs/new?pid=' + property.id}
-                            className="p-2 mr-2 rounded bg-light text-dark font-bold text-sm text-center w-fit justify-self-end"
+                            className="p-2 mr-2 rounded bg-light text-dark font-bold text-sm text-center w-fit"
                         >
                             New Job
                         </a>
                         <a
                             href={'/maps/edit?pid=' + property.id}
-                            className="p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit border-2 border-stone-900"
+                            className="p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit"
                         >
                             Edit Map
                         </a>
@@ -204,7 +204,7 @@ export default function Propertymap() {
             <div className="mainpane lg:col-start-1 lg:row-start-1">
                 <p className="panetitle">Trees</p>
                 <div id="alltrees" className="panecontent max-lg:max-h-[40svh] lg:max-h-[75svh] overflow-y-scroll scroll-theme text-dark">
-                    <div className="grid grid-cols-3 px-2 text-center">
+                    <div className="grid grid-cols-3 px-2 text-center text-light">
                         <p>Species</p>
                         <p>DBH</p>
                         <p>Crown</p>
