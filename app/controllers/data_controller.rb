@@ -241,7 +241,7 @@ class DataController < ApplicationController
   end
 
   def fleet
-    fleet = current_user.fleets
+    fleet = current_user.fleets.order(:name)
     vehicles = fleet.select{|item| item.fleettype == "Vehicle"}
     equipment = fleet.select{|item| item.fleettype == "Equipment"}
 

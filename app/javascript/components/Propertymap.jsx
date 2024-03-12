@@ -188,6 +188,12 @@ export default function Propertymap() {
                         >
                             New Job
                         </a>
+                        <a
+                            href={'/maps/edit?pid=' + property.id}
+                            className="p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit border-2 border-stone-900"
+                        >
+                            Edit Map
+                        </a>
                     </div>
                     <div className="pt-2">
                         <Filters trees={trees} elRef={elementsRef} map={map.current} />
