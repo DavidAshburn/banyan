@@ -1,6 +1,6 @@
 # README
 
-https://banyan-56a65cc8af92.herokuapp.com
+https://banyan-7d50c081a7b2.herokuapp.com
 
 # addons
 # gems
@@ -15,38 +15,3 @@ https://banyan-56a65cc8af92.herokuapp.com
     interactivity
     daygrid
     lists
-
-Dashboard Menu
-  Calendar - stubbed in debug
-  Config // route and component stubbed as Profile
-    Tree Species for Dropdown Labels - accepts input
-    Theming
-    Estimation
-      man/hours
-      overhead/day
-
-Views
-  Client index
-  Show Client
-  Show Tree
-  Show Day
-    Map with locations marked
-      Calculate drive time and predict problems based on estimated start/end times
-
-Property 
-  Zones, key on tree and description in property?
-
-//
-scheduled jobs / reminders for repruning
-
-automate reminder emails to clients -
-  Youll be getting a call from us soon since
-    we pruned your tree 6 months ago
-    //all in the subject line
-  notify business that a call needs to be made
-
-constant contact was their crm
-
-send emails with work orders to foreman and crew
-
-filters on show property/create job
