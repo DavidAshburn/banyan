@@ -184,13 +184,13 @@ export default function Propertymap() {
                         <Propertyinfo property = {property} client={client}/>
                         <a
                             href={'/jobs/new?pid=' + property.id}
-                            className="p-2 mr-2 rounded bg-light text-dark font-bold text-sm text-center w-fit"
+                            className="p-2 mr-2 rounded bg-light text-dark font-bold text-sm text-center w-fit h-fit"
                         >
                             New Job
                         </a>
                         <a
                             href={'/maps/edit?pid=' + property.id}
-                            className="p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit"
+                            className="p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit h-fit"
                         >
                             Edit Map
                         </a>
