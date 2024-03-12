@@ -131,7 +131,7 @@ export default function FleetItem({item}) {
         setRenewables(newrenewables);
     }
     function preventEnter(event) {
-        event.key === 'Enter' && event.preventDefault();
+        event.key === 'Enter' && updateFleet(event);
     }
     return(
         <form id={item.id} className="grid gap-2 p-2 grid-cols-2 rounded border border-accent" onKeyDown={preventEnter}>
