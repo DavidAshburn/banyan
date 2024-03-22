@@ -129,6 +129,28 @@ export default function Propertymap() {
     function capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
+
+    function treeData() {
+        fetch(
+            "/data/proptrees?pid=" + property.id
+        ).then((response) => response.json())
+        .then((data) => {
+            console.log("TreeData");
+            let trees = data[1];
+            
+            let output = trees.map((tree) => {
+                return [
+                    tree.species,
+                    tree.dbh,
+                    tree.crown,
+                    tree.latitude,
+                    tree.longitude
+                ]
+            })
+            
+           console.log(output);
+        });
+    }
     
 
     useEffect(() => {
@@ -174,14 +196,17 @@ export default function Propertymap() {
     return(
         
 
-        <div className="flex flex-col lg:grid min-h-screen grid-cols-1 grid-rows-[60dvh_1fr_1fr_1fr] lg:grid-cols-[1fr_3fr] lg:grid-rows-[3fr_1fr] gap-2">
+        <div className="flex flex-col lg:grid min-h-screen grid-cols-1 grid-rows-[60lvh_1fr_1fr_1fr] lg:grid-cols-[1fr_3fr] lg:grid-rows-[60lvh_1fr] gap-2">
             <div ref={mapContainer} className="min-h-[60lvh] lg:col-start-2 lg:row-start-1"></div>
             
             <div className="mainpane lg:col-start-2 lg:row-start-2">
                 <p className="panetitle">Info</p>
                 <div className="grid-cols-2 panecontent ">
-                    <div className="flex gap-2 justify-ende p-2">
-                        <Propertyinfo property = {property} client={client}/>
+                    <div className="grid grid-cols-3 gap-2 justify-ende p-2">
+                        <div className="col-span-full">
+                            <Propertyinfo property = {property} client={client}/>
+                        </div>
+                            
                         <a
                             href={'/jobs/new?pid=' + property.id}
                             className="p-2 mr-2 rounded bg-light text-dark font-bold text-sm text-center w-fit h-fit"
@@ -194,6 +219,7 @@ export default function Propertymap() {
                         >
                             Edit Map
                         </a>
+                        <button onClick={treeData} className="p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit h-fit">TreeData</button>
                     </div>
                     <div className="pt-2">
                         <Filters trees={trees} elRef={elementsRef} map={map.current} />

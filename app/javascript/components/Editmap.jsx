@@ -168,10 +168,21 @@ export default function Editmap() {
             <div className="grid h-[90svh] border border-red-500 relative">
                 <div ref={mapContainer} className="min-h-[60lvh]"></div>
                 <div className="w-8 h-8 border-2 rounded-full abs-center border-light" id="crosshair"></div>
-                <button className="w-12 h-12 border-2 rounded-full abs-br-corner border-accent bg-light text-xl font-bold" onClick={openTreeModal}>+</button>
+                <button className="w-fit h-12 px-4 border-2 rounded-full abs-br-corner border-accent bg-accent2 text-light text-xl font-bold" onClick={openTreeModal}>Add Tree</button>
             </div>
-            <div className="grid h-[10svh] text-light px-8 py-4">
-                <p>{property.address}</p>
+            <div className="grid grid-cols-2 h-[10svh] text-light px-8 py-4">
+                <a
+                    href={'/properties/' + property.id}
+                    className="text-center p-2 underline"
+                    >
+                    {property.address}
+                </a>
+                <a
+                    href={'/jobs/new?pid=' + property.id}
+                    className="p-2 mr-2 rounded bg-light text-dark font-bold text-sm text-center w-fit h-fit"
+                >
+                    New Job
+                </a>
             </div>
             <dialog id="treeform" ref={formmodal}>
                 <div className="grid gap-2 p-4 w-fit h-fit bg-dark">

@@ -63,7 +63,7 @@ export default function Propertymap() {
         closeButton: false,
       })
         .setHTML(
-          `<div class='grid gap-[2px] font-inter font-bold'><p>${tree.species}</p><p>${tree.dbh} DBH</p><p>${tree.crown} crown</p></div>`
+          `<div class='grid gap-[2px] font-inter font-bold'><p>${tree.species}</p><p>${tree.dbh}" DBH</p><p>${tree.crown} crown</p></div>`
         )
         .setLngLat([tree.longitude, tree.latitude]);
       
