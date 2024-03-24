@@ -23,16 +23,12 @@ export default function FleetItem({item}) {
 
         let newrenewabletitle, newrenewablevalue = "";
         for(const pair of formData.entries()) {
-            console.log("formData.entries pair");
-            console.log(pair);
 
             let ignore = false
             if(pair[0] == "renewabletitlenew" || 
                 pair[0] == "renewablevaluenew" ||
                 pair[0].slice(0,pair[0].length-1) == "existingdate" ||
                 pair[0].slice(0,pair[0].length-1) == "existingrenewable") {
-                    console.log("ignore found");
-                    console.log(pair[0]);
                     ignore = true;
                 }
                 
@@ -69,15 +65,11 @@ export default function FleetItem({item}) {
                         newobj[pair[1]] = subpair[1];
                     }
                 };
-                console.log('new renewable object');
-                console.log(newobj);
             }
         };
 
         //collect tempitems input since the last refresh
         let tempitemframe = document.getElementById(`tempitems${item.id}`);
-        console.log('tempitem checks');
-        console.log(tempitemframe);
         for(let el of tempitemframe.children) {
             let text = el.innerText.split(' : ');
             newobj[text[0]] = text[1];
@@ -103,7 +95,6 @@ export default function FleetItem({item}) {
               body: JSON.stringify(fleetbody),
         }).then((response) => {
             if(response.ok) {
-                console.log('updated');
                 if(newrenewabletitle !== "") {
                     const frame = document.getElementById(`tempitems${item.id}`);
                     const line = document.createElement('p');
@@ -113,7 +104,7 @@ export default function FleetItem({item}) {
                     document.getElementById('newtitle' + item.id).value = "";
                 }
                     
-            } else console.log('error updating');
+            } else console.log('error updating renewable');
         });
     }
 
@@ -142,9 +133,8 @@ export default function FleetItem({item}) {
               },
               body: JSON.stringify(fleetbody),
         }).then((response) => {
-            if(response.ok) {
-                console.log('updated');                    
-            } else console.log('error updating');
+            if(response.ok) {                
+            } else console.log('error removing renewable');
         });
 
         setRenewables(newrenewables);
