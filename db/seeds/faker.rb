@@ -22,7 +22,7 @@ def makeClient(address)
     email: "#{Faker::JapaneseMedia::StudioGhibli.character}@gmail.com".gsub(/\s+/,""),
     mail_address: address[0],
     notes: Faker::Quotes::Shakespeare,
-    user_id: TestUser.id,
+    user_id: 999,
   )
   Property.create(
   address: address[0],
@@ -49,7 +49,7 @@ def makeClientwTrees(address, trees)
     email: "#{Faker::JapaneseMedia::StudioGhibli.character}@gmail.com".gsub(/\s+/,""),
     mail_address: address[0],
     notes: Faker::Quotes::Shakespeare,
-    user_id: TestUser.id,
+    user_id: 999,
   )
   thisprop = Property.create(
   address: address[0],
@@ -1145,7 +1145,7 @@ proplist = [
   [["751 Kalaau Pl Honolulu, HI 96821",-157.72404,21.30263],kalaauaTrees],
   [["696 Kalaau Pl Honolulu, HI 96821",-157.72436,21.30098],kalaaubTrees],
   [["886 Nana Honua St Honolulu, HI 96825",-157.70951,21.30761],nanahonuaTrees],
-[["105 Kalapaki Pl Honolulu, HI 96825",-157.68340,21.30517],kalapakiTrees],
+  [["105 Kalapaki Pl Honolulu, HI 96825",-157.68340,21.30517],kalapakiTrees],
   [["1099 Kalapaki St Honolulu, HI 96825",-157.68441,21.30550],kalapakibTrees],
   [["614 Kealahou St Honolulu, HI 96825",-157.67268,21.30174],kealahouTrees],
   [["41-578 Kalaniana'ole Hwy Waimanalo, HI 96795",-157.68399,21.32557],kalanianaoleTrees],

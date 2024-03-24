@@ -23,21 +23,24 @@ export default function FleetItem({item}) {
 
         let newrenewabletitle, newrenewablevalue = "";
         for(const pair of formData.entries()) {
-            
-            let ignore = false
+            console.log("formData.entries pair");
             console.log(pair);
+
+            let ignore = false
             if(pair[0] == "renewabletitlenew" || 
                 pair[0] == "renewablevaluenew" ||
                 pair[0].slice(0,pair[0].length-1) == "existingdate" ||
                 pair[0].slice(0,pair[0].length-1) == "existingrenewable") {
+                    console.log("ignore found");
+                    console.log(pair[0]);
                     ignore = true;
                 }
                 
-            //set basic parameter
+            //set non-Renewable parameters on the submission data object
             if(!ignore){
                 fleetbody.fleet[pair[0]] = pair[1];
             }
-            //set new renewable values
+            //set local variables for new renewable title and value if present
             if(pair[0] == "renewabletitlenew") {
                 newrenewabletitle = pair[1];
             }
@@ -46,27 +49,42 @@ export default function FleetItem({item}) {
             }
         }
 
+        //local variable to collect old and new renewables all together, 
+        //due to data structure we have to submit all of them to CRUD a member
         let newobj = {};
 
-        if(newrenewabletitle.length) {
+        //pop newobj with newtitle:newvalue if a title present
+        if(newrenewabletitle.length && newrenewabletitle.length > 0) {
             newobj[newrenewabletitle] = newrenewablevalue;
         };
 
-        let existingrenewables = {};
-
         //collect current input values of existing item.renewables
         for(const pair of formData.entries()) {
-            let pattern = pair[0].slice(0,-1);
+            let pattern = pair[0].slice(0,17);
             if(pattern === "existingrenewable") {
-                let index = pair[0].slice(-1);
+                let index = pair[0].slice(17);
+                
                 for(const subpair of formData.entries()) {
                     if(subpair[0] === `existingdate${index}`) {
                         newobj[pair[1]] = subpair[1];
                     }
                 };
+                console.log('new renewable object');
+                console.log(newobj);
             }
         };
+
+        //collect tempitems input since the last refresh
+        let tempitemframe = document.getElementById(`tempitems${item.id}`);
+        console.log('tempitem checks');
+        console.log(tempitemframe);
+        for(let el of tempitemframe.children) {
+            let text = el.innerText.split(' : ');
+            newobj[text[0]] = text[1];
+        }
+
         
+        //remove undefined key/value pairs from renewable collection object
         const cleanData = Object.entries(newobj)
         .filter(([key,value]) => value !== undefined)
         .reduce((obj, [key, value]) => {
@@ -98,6 +116,7 @@ export default function FleetItem({item}) {
             } else console.log('error updating');
         });
     }
+
     function removeRenewable(name) {
         let token = document.getElementsByName('csrf-token')[0].content;
         let updated = {};
@@ -130,6 +149,8 @@ export default function FleetItem({item}) {
 
         setRenewables(newrenewables);
     }
+
+
     function preventEnter(event) {
         event.key === 'Enter' && updateFleet(event);
     }

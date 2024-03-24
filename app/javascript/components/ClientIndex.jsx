@@ -30,10 +30,10 @@ export default function JobIndex() {
 
     return(
         <div className="flex flex-col gap-4 md:p-4 text-lg text-dark font-inter min-h-screen">
-            <div className="grid gap-2 lg:min-h-[60svh]">
+            <div className="flex flex-col gap-2 lg:min-h-[60svh]">
                 <div className="grid p-2 gap-2">
                     <label htmlFor="search" className="text-light">Search</label>
-                    <input type="text" name="search" id="search" className="max-w-48" onChange={searchClients} />
+                    <input type="text" name="search" id="search" className="max-w-48 h-8" onChange={searchClients} />
                     { searchResults.length > 0 ? <Windowpane
                             title="Results"
                             content={searchResults.map((client, i) => (
