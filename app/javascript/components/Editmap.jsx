@@ -56,6 +56,7 @@ export default function Editmap() {
         }
         setElements(telements);
     }
+
     function addElement(tree, map, elRef) {
         let telements = elRef.current;
 
@@ -89,6 +90,7 @@ export default function Editmap() {
         
         setElements(telements);
     }
+
     function setBounds(property, trees, map) {
         let baseLL = new mapboxgl.LngLat(property.longitude, property.latitude);
         //mapbounds setting
@@ -102,12 +104,15 @@ export default function Editmap() {
         }
         map.fitBounds(bounds, { padding: 100 });
     }
+
     function openTreeModal(e){
         document.getElementById('treeform').showModal();
     }
+
     function openZoneModal(e){
         document.getElementById('zoneform').showModal();
     }
+
     const addTree = async (event) => {
         const token = document.getElementsByName('csrf-token')[0].content;
         const center = map.current.getCenter();
@@ -139,47 +144,6 @@ export default function Editmap() {
 
         addElement(newtree.tree, map.current, elementsRef);
         document.getElementById('treeform').close();
-    }
-
-    const addZone = async (event) => {
-        const token = document.getElementsByName('csrf-token')[0].content;
-        const zname = document.getElementById('zonenamein').value;
-
-        fetch('/edit/addzone?zname=' + zname + '&pid=' + property.id, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-Token': token,
-              }
-        }).then((response) => {
-            if(response.ok) {
-                fetch('/properties/' + property.id + '.json')
-                .then((response) => response.json())
-                .then((data) => {
-                    setProperty(data);
-                })
-            }
-        });
-
-        document.getElementById('zonenamein').value = "";
-        document.getElementById('zoneform').close();
-    }
-
-    function removeZone(zonename) {
-        const token = document.getElementsByName('csrf-token')[0].content;
-        fetch('/edit/removezone?zname=' + zonename + '&pid=' + property.id, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-Token': token,
-            }
-        }).then((response) => {
-            if(response.ok) {
-                fetch('/properties/' + property.id + '.json')
-                .then((response) => response.json())
-                .then((data) => {
-                    setProperty(data);
-                })
-            }
-        })
     }
 
     useEffect(() => {
@@ -214,6 +178,7 @@ export default function Editmap() {
                 }
             });
     }, []);
+
     return(
         <div className="grid min-h-[100lvh] mesh1">
             <div className="grid h-[90svh] border border-red-500 relative">
@@ -252,24 +217,7 @@ export default function Editmap() {
                     <button onClick={()=>formmodal.current.close()} className="lightbutton">Close</button>
                 </div>
             </dialog>
-            <dialog id="zoneform" ref={zonemodal}>
-                <div className="grid gap-2 p-4 w-fit h-fit bg-dark">
-                    <div className="grid gap-2 p-2 text-light">
-                        {property.zones && property.zones.map((zone) => (
-                            <div key={zone}>
-                                <div className="flex justify-between items-center pl-4 gap-2 bg-light text-dark rounded-full max-sm:min-w-20 sm:w-full tagpair-gradient h-fit">
-                                    <p>{zone}</p>
-                                    <button onClick={()=>removeZone(zone)} className="rounded-full h-[1.5rem] w-[1.5rem] bg-cross -mr-[2px]"></button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    <label htmlFor="zonenamein" className="text-center p-2 text-light">Zone Name</label>
-                    <input type="text" name="zonenamein" id="zonenamein"/>
-                    <button onClick={addZone} className="lightbutton">Add Zone</button>
-                    <button onClick={()=>zonemodal.current.close()} className="lightbutton">Close</button>
-                </div>
-            </dialog>
+            <ZoneModal zonemodal={zonemodal} property={property} setProperty={setProperty} />
         </div>
     )
 }
