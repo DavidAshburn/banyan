@@ -28,7 +28,6 @@ export default class extends Controller {
     fetch('/data/getcalendar')
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         this.calendar?.addEventSource(data);
       });
   }

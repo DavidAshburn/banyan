@@ -1,4 +1,35 @@
 class EditController < ApplicationController
+  def addzone
+    @prop = Property.find(params[:pid])
+    newzones = @prop.zones
+    newzones.push(params[:zname])
+
+    respond_to do |format|
+      if @prop.update(zones:newzones)
+        format.json { render @prop, status: :ok}
+      else
+        format.json { render json: @prop.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def removezone
+    @prop = Property.find(params[:pid])
+    newzones = @prop.zones.select {|zone| zone != params[:zname]}
+
+    respond_to do |format|
+      if @prop.update(zones:newzones)
+        @prop.trees.each {|tree|
+          treezones = tree.zones - [params[:zname]]
+          tree.update(zones:treezones)
+        }
+        format.json { render @prop, status: :ok}
+      else
+        format.json { render json: @prop.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def locupdate
     @prop = Property.find(params[:pid])
 

@@ -160,7 +160,6 @@ export default function Dashboard() {
     fetch(`/data/dashboard`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setClientData(data.clients);
         setJobs(data.jobs);
         setUser(data.user);

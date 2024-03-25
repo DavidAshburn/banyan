@@ -136,7 +136,7 @@ export default function Propertymap() {
         ).then((response) => response.json())
         .then((data) => {
             console.log("TreeData");
-            let trees = data[1];
+            let trees = data.trees;
             
             let output = trees.map((tree) => {
                 return [
@@ -170,22 +170,22 @@ export default function Propertymap() {
         fetch(`/data/proptrees?pid=` + pid)
             .then((response) => response.json())
             .then((data) => {
-                setProperty(data[0]);
-                setTrees(data[1]);
+                setProperty(data.property);
+                setTrees(data.trees);
                 setJobs(data[2]);
 
-                buildElements(data[1], map.current, elementsRef, chosenRef, treesRef);
-                setBounds(data[0], data[1], map.current);
+                buildElements(data.trees, map.current, elementsRef, chosenRef, treesRef);
+                setBounds(data.property, data.trees, map.current);
 
-                if(data[1].length == 0) {
+                if(data.trees.length == 0) {
                     let propertymark = new mapboxgl.Marker({
                         color: startcolor,
                     })
-                        .setLngLat([data[0].longitude, data[0].latitude])
+                        .setLngLat([data.property.longitude, data.property.latitude])
                         .addTo(map.current);
                 }
                 
-                fetch('/data/client?cid=' + data[0].client_id)
+                fetch('/data/client?cid=' + data.property.client_id)
                     .then((response) => response.json())
                     .then((data) => {
                         setClient(data.client);

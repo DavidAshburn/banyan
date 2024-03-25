@@ -82,7 +82,8 @@ class DataController < ApplicationController
     @jobs = @property.jobs
 
     respond_to do |format|
-      format.json { render json: [@property, @proptrees, @jobs]}
+      #format.json { render json: [@property, @proptrees, @jobs]}
+      format.json { render json: { property:@property, trees:@proptrees, jobs:@jobs}}
     end
   end
 

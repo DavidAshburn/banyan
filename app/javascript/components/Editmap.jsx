@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import mapboxgl, { Map } from 'mapbox-gl';
+import ZoneChecks from "./editmap/ZoneChecks";
 
 export default function Editmap() {
     mapboxgl.accessToken =
@@ -12,7 +13,8 @@ export default function Editmap() {
 
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const formmodal = useRef(null)
+    const formmodal = useRef(null);
+    const zonemodal = useRef(null);
 
     //elements
     const [elements, _setElements] = useState({});
@@ -103,9 +105,16 @@ export default function Editmap() {
     function openTreeModal(e){
         document.getElementById('treeform').showModal();
     }
+    function openZoneModal(e){
+        document.getElementById('zoneform').showModal();
+    }
     const addTree = async (event) => {
         const token = document.getElementsByName('csrf-token')[0].content;
         const center = map.current.getCenter();
+        let zonelist = [];
+        for(let frame of document.getElementById('treezones').children) {
+            if(frame.firstChild.checked) zonelist.push(frame.lastChild.innerText);
+        };
         const newtree = {
             "tree": {
                 "longitude": center.lng,
@@ -114,9 +123,11 @@ export default function Editmap() {
                 "dbh": document.getElementById("dbhin").value,
                 "crown": document.getElementById("crownin").value,
                 "notes": document.getElementById("notesin").value,
+                "zones": zonelist,
                 "property_id": property.id
             }
         }
+        
         fetch('/trees.json', {
             method: 'POST',
             headers: {
@@ -130,6 +141,46 @@ export default function Editmap() {
         document.getElementById('treeform').close();
     }
 
+    const addZone = async (event) => {
+        const token = document.getElementsByName('csrf-token')[0].content;
+        const zname = document.getElementById('zonenamein').value;
+
+        fetch('/edit/addzone?zname=' + zname + '&pid=' + property.id, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-Token': token,
+              }
+        }).then((response) => {
+            if(response.ok) {
+                fetch('/properties/' + property.id + '.json')
+                .then((response) => response.json())
+                .then((data) => {
+                    setProperty(data);
+                })
+            }
+        });
+
+        document.getElementById('zonenamein').value = "";
+        document.getElementById('zoneform').close();
+    }
+
+    function removeZone(zonename) {
+        const token = document.getElementsByName('csrf-token')[0].content;
+        fetch('/edit/removezone?zname=' + zonename + '&pid=' + property.id, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-Token': token,
+            }
+        }).then((response) => {
+            if(response.ok) {
+                fetch('/properties/' + property.id + '.json')
+                .then((response) => response.json())
+                .then((data) => {
+                    setProperty(data);
+                })
+            }
+        })
+    }
 
     useEffect(() => {
 
@@ -148,17 +199,17 @@ export default function Editmap() {
         fetch(`/data/proptrees?pid=` + pid)
             .then((response) => response.json())
             .then((data) => {
-                setProperty(data[0]);
-                setTrees(data[1]);
+                setProperty(data.property);
+                setTrees(data.trees);
 
-                buildElements(data[1], map.current, elementsRef);
-                setBounds(data[0], data[1], map.current);
+                buildElements(data.trees, map.current, elementsRef);
+                setBounds(data.property, data.trees, map.current);
 
-                if(data[1].length == 0) {
+                if(data.trees.length == 0) {
                     let propertymark = new mapboxgl.Marker({
                         color: startcolor,
                     })
-                        .setLngLat([data[0].longitude, data[0].latitude])
+                        .setLngLat([data.property.longitude, data.property.latitude])
                         .addTo(map.current);
                 }
             });
@@ -169,8 +220,9 @@ export default function Editmap() {
                 <div ref={mapContainer} className="min-h-[60lvh]"></div>
                 <div className="w-8 h-8 border-2 rounded-full abs-center border-light" id="crosshair"></div>
                 <button className="w-fit h-12 px-4 border-2 rounded-full abs-br-corner border-accent bg-accent2 text-light text-xl font-bold" onClick={openTreeModal}>Add Tree</button>
+                <button className="w-fit h-12 px-4 border-2 rounded-full abs-bl-corner border-accent bg-accent2 text-light text-xl font-bold" onClick={openZoneModal}>Tree Zones</button>
             </div>
-            <div className="grid grid-cols-2 h-[10svh] text-light px-8 py-4">
+            <div className="flex items-center justify-evenly h-[10svh] text-light px-8 py-4">
                 <a
                     href={'/properties/' + property.id}
                     className="text-center p-2 underline"
@@ -192,10 +244,30 @@ export default function Editmap() {
                     <input type="text" name="dbh" id="dbhin"/>
                     <label htmlFor="crownin" className="text-center p-2 text-light">Crown</label>
                     <input type="text" name="crown" id="crownin"/>
+                    <label className="text-center p-2 text-light">Zone</label>
+                    <ZoneChecks property={property} />
                     <label htmlFor="notesin" className="text-center p-2 text-light">Notes</label>
                     <input type="text" name="notes" id="notesin"/>
                     <button onClick={addTree} className="lightbutton">Save Tree</button>
                     <button onClick={()=>formmodal.current.close()} className="lightbutton">Close</button>
+                </div>
+            </dialog>
+            <dialog id="zoneform" ref={zonemodal}>
+                <div className="grid gap-2 p-4 w-fit h-fit bg-dark">
+                    <div className="grid gap-2 p-2 text-light">
+                        {property.zones && property.zones.map((zone) => (
+                            <div key={zone}>
+                                <div className="flex justify-between items-center pl-4 gap-2 bg-light text-dark rounded-full max-sm:min-w-20 sm:w-full tagpair-gradient h-fit">
+                                    <p>{zone}</p>
+                                    <button onClick={()=>removeZone(zone)} className="rounded-full h-[1.5rem] w-[1.5rem] bg-cross -mr-[2px]"></button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <label htmlFor="zonenamein" className="text-center p-2 text-light">Zone Name</label>
+                    <input type="text" name="zonenamein" id="zonenamein"/>
+                    <button onClick={addZone} className="lightbutton">Add Zone</button>
+                    <button onClick={()=>zonemodal.current.close()} className="lightbutton">Close</button>
                 </div>
             </dialog>
         </div>

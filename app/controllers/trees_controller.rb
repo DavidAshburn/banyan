@@ -80,14 +80,15 @@ class TreesController < ApplicationController
         :crown,
         :history,
         :hazards,
-        :pictures,
         :species,
         :removed,
         :ground,
         :notes,
         :property_id,
         :created_at,
-        :updated_at
+        :updated_at,
+        pictures: [],
+        zones: [],
         )
     end
 end

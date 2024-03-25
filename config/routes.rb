@@ -43,7 +43,8 @@ Rails.application.routes.draw do
   post 'edit/completejob', to: 'edit#completejob'
   post 'edit/invoicejob', to: 'edit#invoicejob'
   post 'edit/paidjob', to: 'edit#paidjob'
-
+  post 'edit/addzone', to: 'edit#addzone'
+  post 'edit/removezone', to: 'edit#removezone'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

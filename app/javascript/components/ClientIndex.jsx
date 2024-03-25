@@ -13,7 +13,6 @@ export default function JobIndex() {
             .then((response) => response.json())
             .then((data) => {
                 setSearchResults(data);
-                console.log(data);
             });
     }
 
@@ -24,7 +23,6 @@ export default function JobIndex() {
           .then((data) => {
             setAllClients(data.allclients);
             setActiveClients(data.activeclients);
-            console.log(data);
           });
       }, []);
 
