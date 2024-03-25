@@ -11,33 +11,6 @@ def makeTrees(trees, pid)
   end
 end
 
-def makeClient(address)
-  cname = Faker::Name.name
-  phone = Faker::PhoneNumber.cell_phone
-
-  thisguy = Client.create(
-    name: cname,
-    contact_name: cname,
-    phone: phone,
-    email: "#{Faker::JapaneseMedia::StudioGhibli.character}@gmail.com".gsub(/\s+/,""),
-    mail_address: address[0],
-    notes: Faker::Quotes::Shakespeare,
-    user_id: 999,
-  )
-  Property.create(
-  address: address[0],
-  client_id: thisguy.id,
-  email: thisguy.email,
-  latitude: address[2],
-  longitude: address[1],
-  name: "Home",
-  parking: "street",
-  phone: phone,
-  property_type: "House",
-  tree_access: "good",
-  )
-end
-
 def makeClientwTrees(address, trees)
   cname = Faker::Name.name
   phone = Faker::PhoneNumber.cell_phone

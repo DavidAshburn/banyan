@@ -67,6 +67,12 @@ class EditController < ApplicationController
 
   def completejob
     @job = Job.find(params[:jobid])
+    @job.trees.entries.each{|workline|
+      tree = Tree.find_by_id(workline[0])
+      fullhistory = tree.history
+      fullhistory[Time.now.strftime("%d/%m/%Y %H:%M")] = workline[1];
+      tree.update_attribute(:history, fullhistory)
+    }
 
     respond_to do |format|
       if @job.update(completed:true)
