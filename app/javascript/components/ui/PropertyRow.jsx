@@ -12,12 +12,16 @@ export default function Property({property}) {
       <p className="text-stone-400">{toCap(property.parking)} parking</p>
       <p className="text-stone-400">{toCap(property.tree_access)} access</p>
       <div className="col-span-full bg-stone-700 grid sm:grid-cols-3 items-center">
-        <a
-          href={'/properties/' + property.id}
-          className="sm:col-span-2 text-center p-2 underline"
-        >
-          {property.address}
-        </a>
+        <div className="flex flex-col justify-center gap-2">
+          <a
+            href={'/properties/' + property.id}
+            className="sm:col-span-2 text-center p-2 underline"
+          >
+            {property.name}
+          </a>
+          <p> {property.address} </p>
+        </div>  
+          
         <div className="sm:col-start-3 flex items-center justify-center gap-2 p-2">
           <a
             href={'/jobs/new?pid=' + property.id}
