@@ -20,8 +20,13 @@ class DataController < ApplicationController
   def client
     @client = Client.find(params[:cid])
     @count = @client.properties.count
+    @properties = @client.properties
+    treecount = 0;
+    @properties.each do |prop|
+      treecount += prop.trees.count
+    end
 
-    @data = {client:@client, property_count:@count}
+    @data = {client:@client, property_count:@count, properties:@properties, tree_count:treecount}
 
     respond_to do |format|
       format.json { render json: @data}

@@ -31,6 +31,9 @@ application.register("reactnewjob", ReactnewjobController)
 import ReactpropshowController from "./reactpropshow_controller"
 application.register("reactpropshow", ReactpropshowController)
 
+import ReactshowclientController from "./reactshowclient_controller"
+application.register("reactshowclient", ReactshowclientController)
+
 import RfleetController from "./rfleet_controller"
 application.register("rfleet", RfleetController)
 

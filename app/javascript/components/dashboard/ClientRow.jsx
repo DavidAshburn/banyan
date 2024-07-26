@@ -21,7 +21,11 @@ export default function ClientRow({ client, properties, index }) {
       data-ref={index}
       onClick={toggleItem}
     >
-      <p className="row-span-2">{client.name}</p>
+      <a 
+        className="row-span-2"
+        href={'/clients/' + `${client.id}`}>
+          {client.name}
+      </a>
       <p className="text-sm">{client.email}</p>
       <p>{client.phone}</p>
       <div className={'grid gap-4 col-span-full ' + display}>

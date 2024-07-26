@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import ClientIndex from '../components/ClientIndex';
+import ClientIndex from '../components/clients/ClientIndex';
 
 // Connects to data-controller="react"
 export default class extends Controller {
