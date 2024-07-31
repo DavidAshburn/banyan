@@ -1,5 +1,4 @@
 import React from "react";
-import ZoneChecks from "./ZoneChecks";
 
 export default function AddTreeModal({formmodal, property, addTree}) {
 
@@ -12,8 +11,6 @@ export default function AddTreeModal({formmodal, property, addTree}) {
                 <input type="text" name="dbh" id="dbhin"/>
                 <label htmlFor="crownin" className="text-center p-2 text-light">Crown</label>
                 <input type="text" name="crown" id="crownin"/>
-                <label className="text-center p-2 text-light">Zone</label>
-                <ZoneChecks property={property} />
                 <label htmlFor="notesin" className="text-center p-2 text-light">Notes</label>
                 <input type="text" name="notes" id="notesin"/>
                 <button onClick={addTree} className="lightbutton">Save Tree</button>

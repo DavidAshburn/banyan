@@ -1,7 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
 import mapboxgl, { Map } from 'mapbox-gl';
-import ZoneChecks from "./editmap/ZoneChecks";
-import ZoneModal from "./editmap/ZoneModal";
 import AddTreeModal from "./editmap/AddTreeModal";
 
 export default function Editmap() {
@@ -16,7 +14,6 @@ export default function Editmap() {
     const mapContainer = useRef(null);
     const map = useRef(null);
     const formmodal = useRef(null);
-    const zonemodal = useRef(null);
 
     //elements
     const [elements, _setElements] = useState({});
@@ -96,10 +93,6 @@ export default function Editmap() {
     function addTree() {
         const token = document.getElementsByName('csrf-token')[0].content;
         const center = map.current.getCenter();
-        let zonelist = [];
-        for(let frame of document.getElementById('treezones').children) {
-            if(frame.firstChild.checked) zonelist.push(frame.lastChild.innerText);
-        };
         const newtree = {
             "tree": {
                 "longitude": center.lng,
@@ -108,7 +101,6 @@ export default function Editmap() {
                 "dbh": document.getElementById("dbhin").value,
                 "crown": document.getElementById("crownin").value,
                 "notes": document.getElementById("notesin").value,
-                "zones": zonelist,
                 "property_id": property.id
             }
         }
@@ -144,9 +136,6 @@ export default function Editmap() {
         document.getElementById('treeform').showModal();
     }
 
-    function openZoneModal(e){
-        document.getElementById('zoneform').showModal();
-    }
 
     useEffect(() => {
 
@@ -183,11 +172,10 @@ export default function Editmap() {
 
     return(
         <div className="grid min-h-[100lvh] mesh1">
-            <div className="grid h-[90svh] border border-red-500 relative">
+            <div className="grid h-[90svh] relative">
                 <div ref={mapContainer} className="min-h-[60lvh]"></div>
                 <div className="w-8 h-8 border-2 rounded-full abs-center border-light" id="crosshair"></div>
                 <button className="w-fit h-12 px-4 border-2 rounded-full abs-br-corner border-accent bg-accent2 text-light text-xl font-bold" onClick={openTreeModal}>Add Tree</button>
-                <button className="w-fit h-12 px-4 border-2 rounded-full abs-bl-corner border-accent bg-accent2 text-light text-xl font-bold" onClick={openZoneModal}>Tree Zones</button>
             </div>
             <div className="flex items-center justify-evenly h-[10svh] text-light px-8 py-4">
                 <a
@@ -204,7 +192,6 @@ export default function Editmap() {
                 </a>
             </div>
             <AddTreeModal formmodal={formmodal} property={property} addTree={addTree} />
-            <ZoneModal zonemodal={zonemodal} property={property} setProperty={setProperty} />
         </div>
     )
 }
