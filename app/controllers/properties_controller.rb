@@ -15,11 +15,12 @@ class PropertiesController < ApplicationController
   # GET /properties/new
   def new
     @property = Property.new
-
+    @edit = false
   end
 
   # GET /properties/1/edit
   def edit
+    @edit = true
   end
 
   # POST /properties or /properties.json

@@ -19,7 +19,7 @@ module.exports = {
         light: '#e8eef2',
         accent: '#166556',
         accent2: '#219781',
-        alert: '#f87954',
+        alert: '#ff7f50',
         info: '#6a66a3'
       },
     },

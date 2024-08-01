@@ -219,6 +219,12 @@ export default function Propertymap() {
                         >
                             Edit Map
                         </a>
+                        <a
+                            href={'/properties/' + property.id + '/edit'}
+                            className="p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit h-fit"
+                        >
+                            Edit Property
+                        </a>
                         <button onClick={treeData} className="p-2 rounded bg-light text-dark font-bold text-sm text-center w-fit h-fit">TreeData</button>
                     </div>
                     <div className="pt-2">

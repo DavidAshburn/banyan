@@ -13,7 +13,7 @@
 
   <div class="formcontainer" data-controller="propertyform">
     <div class="mainpane sm:col-start-2">
-      <p class="panetitle">New Property</p>
+      <p class="panetitle">Property Details</p>
       <div class="panecontent">
         <% if !params[:cid] %>
           <div class="grid grid-cols-[8rem_1fr] border-b p-2 rounded-md border-dark bg-stone-700 text-dark">
@@ -77,10 +77,13 @@
         </div>
         <%= form.number_field :latitude, step: "any", id:"forminlatitude", class:"hidden"%>
         <%= form.number_field :longitude, step: "any", id:"forminlongitude", class:"hidden"%>
-        <%= form.submit 'Add Property',
+        <%= form.submit 'Save Property',
           class: "p-2 px-4 text-center bg-dark font-bold font-inter text-2xl"
         %>
         <%= link_to "Cancel", user_dashboard_path, class:"p-2 px-4 text-center bg-light font-bold text-dark font-inter text-2xl" %>
+        <% if @edit %>
+          <%= link_to 'Delete Property', property_path(@property), data: {"turbo-method": :delete}, class: "mt-12 w-1/4 place-self-end p-2 px-4 text-center bg-alert font-bold text-dark font-inter text-xl" %>
+        <% end %>
       </div>
     </div>
   </div>
