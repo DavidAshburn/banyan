@@ -196,13 +196,13 @@ export default function Propertymap() {
     return(
         
 
-        <div className="flex flex-col lg:grid min-h-screen grid-cols-1 grid-rows-[60lvh_1fr_1fr_1fr] lg:grid-cols-[1fr_3fr] lg:grid-rows-[60lvh_1fr] gap-2">
+        <div className="flex flex-col lg:grid min-h-screen lg:grid-cols-[1fr_3fr] lg:grid-rows-[60lvh_1fr] gap-2">
             <div ref={mapContainer} className="min-h-[60lvh] lg:col-start-2 lg:row-start-1"></div>
             
             <div className="mainpane lg:col-start-2 lg:row-start-2">
                 <p className="panetitle">Info</p>
                 <div className="grid-cols-2 panecontent ">
-                    <div className="grid grid-cols-3 gap-2 justify-ende p-2">
+                    <div className="grid grid-cols-3 gap-2 p-2">
                         <div className="col-span-full">
                             <Propertyinfo property = {property} client={client}/>
                         </div>
@@ -229,7 +229,7 @@ export default function Propertymap() {
 
             <div className="mainpane lg:col-start-1 lg:row-start-1">
                 <p className="panetitle">Trees</p>
-                <div id="alltrees" className="panecontent max-lg:max-h-[40svh] lg:max-h-[75svh] overflow-y-scroll scroll-theme text-dark">
+                <div id="alltrees" className="grid gap-2 p-2 max-lg:max-h-[40svh] lg:h-[58lvh] overflow-y-scroll scroll-theme text-dark">
                     <div className="grid grid-cols-3 px-2 text-center text-light">
                         <p>Species</p>
                         <p>DBH</p>
